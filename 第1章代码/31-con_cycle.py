@@ -1,4 +1,4 @@
-# 条件及循环语句30-con_cycle.py
+# 条件及循环语句31-con_cycle.py
 # 条件语句测试程序
 import numpy as np
 # 判断随机数是否大于0.5

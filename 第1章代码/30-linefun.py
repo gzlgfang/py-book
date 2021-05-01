@@ -1,4 +1,4 @@
-# 利用矩阵函数mat求解线性方程组31—linefun.py
+# 利用矩阵函数mat求解线性方程组30—linefun.py
 import numpy as np
 flag = 1
 while (flag):
