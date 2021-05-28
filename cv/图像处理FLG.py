@@ -1,8 +1,10 @@
-
-from skimage import io
 import numpy as np
 import matplotlib.pyplot as plt
-img1 = ("g:/flg.png")
+from skimage import io
+
+## 不应指定绝对路径，而应该换成相对路径
+
+img1 = '..\\imgs\\logo.png'
 asimg1 = io.imread(img1)
 print(type(asimg1), asimg1.shape, asimg1.dtype)
 

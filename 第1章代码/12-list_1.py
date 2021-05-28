@@ -1,0 +1,20 @@
+# 12_list_1.py,有关列表的基本定义
+list1 = [1, 2, 3, 4, False]
+list2 = [1, 2, 3, "ch", "True", "华南理工大学"]
+list3 = []
+list4 = [2 * 3, 7**2, 3 / 2, 12 // 5, 8 + 2, 6 - 3 / 2]
+set1 = {1, 2, 3}
+tup1 = ("a", "b", "c")
+dict1 = {'city': 'guangzhou', 'GDP': 10}
+list5 = [6, 7, list2, set1, tup1, dict1]
+print("list4=", list4)
+print("list5=", list5)
+rage1 = range(1, 8)
+list6 = list(set1)  # 将集合串转换成列表
+list7 = list(tup1)  # 将元组转换成列表
+list8 = list(dict1)  # 将字典转换成列表
+list9 = list(rage1)  # 将区间转换成列表
+print("list6=", list6)
+print("list7=", list7)
+print("list8=", list8)
+print("list9=", list9)
