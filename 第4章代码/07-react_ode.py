@@ -42,8 +42,8 @@ for i in range(50):
     T=181+i+273.15
     k= k0*np.exp(-E/(R*T))#;
     sol =odeint(dy, y0, tspan)
-    MAX_C_B=max(sol[:,1])
-    time1=list(sol[:,1]).index(MAX_C_B)
+    MAX_C_B=max(sol[:,1])#确定最大值
+    time1=list(sol[:,1]).index(MAX_C_B)#确定最大值所在的位置
     cbmax.append(MAX_C_B)
     timemax.append(time1)
     temper.append(T)
