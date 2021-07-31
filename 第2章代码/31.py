@@ -45,8 +45,8 @@ ax.set_ylim(5,13)
 ax.set_ylabel("压头H/m,管路阻力He/m",fontsize=18)
 ax.set_xlabel("流量"+r"$q_{v}/L·s^{-1}$",fontsize=18)
 ax.set_title("离心泵工作曲线",fontsize=18)
-ax.xaxis.set_major_locator(mpl.ticker.MultipleLocator(2))#主刻度间隔10
-ax.xaxis.set_minor_locator(mpl.ticker.MultipleLocator(1))#次刻度间隔5
+ax.xaxis.set_major_locator(mpl.ticker.MultipleLocator(1))#主刻度间隔1
+ax.xaxis.set_minor_locator(mpl.ticker.MultipleLocator(0.5))#次刻度间隔0.5
 #ax.tick_params( top='on', which='both',direction = 'in')
 ax.grid(color="b", which="both", linestyle=':', linewidth=1)
 

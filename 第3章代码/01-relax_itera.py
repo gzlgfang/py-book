@@ -13,7 +13,7 @@ mpl.rcParams['xtick.direction'] = 'in'#坐标轴上的短线朝内，默认朝�
 mpl.rcParams['ytick.direction'] = 'in'
 f = lambda x: x *np.sin(x) + 7 * x-18#超越方程
 def f1(x,omiga):
-    return x+omiga*((18-7*x)/np.sin(x)-x)#迭代格式1
+     return x+omiga*((18-7*x)/np.sin(x)-x)#迭代格式1
 def f2(x,omiga):
     return x+omiga*((18-x*np.sin(x))/7-x)#迭代格式2
 """ 精度及初始点设置

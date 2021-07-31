@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Form</class>
+ <widget class="QWidget" name="Form">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1030</width>
+    <height>774</height>
+   </rect>
+  </property>
+  <property name="font">
+   <font>
+    <family>黑体</family>
+    <pointsize>18</pointsize>
+   </font>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">border-top-color: rgb(0, 255, 255);</string>
+  </property>
+  <widget class="QDateEdit" name="dateEdit">
+   <property name="geometry">
+    <rect>
+     <x>340</x>
+     <y>370</y>
+     <width>471</width>
+     <height>81</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Arial</family>
+     <pointsize>18</pointsize>
+    </font>
+   </property>
+   <property name="dateTime">
+    <datetime>
+     <hour>18</hour>
+     <minute>18</minute>
+     <second>18</second>
+     <year>2021</year>
+     <month>6</month>
+     <day>22</day>
+    </datetime>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="pushButton">
+   <property name="geometry">
+    <rect>
+     <x>330</x>
+     <y>230</y>
+     <width>491</width>
+     <height>91</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>黑体</family>
+     <pointsize>18</pointsize>
+    </font>
+   </property>
+   <property name="text">
+    <string>欢迎 进 入窗体切换实验 调试程序
+这里是窗体one，点击我进入窗体two</string>
+   </property>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
