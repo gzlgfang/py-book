@@ -87,7 +87,7 @@ sn.countplot(x=DF["province"],data=DF,ax=ax[1,0])#个数统计
 sn.swarmplot(y ='income', x = 'sex',data=DF,ax=ax[1,1])#群图
 sn.kdeplot(x='age' ,y='income',data=DF,ax=ax[2,0])#kde图
 D2_data=np.random.rand(12, 12)
-sn.heatmap(D2_data,vmin=0,vmax=1,cmap="YlGnBu",  yticklabels=np.arange(1,13,1),xticklabels=np.arange(1,13,1),ax=ax[2,1])
+sn.heatmap(D2_data,vmin=0,vmax=1,linewidths = 0.05, annot=True, fmt='.1f', cmap='rainbow',  yticklabels=np.arange(1,13,1),xticklabels=np.arange(1,13,1),ax=ax[2,1])
 plt.subplots_adjust(wspace=0.2,hspace=0.3)
 #catplot
 sn.catplot(x="sex", y="total_bill", hue="smoker", col="time",data=tips, kind="bar", height=4, aspect=.7)
