@@ -1,5 +1,14 @@
 # Py-book
 
+## 初始化
+
+用`virtualenv`，统一一下需要的依赖
+
+```python
+virtualenv venv
+(venv) pip install -r requirements.txt
+```
+
 ## 运行工具及环境
 
 > 两个维护者的开发工具并不一致

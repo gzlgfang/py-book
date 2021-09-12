@@ -1,0 +1,9 @@
+numpy
+scipy
+sympy
+matplotlib
+scikit-opt
+scikit-image
+pandas
+PyQt5
+PyInstaller
