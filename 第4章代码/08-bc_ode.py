@@ -23,8 +23,8 @@ tspan=np.linspace(0,10,101)#确定自变量范围
 f2=80#y1右端值
 a1,a2=0,-20
 y0_1,y0_2=[40,a1],[40,a2]
-sol_1=odeint(dy, y0_1, tspan)#计算得到y1的末端值为sol_1[101,0]
-sol_2=odeint(dy, y0_2, tspan)#计算得到y1的末端值为sol_2[101,0]
+sol_1=odeint(dy, y0_1, tspan)#计算得到y1的末端值为sol_1[100,0]
+sol_2=odeint(dy, y0_2, tspan)#计算得到y1的末端值为sol_2[100,0]
 k=(a2-a1)/(sol_2[100,0]-sol_1[100,0])
 c_0=a1+k*(f2-sol_1[100,0])
 #print(c_0)

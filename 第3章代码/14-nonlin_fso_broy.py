@@ -5,16 +5,16 @@ import math
 #f2=8*y-sin(x)-cos(y);
 
 def fun(x):
-    return[ 8.0-x[0]**2-0.5*x[1]**2.0 , 
-    4.0-math.exp(x[0])-2*x[1]] 
-sol = optimize.broyden1(fun, [0.8, -1.8])
+    return[2.0*x[0]-0.5*math.sin(x[1]*x[2])-0.8 ,math.exp(x[0])-56*(x[1]+0.2)+math.cos(x[2])+1.22,
+           0.7* x[0]**2+0.6*x[1]+x[2]-62]
+sol = optimize.broyden1(fun, [0.1, 0.1,-0.1])
 print("sol_broyden1=",sol.T)
 print(fun(sol))
 
-sol = optimize.broyden2(fun, [-1.8, 0.8])
+sol = optimize.broyden2(fun, [1.8, 0.8,0.1])
 print("sol_broyden2=",sol.T)
 print(fun(sol))
 
-sol = optimize.fsolve(fun, [-1.8, 0.8])
+sol = optimize.fsolve(fun, [0.8, 0.8,-0.5])
 print("sol_fsolve=",sol.T)
 print(fun(sol)) 

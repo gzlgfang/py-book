@@ -1,4 +1,4 @@
-#35-3D_draw.py
+#34-3D_draw.py
 #3D图形绘制
 import numpy as np
 import matplotlib.pyplot as plt
@@ -22,6 +22,7 @@ R = np.sqrt((X**2 + Y**2)/2)
 Z =-20*np.exp(-0.2*R)+20+np.exp(0.5)-np.exp(0.5*(np.cos(2*np.pi*X)+np.cos(2*np.pi*Y)))
 norm = mpl.colors.Normalize(-abs(Z).max(), abs(Z).max())#确定映射数据范围
 #布局设置
+fig, ax = plt.subplots(1, 3, figsize=(12, 4),subplot_kw={'projection': '3d'} )
 def title_and_lablim(ax, title):#常规坐标轴特性设置，可通用
     ax.set_title(title)
     ax.set_xlabel("$x$", fontsize=16)
@@ -31,24 +32,20 @@ def title_and_lablim(ax, title):#常规坐标轴特性设置，可通用
     ax.set_ylim(-5,5.1)
     ax.set_xticks(np.arange(-5,5.1,1))
     ax.set_yticks(np.arange(-5,5.1,1))
-fig=plt.figure()
-ax = plt.subplot(131,projection='3d' )
-p = ax.plot_surface(X, Y, Z, rstride=1, cstride=1, linewidth=0, antialiased=False, norm=norm, cmap=mpl.cm.copper)
-ax.contour(X, Y, Z, zdir='z', offset=0, norm=norm, cmap=mpl.cm.copper)
-fig.colorbar(p, ax=ax, shrink=0.8)
-title_and_lablim(ax, "plot_surface+z_contour")
+p = ax[0].plot_surface(X, Y, Z, rstride=1, cstride=1, linewidth=0, antialiased=False, norm=norm, cmap=mpl.cm.copper)
+ax[0].contour(X, Y, Z, zdir='z', offset=0, norm=norm, cmap=mpl.cm.copper)
+fig.colorbar(p, ax=ax[0], shrink=0.8)
+title_and_lablim(ax[0], "plot_surface+z_contour")
 
-ax = plt.subplot(132,projection='3d' )
-p = ax.plot_wireframe(X, Y, Z, rstride=5, cstride=5, norm=norm, cmap=mpl.cm.RdBu,lw=0.5)
-ax.contour(X, Y, Z, zdir='z', offset=0, norm=norm, cmap=mpl.cm.RdBu)
-title_and_lablim(ax, "plot_wireframe+z_contour")
+p = ax[1].plot_wireframe(X, Y, Z, rstride=5, cstride=5, norm=norm, cmap=mpl.cm.RdBu,lw=0.5)
+ax[1].contour(X, Y, Z, zdir='z', offset=0, norm=norm, cmap=mpl.cm.RdBu)
+title_and_lablim(ax[1], "plot_wireframe+z_contour")
 
-ax = plt.subplot(133,projection='3d' )
-ax.contour(X, Y, Z, zdir='z', offset=0, norm=norm, cmap=mpl.cm.Blues)
-ax.contour(X, Y, Z, zdir='y', offset=5, norm=norm, cmap=mpl.cm.copper)
-ax.contour(X, Y, Z, zdir='x', offset=-5, norm=norm, cmap='Purples')
-title_and_lablim(ax, "3D_contour")
+ax[2].contour(X, Y, Z, zdir='z', offset=0, norm=norm, cmap=mpl.cm.Blues)
+ax[2].contour(X, Y, Z, zdir='y', offset=5, norm=norm, cmap=mpl.cm.copper)
+ax[2].contour(X, Y, Z, zdir='x', offset=-5, norm=norm, cmap='Purples')
+title_and_lablim(ax[2], "3D_contour")
 fig.tight_layout()
-fig.savefig("ch2-35-3D_draw.png", dpi=400)
-
+fig.savefig("ch2-34-3D_draw.png", dpi=400)
+plt.legend()
 plt.show() 

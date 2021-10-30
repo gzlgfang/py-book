@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 #01-BP_basica
 import time
 import numpy as np

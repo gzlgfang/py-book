@@ -44,6 +44,7 @@ for i in range(50):
     sol =odeint(dy, y0, tspan)
     MAX_C_B=max(sol[:,1])#确定最大值
     time1=list(sol[:,1]).index(MAX_C_B)#确定最大值所在的位置
+    #time1=(sol[:,1]).index(MAX_C_B)#sol[:,1]为numpy.ndarray
     cbmax.append(MAX_C_B)
     timemax.append(time1)
     temper.append(T)
@@ -66,7 +67,7 @@ plt.xticks()
 plt.yticks()
 
 
-
+print(sol[:,1])
 
 plt.figure(figsize=(8,6), dpi=80)# 创建一个 8 * 6 点（point）的图，并设置分辨率为 80
 # 绘制温度曲线，使用红色、连续的、宽度为 2（像素）的线条

@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 #02-wuxing Physical properties 
 from typing import Type
 import numpy as np
