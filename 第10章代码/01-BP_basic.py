@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-#01-BP_basica
+# 01-BP_basica
 import time
 import numpy as np
 import random as rnd
