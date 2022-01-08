@@ -7,14 +7,12 @@ import numpy as np
 img1=cv2.imread("xtx_gra.jpg",cv2.IMREAD_UNCHANGED)
 cv2.namedWindow("Original image ",cv2.WINDOW_NORMAL)
 cv2.imshow("Original image ",img1)
-
 #核，正方形
 #kernel1 = cv2.getStructuringElement(cv2.MORPH_RECT,(10,10))
 #kernel2 = cv2.getStructuringElement(cv2.MORPH_CROSS,(10,10))
 #kernel3 = cv2.getStr2ucturingElement(cv2.MORPH_ELLIPSE,(10,20))
 kernel4 = np.ones((10,10), np.float32) 
 kernel=kernel4
-
 
 
 #腐蚀

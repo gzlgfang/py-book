@@ -1,7 +1,6 @@
 #10-Parameter identification 
 #10-para_indent.py 
 #用函数调用重编-09
-from re import U
 from scipy import optimize as op
 import numpy as np
 import matplotlib  as mpl
@@ -59,7 +58,7 @@ lamda=0.75
 miue=1
 flag=True
 n=0
-eer=0.000001
+eer=0.0000001
 kk1=np.copy(k0)
 kk1[0]=k0[0]+h
 

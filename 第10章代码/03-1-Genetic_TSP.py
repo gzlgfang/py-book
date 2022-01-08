@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
-#03-Genetic algorithm 
-from typing import Type
-from matplotlib import colors, markers
+#03-1-Genetic algorithm 
+
 import numpy as np
 from numpy.core.numeric import tensordot
 import pandas as pd
@@ -35,24 +34,18 @@ def city_zb(width,hight,city_num):
     return city_zb
 #city_zb=city_zb(50,50,15)#确定城市数目及坐标
 
-
-
-
-
-
-
 #读入城市坐标
 DF=pd.read_excel('city.xlsx','Sheet1', na_filter=False,index_col=0)#共有31个城市坐标
 city_x =np.array( DF['x'])#数据分配
 city_y=np.array( DF['y'])
-#n=len(city_x)#计算城市的数目
-#city_zb=np.zeros((n,2))#设置坐标数组
-#city_zb[:,0]=city_x/100
-#city_zb[:,1]=city_y/100
+n=len(city_x)#计算城市的数目
+city_zb=np.zeros((n,2))#设置坐标数组
+city_zb[:,0]=city_x/100
+city_zb[:,1]=city_y/100
 
 
-city_zb=city_zb(50,50,100)#确定城市数目及坐标
-n=len(city_zb)
+#city_zb=city_zb(50,50,100)#确定城市数目及坐标
+#n=len(city_zb)
 
 
 # 计算城市i和城市j之间的距离
@@ -66,12 +59,14 @@ def  Distance(city_zb):
                #D[i,j]=city_zb[i,0]
                D[i,j]=((city_zb[i,0]-city_zb[j,0])**2+(city_zb[i,1]-city_zb[j,1])**2)**0.5
                D[j,i]=D[i,j]
+     D[0,14]=D[14,0]=10000000#0-14之间有障碍物
+     D[29,30]=D[30,29]=1000000
      return D 
 D=Distance(city_zb)#计算一次即可
 #print(D)
 #设置基本遗传数据
-ZQS=600     #种群大小
-Maxgen=500     #最大遗传代数
+ZQS=300     #种群大小
+Maxgen=300     #最大遗传代数
 Pc=0.6        #交叉概率
 Pm=0.2      #变异概率
 Sel_ra=0.7       #选择率
@@ -126,17 +121,17 @@ def drawpath(LJ,city_zb,num):
 
 
 
-    #plt.ylim(0,40)
-    #plt.xlim(10,45)
+    plt.ylim(0,40)
+    plt.xlim(10,45)
     
-    plt.ylim(-5,55)
-    plt.xlim(-5,55)
+    #plt.ylim(-5,55)
+    #plt.xlim(-5,55)
     
     
     plt.grid()
     plt.xlabel('横坐标')
     plt.ylabel('纵坐标')
-    plt.title(' 轨迹图')
+    plt.title('轨迹图')
 
 
 #计算路径总距离
@@ -451,6 +446,10 @@ draw_path=drawpath(LJ[index,:],city_zb,num)
 #plt.legend(str(p_len[0]))
 plt.text(35,52,'总长度=')
 plt.text(39,52,str(int(1000*p_len[index])/1000))
+
+plt.text(35,32,'总长度=')
+plt.text(39,32,str(int(1000*p_len[index])/1000))
+
 
 #打印最终优化路径
 print_LJ=str()

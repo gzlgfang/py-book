@@ -174,6 +174,8 @@ class Ui_MainWindow(object):
         font = QtGui.QFont()
         font.setFamily("黑体")
         font.setPointSize(18)
+        
+        
         self.lineEdit_17.setFont(font)
         self.lineEdit_17.setStyleSheet("background-color: rgb(170, 255, 255);")
         self.lineEdit_17.setText("")
@@ -209,6 +211,99 @@ class Ui_MainWindow(object):
         self.lineEdit_20.setText("")
         self.lineEdit_20.setAlignment(QtCore.Qt.AlignCenter)
         self.lineEdit_20.setObjectName("lineEdit_20")
+        
+        self.lineEdit_36 = QtWidgets.QLineEdit(self.centralwidget)
+        self.lineEdit_36.setGeometry(QtCore.QRect(170, 943, 141, 41))
+        font = QtGui.QFont()
+        font.setFamily("黑体")
+        font.setPointSize(18)
+        self.lineEdit_36.setFont(font)
+        self.lineEdit_36.setStyleSheet("background-color: rgb(170, 255, 255);")
+        self.lineEdit_36.setText("0")
+        self.lineEdit_36.setAlignment(QtCore.Qt.AlignCenter)
+        self.lineEdit_36.setObjectName("lineEdit_36")
+        
+        self.lineEdit_37 = QtWidgets.QLineEdit(self.centralwidget)
+        self.lineEdit_37.setGeometry(QtCore.QRect(170,1023, 141, 41))
+        font = QtGui.QFont()
+        font.setFamily("黑体")
+        font.setPointSize(18)
+        self.lineEdit_37.setFont(font)
+        self.lineEdit_37.setStyleSheet("background-color: rgb(170, 255, 255);")
+        self.lineEdit_37.setText("0")
+        self.lineEdit_37.setAlignment(QtCore.Qt.AlignCenter)
+        self.lineEdit_37.setObjectName("lineEdit_37")
+
+
+        self.lineEdit_38 = QtWidgets.QLineEdit(self.centralwidget)
+        self.lineEdit_38.setGeometry(QtCore.QRect(340, 943, 141, 41))
+        font = QtGui.QFont()
+        font.setFamily("黑体")
+        font.setPointSize(18)
+        self.lineEdit_38.setFont(font)
+        self.lineEdit_38.setStyleSheet("background-color: rgb(170, 255, 255);")
+        self.lineEdit_38.setText("4")
+        self.lineEdit_38.setAlignment(QtCore.Qt.AlignCenter)
+        self.lineEdit_38.setObjectName("lineEdit_38")
+        
+        self.lineEdit_39 = QtWidgets.QLineEdit(self.centralwidget)
+        self.lineEdit_39.setGeometry(QtCore.QRect(340,1023, 141, 41))
+        font = QtGui.QFont()
+        font.setFamily("黑体")
+        font.setPointSize(18)
+        self.lineEdit_39.setFont(font)
+        self.lineEdit_39.setStyleSheet("background-color: rgb(170, 255, 255);")
+        self.lineEdit_39.setText("5")
+        self.lineEdit_39.setAlignment(QtCore.Qt.AlignCenter)
+        self.lineEdit_39.setObjectName("lineEdit_39")
+
+
+
+        self.lineEdit_40 = QtWidgets.QLineEdit(self.centralwidget)
+        self.lineEdit_40.setGeometry(QtCore.QRect(620, 943, 141, 41))
+        font = QtGui.QFont()
+        font.setFamily("黑体")
+        font.setPointSize(18)
+        self.lineEdit_40.setFont(font)
+        self.lineEdit_40.setStyleSheet("background-color: rgb(170, 255, 255);")
+        self.lineEdit_40.setText("0")
+        self.lineEdit_40.setAlignment(QtCore.Qt.AlignCenter)
+        self.lineEdit_40.setObjectName("lineEdit_40")
+        
+        self.lineEdit_41 = QtWidgets.QLineEdit(self.centralwidget)
+        self.lineEdit_41.setGeometry(QtCore.QRect(620,1023, 141, 41))
+        font = QtGui.QFont()
+        font.setFamily("黑体")
+        font.setPointSize(18)
+        self.lineEdit_41.setFont(font)
+        self.lineEdit_41.setStyleSheet("background-color: rgb(170, 255, 255);")
+        self.lineEdit_41.setText("0")
+        self.lineEdit_41.setAlignment(QtCore.Qt.AlignCenter)
+        self.lineEdit_41.setObjectName("lineEdit_41")
+
+
+        self.lineEdit_42 = QtWidgets.QLineEdit(self.centralwidget)
+        self.lineEdit_42.setGeometry(QtCore.QRect(792, 943, 141, 41))
+        font = QtGui.QFont()
+        font.setFamily("黑体")
+        font.setPointSize(18)
+        self.lineEdit_42.setFont(font)
+        self.lineEdit_42.setStyleSheet("background-color: rgb(170, 255, 255);")
+        self.lineEdit_42.setText("1")
+        self.lineEdit_42.setAlignment(QtCore.Qt.AlignCenter)
+        self.lineEdit_42.setObjectName("lineEdit_42")
+        
+        self.lineEdit_43 = QtWidgets.QLineEdit(self.centralwidget)
+        self.lineEdit_43.setGeometry(QtCore.QRect(792,1023, 141, 41))
+        font = QtGui.QFont()
+        font.setFamily("黑体")
+        font.setPointSize(18)
+        self.lineEdit_43.setFont(font)
+        self.lineEdit_43.setStyleSheet("background-color: rgb(170, 255, 255);")
+        self.lineEdit_43.setText("1")
+        self.lineEdit_43.setAlignment(QtCore.Qt.AlignCenter)
+        self.lineEdit_43.setObjectName("lineEdit_43")
+
         self.lineEdit_21 = QtWidgets.QLineEdit(self.centralwidget)
         self.lineEdit_21.setGeometry(QtCore.QRect(620, 613, 141, 41))
         font = QtGui.QFont()
@@ -424,6 +519,8 @@ class Ui_MainWindow(object):
         self.label_11.setStyleSheet("background-color: rgb(255, 170, 255);")
         self.label_11.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignVCenter)
         self.label_11.setObjectName("label_11")
+        
+        
         self.label_12 = QtWidgets.QLabel(self.centralwidget)
         self.label_12.setGeometry(QtCore.QRect(60, 863, 91, 41))
         font = QtGui.QFont()
@@ -434,6 +531,52 @@ class Ui_MainWindow(object):
         self.label_12.setStyleSheet("background-color: rgb(255, 170, 255);")
         self.label_12.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignVCenter)
         self.label_12.setObjectName("label_12")
+        
+        self.label_30 = QtWidgets.QLabel(self.centralwidget)
+        self.label_30.setGeometry(QtCore.QRect(60, 943, 91, 41))
+        font = QtGui.QFont()
+        font.setFamily("黑体")
+        font.setPointSize(18)
+        self.label_30.setFont(font)
+        self.label_30.setLayoutDirection(QtCore.Qt.RightToLeft)
+        self.label_30.setStyleSheet("background-color: rgb(255, 170, 255);")
+        self.label_30.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignVCenter)
+        self.label_30.setObjectName("label_30")
+        
+        self.label_31 = QtWidgets.QLabel(self.centralwidget)
+        self.label_31.setGeometry(QtCore.QRect(60, 1023, 91, 41))
+        font = QtGui.QFont()
+        font.setFamily("黑体")
+        font.setPointSize(18)
+        self.label_31.setFont(font)
+        self.label_31.setLayoutDirection(QtCore.Qt.RightToLeft)
+        self.label_31.setStyleSheet("background-color: rgb(255, 170, 255);")
+        self.label_31.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignVCenter)
+        self.label_31.setObjectName("label_30")
+
+
+        self.label_32 = QtWidgets.QLabel(self.centralwidget)
+        self.label_32.setGeometry(QtCore.QRect(500, 943, 91, 41))
+        font = QtGui.QFont()
+        font.setFamily("黑体")
+        font.setPointSize(18)
+        self.label_32.setFont(font)
+        self.label_32.setLayoutDirection(QtCore.Qt.RightToLeft)
+        self.label_32.setStyleSheet("background-color: rgb(255, 170, 255);")
+        self.label_32.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignVCenter)
+        self.label_32.setObjectName("label_32")
+        
+        self.label_33 = QtWidgets.QLabel(self.centralwidget)
+        self.label_33.setGeometry(QtCore.QRect(500, 1023, 101, 41))
+        font = QtGui.QFont()
+        font.setFamily("黑体")
+        font.setPointSize(18)
+        self.label_33.setFont(font)
+        self.label_33.setLayoutDirection(QtCore.Qt.RightToLeft)
+        self.label_33.setStyleSheet("background-color: rgb(255, 170, 255);")
+        self.label_33.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignVCenter)
+        self.label_33.setObjectName("label_33")
+        
         self.label_13 = QtWidgets.QLabel(self.centralwidget)
         self.label_13.setGeometry(QtCore.QRect(500, 863, 91, 41))
         font = QtGui.QFont()
@@ -559,36 +702,34 @@ class Ui_MainWindow(object):
         MainWindow.setStatusBar(self.statusbar)
 
         # 设置默认值
-        self.lineEdit_17.setText(str(1))
-        self.lineEdit_18.setText(str(1))
-        self.lineEdit_19.setText(str(1))
-        self.lineEdit_20.setText(str(1))
-        self.lineEdit_21.setText(str(1))
+        self.lineEdit_17.setText(str(0))
+        self.lineEdit_18.setText(str(0))
+        self.lineEdit_19.setText(str(0))
+        self.lineEdit_20.setText(str(0))
+        self.lineEdit_21.setText(str(0))
         self.lineEdit_22.setText(str(0))
         self.lineEdit_23.setText(str(0))
         self.lineEdit_24.setText(str(0))
 
-        self.lineEdit_25.setText(str(1))
-        self.lineEdit_26.setText(str(2))
-        self.lineEdit_27.setText(str(3))
-        self.lineEdit_28.setText(str(4))
+        self.lineEdit_25.setText(str(0))
+        self.lineEdit_26.setText(str(1))
+        self.lineEdit_27.setText(str(2))
+        self.lineEdit_28.setText(str(3))
         self.lineEdit_29.setText(str(1))
         self.lineEdit_30.setText(str(1))
         self.lineEdit_31.setText(str(1))
         self.lineEdit_32.setText(str(1))
 
-        self.lineEdit_33.setText(str(0))
-        self.lineEdit_34.setText(str(30))
+        self.lineEdit_33.setText(str(-10))
+        self.lineEdit_34.setText(str(10))
         self.lineEdit_35.setText(str(0.000001))
 
         self.retranslateUi(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
-
-        self.pushButton.clicked.connect(self.bie)
-
+        self.pushButton.clicked.connect(self.bie)#通过点击pushButton触发bie函数
         timer = QtCore.QTimer(MainWindow)  # 创建一个QTimer计时器对象
         timer.timeout.connect(self.showtime)  # 发射timeout信号，与自定义槽函数关联
-        timer.start()  # 启动计
+        timer.start()  # 启动计时
 
 
     def retranslateUi(self, MainWindow):
@@ -606,10 +747,16 @@ class Ui_MainWindow(object):
         self.label_10.setText(_translate("MainWindow", "  x"))
         self.label_11.setText(_translate("MainWindow", "  x"))
         self.label_12.setText(_translate("MainWindow", "  x"))
+        
+        self.label_30.setText(_translate("MainWindow", "  x"))
+        self.label_31.setText(_translate("MainWindow", "  x"))
+        self.label_32.setText(_translate("MainWindow", " xcosx"))
+        self.label_33.setText(_translate("MainWindow", "xexp(x)"))
+
         self.label_13.setText(_translate("MainWindow", " cosx"))
         self.label_14.setText(_translate("MainWindow", " lnx"))
         self.label_15.setText(_translate("MainWindow", " xsinx"))
-        self.label_16.setText(_translate("MainWindow", " exp(x）"))
+        self.label_16.setText(_translate("MainWindow", " exp(x)"))
         self.label_17.setText(_translate("MainWindow", "<html><head/><body><p>    方程求解要求设置</p></body></html>"))
         self.label_19.setText(_translate("MainWindow", "结束：b"))
         self.label_20.setText(_translate("MainWindow", "起始：a"))
@@ -643,8 +790,10 @@ class Ui_MainWindow(object):
                 para6 = float(self.lineEdit_22.text())
                 para7 = float(self.lineEdit_23.text())
                 para8 = float(self.lineEdit_24.text())
-
-                # print(para1 * x,para2,para3,para8)
+                para9 = float(self.lineEdit_36.text())
+                para10 = float(self.lineEdit_37.text())
+                para11 = float(self.lineEdit_40.text())
+                para12 = float(self.lineEdit_41.text())
 
                 id1 = float(self.lineEdit_25.text())
                 id2 = float(self.lineEdit_26.text())
@@ -652,18 +801,26 @@ class Ui_MainWindow(object):
                 id4 = float(self.lineEdit_28.text())
                 id5 = float(self.lineEdit_29.text())
                 id6 = float(self.lineEdit_30.text())
-                id7 = float(self.lineEdit_31.text())
+                id7 = float(self.lineEdit_31.text()) 
                 id8 = float(self.lineEdit_32.text())
+                id9 = float(self.lineEdit_38.text())
+                id10 = float(self.lineEdit_39.text())
+                id11= float(self.lineEdit_42.text()) 
+                id12 = float(self.lineEdit_43.text())
 
+                if para6==0:#含有对数项的系数
                 # print(id1,id2,id3,id4,id5,id6,id7,id8)
-                return para1 * x ** id1 + para2 * x ** id2 + para3 * x ** id3 + para4 * x ** id4 + para5 * (
-                            x * np.sin(x)) ** id5 +  para6*np.log(x)**id6+para7 * np.exp(x) ** id7 + para8 * np.cos(x) ** id8
-
+                    return para1 * x ** id1 + para2 * x ** id2 + para3 * x ** id3 + para4 * x ** id4 + para5 * (
+                            x * np.sin(x)) ** id5 +  para7 * np.exp(x) ** id7 + para8 * np.cos(x) ** id8+para9 * x ** id9 + para10 * x ** id10+para11 *x* np.cos(x) ** id11 + para12*x * np.exp(x) ** id12
+                else:
+                    return para1 * x ** id1 + para2 * x ** id2 + para3 * x ** id3 + para4 * x ** id4 + para5 * (
+                            x * np.sin(x)) ** id5 +  para7 * np.exp(x) ** id7 + para8 * np.cos(x) ** id8+para9 * x ** id9 + para10 * x ** id10+para11 *x* np.cos(x) ** id11 + para12*x * np.exp(x) ** id12
+                  
             a = float(self.lineEdit_33.text())  #
             b = float(self.lineEdit_34.text())
 
             esp = float(self.lineEdit_35.text())
-            plt.figure(figsize=(16, 8), num="收敛过程图")
+            plt.figure(figsize=(16, 8), num="绘制函数曲线")
             x = np.linspace(a, b, 300)
             y = f(x)
             plt.plot(x, y, lw=2, color="b", label="y")  # 绘制函数曲线
@@ -723,12 +880,12 @@ class Ui_MainWindow(object):
                 print("x{}={:.5f}".format(i, s1))
 
             num = len(sol1)
-            if num >= 18:
+            if num >= 16:
                 sol = sol1
             else:
-                sol = np.zeros(18)
-                sol[0:num - 1] = sol1[0:num - 1]
-
+                sol = np.zeros(16)
+                sol[0:num ] = sol1[0:num ]
+            print("sol",sol1)
             self.lineEdit.setText(str(int(100000 * sol[0] + 0.5) / 100000))
             self.lineEdit_2.setText(str(int(100000 * sol[1] + 0.5) / 100000))
             self.lineEdit_3.setText(str(int(100000 * sol[2] + 0.5) / 100000))
@@ -737,7 +894,6 @@ class Ui_MainWindow(object):
             self.lineEdit_6.setText(str(int(100000 * sol[5] + 0.5) / 100000))
             self.lineEdit_7.setText(str(int(100000 * sol[6] + 0.5) / 100000))
             self.lineEdit_8.setText(str(int(100000 * sol[7] + 0.5) / 100000))
-
             self.lineEdit_9.setText(str(int(100000 * sol[8] + 0.5) / 100000))
             self.lineEdit_10.setText(str(int(100000 * sol[9] + 0.5) / 100000))
             self.lineEdit_11.setText(str(int(100000 * sol[10] + 0.5) / 100000))
@@ -746,7 +902,6 @@ class Ui_MainWindow(object):
             self.lineEdit_14.setText(str(int(100000 * sol[13] + 0.5) / 100000))
             self.lineEdit_15.setText(str(int(100000 * sol[14] + 0.5) / 100000))
             self.lineEdit_16.setText(str(int(100000 * sol[15] + 0.5) / 100000))
-
             # print(f(1))
             # root1=int(f(1)*100000+0.5)/100000
             # self.lineEdit.setText(str(root1))
