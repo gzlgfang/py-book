@@ -11,7 +11,7 @@ cv2.namedWindow("Image4",cv2.WINDOW_NORMAL)
 
 img1=cv2.imread("jianghua.jpg")
 img2=cv2.imread("starflower.jpg")
-img3=cv2.imread("insect.png")
+img3=cv2.imread("g:\qm.PNG")
 img4=cv2.imread("insect.png",flags=0)
 
 

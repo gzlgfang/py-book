@@ -14,10 +14,11 @@ plt.rcParams['ytick.direction'] = 'in'
 mpl.rcParams["font.size"] = 16#设置字体大小
 #img=cv2.imread("insect.png",flags=0)
 #img=cv2.cvtColor(cv2.imread("heflower.jpg"),cv2.COLOR_BGR2GRAY)
-img=cv2.imread("heflower.jpg",0)
+#img=cv2.imread("heflower.jpg",0)
+img=cv2.imread("g:\qm2.png",0)
 hist=cv2.calcHist([img],[0],None,[256],[0,255])
 plt.plot(hist,color="b",lw=2)
-TR=180
+TR=170
 plt.figure()
 ret1,img1 = cv2.threshold(img,TR,255,cv2.THRESH_BINARY)
 ret2,img2 = cv2.threshold(img,TR,255,cv2.THRESH_BINARY_INV)

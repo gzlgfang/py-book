@@ -1,9 +1,9 @@
 function nlp2021flg
 clear all
 clc
-k0 = [0.01  0.01 ];         % ²ÎÊı³õÖµ
-lb = [0  0  ];                   % ²ÎÊıÏÂÏŞ
-ub = [100  100 ];    % ²ÎÊıÉÏÏŞ
+k0 = [0.01  0.01 ];         % å‚æ•°åˆå€¼
+lb = [0  0  ];                   % å‚æ•°ä¸‹é™ 
+ub = [100  100 ];    % å‚æ•°ä¸Šé™
 C1 = [7.31185	1.88464	 0    	0 ];
 C2 = [6.9822	2.2737	0	   0];
 C3 = [6.5934	2.6423	0	   0 ];
@@ -72,10 +72,10 @@ yexp4 =data4(:,2:5)
 
 
 
-% yexp: ÊµÑéÊı¾İ[CA	CB	CC CD]
-% Ê¹ÓÃº¯Êıfmincon()½øĞĞ²ÎÊı¹À¼Æ
+% yexp: å®éªŒæ•°æ®[CA	CB	CC CD]
+% ä½¿ç”¨å‡½æ•°fmincon()è¿›è¡Œå‚æ•°ä¼°è®¡
 [k,fval,flag] = fmincon(@ObjFmc,k0,[],[],[],[],lb,ub,[],[],C1,C2,C3,C4,yexp1,yexp2,yexp3,yexp4);
-fprintf('\nÊ¹ÓÃº¯Êıfmincon()¹À¼ÆµÃµ½µÄ²ÎÊıÖµÎª:\n')
+fprintf('\nä½¿ç”¨å‡½æ•°fmincon()ä¼°è®¡å¾—åˆ°çš„å‚æ•°å€¼ä¸º:\n')
 fprintf('\tk1 = %.6f\n',k(1))
 fprintf('\tk2 = %.6f\n',k(2))
 fprintf('  The sum of the squares is: %.3e\n\n',fval)
@@ -89,9 +89,9 @@ disp(yexp1)
 ty=yexp1(:,1)+yexp1(:,2)+yexp1(:,3)+yexp1(:,4)
 plot(tspan,yexp1(:,1),'*b',tspan,yexp1(:,2),'vb',tspan,yexp1(:,3),'^b',tspan,yexp1(:,4),'+b',tspan,ty,'ob-','linewidth',2);
 hold on;
-plot(tspan,C(:,1),'r-',tspan,C(:,2),'k-',tspan,C(:,3),'m-',tspan,C(:,4),'g-','linewidth',2);% »æÍ¼
-xlabel('Ê±¼ä (min)');
-ylabel('Å¨¶È (kmol/m^3)');
+plot(tspan,C(:,1),'r-',tspan,C(:,2),'k-',tspan,C(:,3),'m-',tspan,C(:,4),'g-','linewidth',2);% ç»˜å›¾
+xlabel('æ—¶é—´ (min)');
+ylabel('æµ“åº¦ (kmol/m^3)');
 legend('A','B','C','D');grid on
 figure
 
@@ -104,9 +104,9 @@ disp(yexp2)
 ty=yexp2(:,1)+yexp2(:,2)+yexp2(:,3)+yexp2(:,4)
 plot(tspan,yexp2(:,1),'*b',tspan,yexp2(:,2),'vb',tspan,yexp2(:,3),'^b',tspan,yexp2(:,4),'+b',tspan,ty,'ob-','linewidth',2);
 hold on;
-plot(tspan,C(:,1),'r-',tspan,C(:,2),'k-',tspan,C(:,3),'m-',tspan,C(:,4),'g-','linewidth',2);% »æÍ¼
-xlabel('Ê±¼ä (min)');
-ylabel('Å¨¶È (kmol/m^3)');
+plot(tspan,C(:,1),'r-',tspan,C(:,2),'k-',tspan,C(:,3),'m-',tspan,C(:,4),'g-','linewidth',2);% ç»˜å›¾
+xlabel('æ—¶é—´ (min)');
+ylabel('æµ“åº¦ (kmol/m^3)');
 legend('A','B','C','D');hold on;grid on
 
 
@@ -119,9 +119,9 @@ figure
 ty=yexp3(:,1)+yexp3(:,2)+yexp3(:,3)+yexp3(:,4)
 plot(tspan,yexp3(:,1),'*b',tspan,yexp3(:,2),'vb',tspan,yexp3(:,3),'^b',tspan,yexp3(:,4),'+b',tspan,ty,'ob-','linewidth',2);
 hold on;
-plot(tspan,C(:,1),'r-',tspan,C(:,2),'k-',tspan,C(:,3),'m-',tspan,C(:,4),'g-','linewidth',2);% »æÍ¼
-xlabel('Ê±¼ä (min)');
-ylabel('Å¨¶È (kmol/m^3)');
+plot(tspan,C(:,1),'r-',tspan,C(:,2),'k-',tspan,C(:,3),'m-',tspan,C(:,4),'g-','linewidth',2);% ç»˜å›¾
+xlabel('æ—¶é—´ (min)');
+ylabel('æµ“åº¦ (kmol/m^3)');
 legend('A','B','C','D');hold on;grid on
 
 
@@ -133,9 +133,9 @@ figure
 ty=yexp4(:,1)+yexp4(:,2)+yexp4(:,3)+yexp4(:,4)
 plot(tspan,yexp4(:,1),'*b',tspan,yexp4(:,2),'vb',tspan,yexp4(:,3),'^b',tspan,yexp4(:,4),'+b',tspan,ty,'ob-','linewidth',2);
 hold on;
-plot(tspan,C(:,1),'r-',tspan,C(:,2),'k-',tspan,C(:,3),'m-',tspan,C(:,4),'g-','linewidth',2);% »æÍ¼
-xlabel('Ê±¼ä (min)');
-ylabel('Å¨¶È (kmol/m^3)');
+plot(tspan,C(:,1),'r-',tspan,C(:,2),'k-',tspan,C(:,3),'m-',tspan,C(:,4),'g-','linewidth',2);% ç»˜å›¾
+xlabel('æ—¶é—´ (min)');
+ylabel('æµ“åº¦ (kmol/m^3)');
 legend('A','B','C','D');hold on;grid on
 
 
@@ -166,6 +166,6 @@ f=(f1+f2+f3+f4)/(4*24);
 function dC =KDEs(t,C,k)
 dCA=-k(2)*C(1)*C(2);
 dCB =-k(1)*C(2)- k(2)*C(1) *C(2);
-dCC =k(1)*C(2) + k(2)*C(1) *C(2);
-dCD= k(2)*C(1) *C(2);
+dCD =k(1)*C(2) + k(2)*C(1) *C(2);
+dCC= k(2)*C(1) *C(2);
 dC = [dCA; dCB; dCC; dCD]; 

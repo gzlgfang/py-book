@@ -15,17 +15,19 @@ mpl.rcParams["font.style"] = "oblique"#设置字体风格，倾斜与否
 mpl.rcParams["font.weight"] ="normal"# "normal",=500，设置字体粗细
 font1 = {'family': 'Times New Roman'} 
 tspan=np.linspace(0,10,101)#确定自变量范围
-y_tspan = np.zeros((2, tspan.size))
+y_tspan = np.zeros((2, tspan.size))#确定应变量初值
 #定义微分方程,注意和程序08-bc_ode中的不同，自变量t放在前面
-def dy(t,y):#已知微分方程y1的两个端点值为40和80，但不知y2的开始端点值
+def dy(t,y):#已知微分方程y1的两个端点值为40和80，但不知y2的开始端点值，注意和ode定义方程dy(y,t)的不同
     y1,y2=y[0],y[1]
     dy1=y2
     dy2=0.05*(1+t**2)*y1+2
     return np.vstack((dy1, dy2))
-#定义边界条件
+#定义边界条件#
 def BC(ya, yb):
     f1,f2=40,80
     return np.array([ya[1]-f1, yb[0]-f2])
+    #return np.array([20*ya[1]-f1*ya[0], 40*yb[0]-f2*yb[1]])
+    #可以其他边界条件，ya表示左边界，yb表示右边界，以bc=0的形式表示边界条件
 sol = solve_bvp(dy, BC,tspan, y_tspan)
 y=sol.sol(tspan)[0] 
 dyy=sol.sol(tspan)[1]

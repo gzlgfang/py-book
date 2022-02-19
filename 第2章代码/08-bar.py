@@ -72,7 +72,7 @@ ax[1,1].legend()
 ax[1,1].set_title("同类数据水平比较",fontsize=16)
 #柱体上端标注数据
 x=np.arange(0,6)
-height=[18,5,32,21,19,7]
+height=[18,5,32,21,19,72]
 align,color, tick_label, alpha, width,bottom, edgecolor, lw,ls,hatch,label="edge","pink",x,0.5,0.8,0.5,"blue",3,"-","////","G"
 title="柱体上端标注数据"
 ax_draw(ax[1,2],x,height,align,color, tick_label, alpha, width,bottom, edgecolor, lw,ls,hatch,label) 

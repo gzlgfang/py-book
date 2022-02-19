@@ -808,11 +808,11 @@ class Ui_MainWindow(object):
                 id11= float(self.lineEdit_42.text()) 
                 id12 = float(self.lineEdit_43.text())
 
-                if para6==0:#含有对数项的系数
+                if para6==0:
                 # print(id1,id2,id3,id4,id5,id6,id7,id8)
                     return para1 * x ** id1 + para2 * x ** id2 + para3 * x ** id3 + para4 * x ** id4 + para5 * (
                             x * np.sin(x)) ** id5 +  para7 * np.exp(x) ** id7 + para8 * np.cos(x) ** id8+para9 * x ** id9 + para10 * x ** id10+para11 *x* np.cos(x) ** id11 + para12*x * np.exp(x) ** id12
-                else:
+                else:#含有对数项的系数
                     return para1 * x ** id1 + para2 * x ** id2 + para3 * x ** id3 + para4 * x ** id4 + para5 * (
                             x * np.sin(x)) ** id5 +  para7 * np.exp(x) ** id7 + para8 * np.cos(x) ** id8+para9 * x ** id9 + para10 * x ** id10+para11 *x* np.cos(x) ** id11 + para12*x * np.exp(x) ** id12
                   

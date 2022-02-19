@@ -34,7 +34,7 @@ def title_and_lablim(ax, title):#常规坐标轴特性设置，可通用
 fig=plt.figure()
 ax = plt.subplot(131,projection='3d' )
 p = ax.plot_surface(X, Y, Z, rstride=1, cstride=1, linewidth=0, antialiased=False, norm=norm, cmap=mpl.cm.copper)
-ax.contour(X, Y, Z, zdir='z', offset=0, norm=norm, cmap=mpl.cm.copper)
+#ax.contour(X, Y, Z, zdir='z', offset=0, norm=norm, cmap=mpl.cm.copper)
 fig.colorbar(p, ax=ax, shrink=0.8)
 title_and_lablim(ax, "plot_surface+z_contour")
 
