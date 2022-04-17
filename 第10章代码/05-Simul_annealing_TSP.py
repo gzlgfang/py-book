@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 # 05-Simulated annealing TSP
+#最优计算结果153.77
 from typing import Type
 from matplotlib import colors, markers
 import numpy as np
@@ -30,12 +31,8 @@ T0 = 2800  # 初始温度
 Tend = 0.0006  # 最终温度
 L = 380  # 链长，每次稳定温度下优化次数
 q = 0.93  # 温度下降速率
-
-
 def fun(x):
     return T0 * q ** x[0] - Tend
-
-
 T_num = int(optimize.fsolve(fun, [30]) + 2)  # 计算退火次数
 
 # 读入城市坐标
@@ -175,7 +172,7 @@ def Newpath(LJ):
         else:
             r_min, r_max = r1, r2
         if r_min == 0:
-            r_min = 1
+            r_min = 1#轨迹逆转
         LJ2[r_min : r_max + 1] = LJ[r_max : r_min - 1 : -1]
     return LJ2
 

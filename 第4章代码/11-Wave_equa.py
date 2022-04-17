@@ -1,4 +1,4 @@
-# 09-Wave_equa.py   波动方程
+#11-Wave_equa.py   波动方程
 import xdrlib
 import matplotlib as mpl
 import matplotlib.pyplot as plt

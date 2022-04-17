@@ -1,4 +1,4 @@
-# 08-heat_trans.py
+# 10-heat_trans.py
 import matplotlib as mpl
 import matplotlib.pyplot as plt
 import numpy as np

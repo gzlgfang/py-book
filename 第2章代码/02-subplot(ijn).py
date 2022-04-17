@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 mpl.rcParams["font.sans-serif"]=["SimHei"]#保证显示中文字
 mpl.rcParams["axes.unicode_minus"]=False
-plt.figure(figsize=(8,16),num="subplot(ijn)布局")
+fig=plt.figure(figsize=(8,16),num="subplot(ijn)布局")
 axes_num=[241,242,243,244,245,246,247,248]#布局图号列表
 for i,axn in enumerate(axes_num):
     ax=plt.subplot(axn)#将布局图号为axn的子图赋给ax,以便后续用ax调用

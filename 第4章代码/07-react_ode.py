@@ -25,19 +25,19 @@ E = np.array([1.3e5, 1.6e5, 8.0e4, 1.2e5])  # ;% 活化能, kJ/kmol
 T = 230 + 273.15
 global k
 k = k0 * np.exp(-E / (R * T))  # ;
-print(k)
+print("k=",k)
 # y1,y2,y3,y3=c_A,c_B,c_C,c_D,
 def dy(y, t):
     y1, y2, y3, y4 = y[0], y[1], y[2], y[3]
     dy1 = -(k[0] + k[1]) * y1
     dy2 = k[0] * y1 - k[2] * y2
     dy3 = k[1] * y1 - k[3] * y3
-    dy4 = k[2] * y2 + k[3] * y2
+    dy4 = k[2] * y2 + k[3] * y3
     return [dy1, dy2, dy3, dy4]
 
 
 y0 = [2, 0, 0, 0]  # 确定初始状态
-tspan = np.linspace(0, 10000, 10001)  # 确定自变量范围
+tspan = np.linspace(0, 30000, 30001)  # 确定自变量范围
 cbmax = []
 timemax = []
 temper = []
@@ -72,7 +72,7 @@ plt.yticks()
 
 print(sol[:, 1])
 
-plt.figure(figsize=(8, 6), dpi=80)  # 创建一个 8 * 6 点（point）的图，并设置分辨率为 80
+fig=plt.figure(figsize=(8, 6), dpi=80)  # 创建一个 8 * 6 点（point）的图，并设置分辨率为 80
 # 绘制温度曲线，使用红色、连续的、宽度为 2（像素）的线条
 plt.plot(tspan, sol[:, 0], label=r"$c_{A}$", color="red", linewidth=3, linestyle="-")
 # 绘制温度变化速率曲线，使用绿色的、虚线、宽度为 2 （像素）的线条

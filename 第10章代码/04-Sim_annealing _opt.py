@@ -56,7 +56,7 @@ def Change2_10(LJ, lb, ub, D):  # 进制转化为10进制，能区分变量数�
         temp1 = 0
         for k in range(var2_num):
             temp0 = temp0 + 2 ** (var2_num - k - 1) * LJ[i * var2_num + k]
-            temp1 = temp1 + 2 ** k
+            temp1 = temp1 + 2**k
         temp0 = lb + temp0 / temp1 * (ub - lb)
         x[i] = temp0
     return x.T
@@ -69,7 +69,7 @@ def fun(x):  # 定义函数
     # return -20*np.exp(-0.2*np.sqrt(x1**2+x2**2))+20+np.exp(1)-np.exp(0.5*(np.cos(2*np.pi*x1)+np.cos(2*np.pi*x2)))
     # return   5+(6-x1)**2+(8-x2)**2
     return (
-        30 + x1 ** 2 + x2 ** 2 - 10 * (np.cos(2 * np.pi * x1) + np.cos(2 * np.pi * x2))
+        30 + x1**2 + x2**2 - 10 * (np.cos(2 * np.pi * x1) + np.cos(2 * np.pi * x2))
     )
 
 

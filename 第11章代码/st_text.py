@@ -1,0 +1,27 @@
+import streamlit as st
+st.title("Python编程初学入门到实践目录")
+col1,col2,col3=st.columns(3)
+with col1:
+    st.header("第1章 Python 入门基础")
+    st.subheader("1.1 Python 概述")
+    st.text("1.1.1发展历史")
+    st.text("1.1.2 安装与启动")
+    st.text("1.1.3运行与编码模式")
+    st.text("1.1.4 变量与常量")
+    st.latex("f(x)=a*cosbx+c")
+with col2:
+    st.header("第2章 数据图形绘制")
+    st.subheader("2.2 布局设置")
+    st.text("2.2.1 单个axes布局")
+    st.text("2.2.2 subplot(ijn) 布局")
+    st.text("2.2.3 subplots布局")
+    st.text("2.2.4 fig.add_axes()布局")
+    st.write("参数设置:")
+with col3:
+    st.header("第3章 过程方程求解")
+    st.subheader("3.1 超越方程求解")
+    st.text("3.1.1 基本方法")
+    st.text("3.1.2 编程求解")
+    st.text("3.1.3 库函数求解")
+    st.text("3.1.4 实例求解分析")
+    st.markdown("目录导航")

@@ -14,22 +14,22 @@ mpl.rcParams["font.size"] = 24  # 设置字体大小
 mpl.rcParams["font.style"] = "oblique"  # 设置字体风格，倾斜与否
 mpl.rcParams["font.weight"] = "normal"  # "normal",=500，设置字体粗细
 
-
+a=2
 def dy(y, x):  # 注意是参数y在前面
     # ddy =y**2*np.cos(x)
-    ddy = np.cos(x)
+    ddy = a*np.cos(x)
     # ddy=np.cos(6*x)+0.8*np.sin(6*x)
     return ddy
 
 
-x = np.arange(0, 10.55, 0.01)  # 确定自变量范围
+x = np.arange(0, 10.5, 0.1)  # 确定自变量范围
 y0 = 0  # 确定初始状态
 result = odeint(dy, y0, x)
 ddy = dy(result[:], x[:])
-print(ddy)
+print(ddy[3:13])
 # for i in range(int(len(x)/2)):
 # print(f"x={2*(i+1)*0.05:.2f},y={result[2*(i+1)-1,0]:.5f}")
-print(result.T)
+#print(result.T)
 plt.figure(figsize=(8, 6), dpi=80)  # 创建一个 8 * 6 点（point）的图，并设置分辨率为 80
 # 绘制温度曲线，使用红色、连续的、宽度为 2（像素）的线条
 plt.plot(x, result[:], label="y", color="red", linewidth=2, linestyle="-")

@@ -41,7 +41,7 @@ res=op.minimize(fun,k0,method='L-BFGS-B',bounds=[(0.01,10),(0.01,10),(0.01,10)])
 k=res.x
 j=res.fun
 
-print(f'辨识参数：k_1={k[0]:.5f}, k_2={k[1]:.5f}, k_3={k[2]:.5f}')
+print(f'辨识参数:k_1={k[0]:.5f}, k_2={k[1]:.5f}, k_3={k[2]:.5f}')
 
 #图形绘制
 #全局设置字体

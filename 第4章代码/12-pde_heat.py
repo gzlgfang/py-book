@@ -1,4 +1,4 @@
-# 11-pde_heat.py
+# 12-pde_heat.py
 import matplotlib as mpl
 import matplotlib.pyplot as plt
 import numpy as np

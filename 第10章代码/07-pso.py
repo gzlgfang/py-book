@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 
 """
-说明：PSO的函数写法
-来源：MATLAB 智能算法
-作者：scarlet
-备注：naive PSO
+说明:PSO的函数写法
+来源:MATLAB 智能算法
+作者:scarlet
+备注:naive PSO
 """
 import numpy as np
 
@@ -77,19 +77,20 @@ def PSO(fitness, N, c1, c2, w, M, D):
 def func(x):
     # x1=x[0]
     # x2=x[1]
-    # x,y,z=x[0],x[1],x[2]
-    x, y = x[0], x[1]
-    f = lambda x: x ** 2 - 2 * x + y + 1000 * (min(4 - 4 * x ** 2 - y ** 2, 0)) ** 2
-    # f=lambda x:(x**0.8+x*y**0.7+z**0.8-1)**2+(x**1.2*y+y**0.9+x**0.5*z-1)**2+(x+y**0.4*z**0.5+z**1.2-1)**2
+    x,y,z=x[0],x[1],x[2]
+    # x, y = x[0], x[1]
+    #str=x**2 - 2 * x + y + 1000 * (min(4 - 4 * x**2 - y**2, 0)) ** 2
+    # f = lambda x: str
+    f=lambda x:(x**0.8+x*y**0.7+z**0.8-1)**2+(x**1.2*y+y**0.9+x**0.5*z-1)**2+(x+y**0.4*z**0.5+z**1.2-1)**2
     # f=lambda x:(x[0]-10)**2+(x[1]-16)**2
     # f = lambda x: x1**2 +2*x1 - 6+x2**2 +2*x2
     # f=lambda x:30+x1**2 + x2**2-10*(np.cos(2*np.pi*x1)+np.cos(2*np.pi*x2))
     # f=lambda x:np.sin(np.sqrt(x1**2 + x2**2))/np.sqrt(x1**2 + x2**2)+np.exp((np.cos(2*np.pi*x1)+np.cos(2*np.pi*x2))/2)-np.exp(1)
-    return np.sum(f(x))  # 求最大变成求最小，前面加负号
+    return f(x)  # 求最大变成求最小，前面加负号
 
 
 # if __name__ == '__main__':
-PSO(func, 50, 1.5, 2.5, 0.5, 100, 2)
+PSO(func, 50, 1.5, 2.5, 0.5, 100, 3)
 plt.xlabel("迭代次数")
 plt.ylabel("目标函数值")
 
