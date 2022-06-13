@@ -20,8 +20,12 @@ def dy(y, x):
     return ddy
 
 
-x = np.arange(0, 300.1, 0.5)  # 确定自变量范围
-y0 = 2000  # 确定初始状态
+#x = np.arange(0, 300.1, 0.5)  # 确定自变量范围
+#y0 = 2000  # 确定初始状态
+#条件反转，已知某一时刻，求0时刻
+x = np.arange(300, -0.1, -0.5)  # 确定自变量范围
+y0 = 302.0521  # 确定初始状态
+
 result = odeint(dy, y0, x)
 ddy = dy(result[:, 0], x[:])
 print(ddy)

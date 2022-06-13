@@ -49,8 +49,7 @@ plt.figure()
 plt.imshow(R_image3)
 plt.figure()
 plt.imshow(R_image1)
-
 plt.show()
-
+print(R_image4)
 
 

@@ -15,14 +15,14 @@ mpl.rcParams["font.weight"] = "normal"  # "normal",=500，设置字体粗细
 # 初始化参数设置
 h = 0.01
 x00 = 0
-y0 = 1
+y0 = 2
 xt = 10.0
 n = int((xt - x00) / h)
 
 
 def dy(x, y):
     # ddy = y**2 *np.cos(x)
-    ddy = np.cos(6 * x) + 0.8 * np.sin(6 * x)
+    ddy = 4*np.cos(2 * x) + 0.8 * np.sin(3 * x)
     return ddy
 
 def rgkt(y0, x0):  # 四阶龙格—库塔法
@@ -35,17 +35,24 @@ def rgkt(y0, x0):  # 四阶龙格—库塔法
 
 ddy = []
 result = []
+
+k1= dy(x00, y0)
+ddy.append(k1)
+result.append(y0)
+#初始点数据记录
+
 for i in range(n):
     x0 = h * i + x00
     y = rgkt(y0, x0)
-    k1 = dy(x0, y0)
+    k1 = dy(x0+h, y)
     ddy.append(k1)
     y0 = y
     result.append(y0)
-for i in range(int(n / 2)):
-    print(f"x={2*(i+1)*h:.2f},y={result[2*(i+1)-1]:.5f}")
+    #新点数据添加
+for i in range(int(n / 2)+1):
+    print(f"x={2*(i)*h:.2f},y={result[2*(i)]:.5f}")
 plt.figure(figsize=(8, 6), dpi=80)  # 创建一个 8 * 6 点（point）的图，并设置分辨率为 80
-X = np.linspace(0, xt, n, endpoint=True)
+X = np.linspace(0, xt, n+1, endpoint=True)
 # 绘制温度曲线，使用红色、连续的、宽度为 2（像素）的线条
 plt.plot(X, result, label="y", color="red", linewidth=2, linestyle="-")
 # 绘制温度变化速率曲线，使用绿色的、虚线、宽度为 2 （像素）的线条

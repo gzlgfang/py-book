@@ -235,7 +235,7 @@ elif add_selectbox == "指数":
     plt.grid(which='both', axis='both', color='r', linestyle=':', linewidth=1)
     plt.text(min(xx)+0.1*(max(xx)-min(xx)),0.9*(max(yy)-min(yy)+min(yy)),f'均方误差={eer:.5f}' )
     alf=(int(alf_opt[1]*10000+0.5)/10000)
-    plt.text(min(xx)+0.1*(max(xx)-min(xx)),0.8*(max(yy)-min(yy)+min(yy)),f'拟合方程：y={alf_opt[0]:.5f}e$^{{{alf}}}$x')#{}
+    plt.text(min(xx)+0.1*(max(xx)-min(xx)),0.8*(max(yy)-min(yy)+min(yy)),f'拟合方程：y={alf_opt[0]:.5f}e$^{{{alf}x}}$')#{}
     plt.xlim(min(xx)-0.5,max(xx)+0.5)#设置x轴范围
     plt.ylim(min(yy)-1,max(yy)+1)
     plt.legend()
@@ -248,7 +248,7 @@ elif add_selectbox == "幂函数":
         return  a*x**b
     alf_opt,alf_cov=op.curve_fit(func,xdata,y_real)
 
-    st.write("拟合方程：y=",int(10000*alf_opt[0]+0.5)/10000,"x^",int(10000*alf_opt[1]+0.5)/10000,"x")
+    st.write("拟合方程：y=",int(10000*alf_opt[0]+0.5)/10000,"x^",int(10000*alf_opt[1]+0.5)/10000)
 
     
     fig=plt.figure(num="拟合曲线绘制",figsize=(8,8))

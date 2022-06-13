@@ -36,16 +36,20 @@ def rgkt(y0, x0):
 
 ddy = []
 result = []
+
+k1= dy(x00, y0)
+ddy.append(k1)
+result.append(y0)
 for i in range(n):
     x0 = h * i + x00
     y = rgkt(y0, x0)
-    k1 = dy(x0, y0)
+    k1 = dy(x0+h, y)
     ddy.append(k1)
     y0 = y
     result.append(y0)
 print(result[:])
 plt.figure(figsize=(8, 6), dpi=80)  # 创建一个 8 * 6 点（point）的图，并设置分辨率为 80
-x = np.linspace(0, xt, 340, endpoint=True)
+x = np.linspace(0, xt, 341, endpoint=True)
 # 绘制温度曲线，使用红色、连续的、宽度为 2（像素）的线条
 plt.plot(x, result, label="T", color="red", linewidth=2, linestyle="-")
 # 绘制温度变化速率曲线，使用绿色的、虚线、宽度为 2 （像素）的线条

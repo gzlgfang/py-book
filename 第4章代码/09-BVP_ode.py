@@ -46,7 +46,7 @@ plt.xticks(np.linspace(0, 10, 11, endpoint=True))  # 设置横轴刻度
 plt.xlim(0, 10)  # 设置x轴的上下限
 plt.ylim(-120, 180)
 plt.xlabel("x", font1, color="blue")  # 设置x轴描述信息
-plt.ylabel("y,dy", color="red")  # 设置y轴描述信息
+plt.ylabel("y,dy", font1,color="red")  # 设置y轴描述信息
 plt.yticks(np.linspace(-120, 180, 16))  # 设置纵轴刻度
 plt.legend()
 plt.grid(True)
