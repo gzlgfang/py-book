@@ -23,8 +23,9 @@ r=3*x
 ax2.plot(x,r,c="blue",lw=2,ls=":",marker="*",mfc="r",ms=0.1)#mfc表示marker颜色，ms表示大小
 ax2.set_title("渐开线极坐标绘制",fontsize=12)  
 #随机折线绘制
-x = np.linspace(0.0, 2*np.pi, 16, endpoint=False)
+x = np.linspace(0.0, 2*np.pi, 17 )
 r = 20*np.random.rand(16)
+r= np.concatenate((r, [r[0]]))
 ax3.plot(x, r, color="b", linewidth=2, marker="*", mfc="r", ms=20)
 ax3.set_title("随机折线极坐标绘制",fontsize=12)  
 

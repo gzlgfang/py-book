@@ -1,4 +1,4 @@
-#34-3D_draw.py
+#37-3D_draw.py
 #3D图形绘制
 import numpy as np
 import matplotlib.pyplot as plt
@@ -46,6 +46,5 @@ ax[2].contour(X, Y, Z, zdir='y', offset=5, norm=norm, cmap=mpl.cm.copper)
 ax[2].contour(X, Y, Z, zdir='x', offset=-5, norm=norm, cmap='Purples')
 title_and_lablim(ax[2], "3D_contour")
 fig.tight_layout()
-fig.savefig("ch2-34-3D_draw.png", dpi=400)
-plt.legend()
+fig.savefig("ch2-37-3D_draw.png", dpi=400)
 plt.show() 

@@ -12,6 +12,8 @@ def f3(x):
     return  x**0.5-1.74+2*np.log10(0.1+18.7*x**0.5/5000) #摩擦系数方程
 x = syp.symbols('x')
 syp_sol0=syp.solve(3*syp.cos(x)+7.0 *syp.sin(x)-4,x)#可解析求解的超越方程
+#syp_sol0=syp.solve(x**7+x**8+x**9,x)#可解析
+#print("x^99=",syp_sol0[1]**99)
 syp_sol2=syp.solve(x ** 3 - 7.7 * x ** 2 + 19.2 * x - 15.3,x)
 print(f"syp_sol0={syp_sol0},syp_sol2={syp_sol2}")
 sol1=[]

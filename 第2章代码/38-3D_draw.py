@@ -49,6 +49,6 @@ ax.contour(X, Y, Z, zdir='y', offset=5, norm=norm, cmap=mpl.cm.copper)
 ax.contour(X, Y, Z, zdir='x', offset=-5, norm=norm, cmap='Purples')
 title_and_lablim(ax, "3D_contour")
 fig.tight_layout()
-fig.savefig("ch2-35-3D_draw.png", dpi=400)
+fig.savefig("ch2-38-3D_draw.png", dpi=400)
 
 plt.show() 

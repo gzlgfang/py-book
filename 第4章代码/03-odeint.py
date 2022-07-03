@@ -17,7 +17,8 @@ mpl.rcParams["font.weight"] = "normal"  # "normal",=500，设置字体粗细
 #a=2
 def dy(y, x):  # 注意是参数y在前面
     # ddy =y**2*np.cos(x)
-    ddy = a*np.cos(x)
+    #ddy = a*np.cos(x)
+    ddy = a*np.sin(3*x)+0.05*x
     # ddy=np.cos(6*x)+0.8*np.sin(6*x)
     return ddy
 
@@ -27,7 +28,6 @@ def dy(y, x):  # 注意是参数y在前面
 #x = np.arange(0,10.1, 0.1)  # 确定自变量范围
 
 x = np.linspace(0, 10, 101)
-
 y0 =0  # 确定初始状态
 y_left=2
 y_right=6
@@ -47,8 +47,6 @@ y_right2=result2[-1]
 k = (a2 - a1) / (y_right2 -y_right1)
 a_0 = a1 + k * (y_right - y_right1)
 # print(c_0)
-
-
 while eer>=tol:
     a=a_0
     result = odeint(dy, y_left, x)
@@ -59,7 +57,7 @@ a=a_0
 result = odeint(dy, y_left, x)
 ddy = dy(result[:], x[:])
 print("a=",a[0])
-
+print("y_b=",result[-1])
 #print(ddy[3:13])
 # for i in range(int(len(x)/2)):
 # print(f"x={2*(i+1)*0.05:.2f},y={result[2*(i+1)-1,0]:.5f}")
@@ -78,9 +76,11 @@ plt.xlim(0, 10)  # 设置纵轴的上下限
 aa=int(a[0]*10000+0.5)/10000
 stra=str(aa)
 stra="a="+stra
-plt.text(4,5,stra)
+plt.text(4,7,stra)
 
-plt.text(4,6,"dy=2a*cos(x)")
+#plt.text(4,6,"dy=a*cos(x)")
+plt.text(4,8,"a*sin3x+0.05x")
+
 plt.xlabel("x", color="blue")  # 设置x轴描述信息
 plt.ylabel("y,dy", color="red")  # 设置y轴描述信息
 plt.yticks(np.linspace(-8, 10, 19))  # 设置纵轴刻度# 设置纵轴刻度
@@ -116,9 +116,10 @@ plt.ylim(min(ymin) - 1, max(ymax) + 1)  # 设置纵轴的上下限
 
 plt.xlim(0, 10)  # 设置纵轴的上下限
 stra=str(a)
-stra="a="+stra
-plt.text(4,3,stra)
-plt.text(4,2,"dy=2a*cos(x)")
+#stra="a="+stra
+#plt.text(4,3,stra)
+#plt.text(4,2,"dy=a*cos(x)")
+plt.text(4,3,"2sin3x+0.05x")
 plt.xlabel("x", color="blue")  # 设置x轴描述信息
 plt.ylabel("y,dy", color="red")  # 设置y轴描述信息
 plt.yticks(np.linspace(-4, 4, 9))  # 设置纵轴刻度# 设置纵轴刻度
@@ -136,14 +137,12 @@ plt.title("右端点确定问题")
 
 plt.figure(figsize=(8, 6), dpi=80)
 
-x = np.arange(0,10.1, 0.1)  # 确定自变量范围,左边界
-a=2
-y0=0
-result = odeint(dy, y0, x)
+x = np.arange(0,10.1, 0.1)  # 确定自变量范围,左边界，
+a,y0=2,0#赋值微分方程系数及初值
+result = odeint(dy, y0, x)#用odeint求解方程得y
 ddy = dy(result[:], x[:])
 
-plt.text(4,3,stra)
-plt.text(4,2,"dy=2a*cos(x)")
+
 plt.plot(x, result[:], label="y", color="red", linewidth=2, linestyle="-")
 # 绘制温度变化速率曲线，使用绿色的、虚线、宽度为 2 （像素）的线条
 plt.plot(x, ddy[:], label="dy/dx", color="green", linewidth=2.0, linestyle="--")
@@ -155,8 +154,9 @@ plt.ylim(min(ymin) - 1, max(ymax) + 1)  # 设置纵轴的上下限
 plt.xlim(0, 10)  # 设置纵轴的上下限
 stra=str(a)
 stra="a="+stra
-plt.text(4,3,stra)
-plt.text(4,2,"dy=2a*cos(x)")
+#plt.text(4,3,stra)
+#plt.text(4,2,"dy=a*cos(x)")
+plt.text(4,3,"2sin3x+0.05x")
 plt.xlabel("x", color="blue")  # 设置x轴描述信息
 plt.ylabel("y,dy", color="red")  # 设置y轴描述信息
 plt.yticks(np.linspace(-4, 4, 9))  # 设置纵轴刻度# 设置纵轴刻度
