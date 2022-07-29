@@ -47,7 +47,7 @@ def Bin_pop(N):  # 产生初始变量二进制数
     return LJ.astype(int)  # 需要强制转变成整数
 
 
-def Change2_10(LJ, lb, ub, D):  # 进制转化为10进制，能区分变量数目及上下限
+def Change2_10(LJ, lb, ub, D):  # 二进制转化为10进制，能区分变量数目及上下限
     N = len(LJ)  # 二进制数组大小
     var2_num = int(N / D)  # 每个变量的二进制数编码长度
     x = np.zeros(D)

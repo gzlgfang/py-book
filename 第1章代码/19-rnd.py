@@ -26,6 +26,6 @@ li=np.arange(0,10)
 print('rnd.shuffle(li):', rnd.shuffle(li))
 print('li=', li)
 # 从列表 items 中随机取出 n 个元素，但不改变原列表。
-li = [5, 6, 9, 12, 33]
-print('rnd.sample(li,5):', rnd.sample(li, 5))
+#li = [5, 6, 9, 12, 33]
+print('rnd.sample(li,5):', rnd.sample(li, 2))
 print('li=', li)
