@@ -26,16 +26,18 @@ y0 = [10, 0,0]# 确定初始状态
 tspan=np.linspace(0,5.0,11)#确定自变量范围
 #sol =odeint(dy, y0, tspan,args=(k1,k2,k3))
 #print("sol=",sol[:,0])
-def J(k1,k2,k3):
-   JJ=sum(sum((odeint(dy, y0, tspan,args=(k1,k2,k3))-C)**2))
-   return JJ
+# def J(k1,k2,k3):
+#    JJ=sum(sum((odeint(dy, y0, tspan,args=(k1,k2,k3))-C)**2))
+#    return JJ
 
 k0=np.array([0.1,0.1,0.1])
 #单纯形法优化
 def fun(x):
     k1,k2,k3=x[0],x[1],x[2]
-    sum=J(k1,k2,k3)
-    return sum
+    #sum=J(k1,k2,k3)
+    sum1=sum(sum((odeint(dy, y0, tspan,args=(k1,k2,k3))-C)**2))
+    return sum1
+
 
 res=op.minimize(fun,k0,method='L-BFGS-B',bounds=[(0.01,10),(0.01,10),(0.01,10)])
 k=res.x

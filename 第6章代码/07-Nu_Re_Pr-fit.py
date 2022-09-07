@@ -24,9 +24,9 @@ y_real=func(x,*cc)+np.random.random(99)*0.1
 #print(y_real)
 fit_cc,fit_cv=op.curve_fit(func,x,y_real)#拟合曲线curvefit方法p0=(0.2,0.2,0.2)
 print(f'c_1={fit_cc[0]:.5f},c_2={fit_cc[1]:.5f}, c_3={fit_cc[2]:.5f}')
-ydata=z=func(x,*fit_cc)
+y_data=z=func(x,*fit_cc)
 #计算绝对百分误差平均值
-abseer=np.mean(abs(y_real-ydata)/ydata)*100
+abseer=np.mean(abs(y_real-y_data)/y_data)*100
 print("abseer=",f'{abseer:.5f}',"%")
 
 #图形绘制
@@ -47,7 +47,7 @@ ax = fig.add_subplot(projection='3d')
 xx=x[0]
 yy=x[1]
 # Plot the line and scatter
-ax.scatter(xx, yy, z,s=58,color="red",label="实验数据" )
+ax.scatter(xx, yy, y_real,s=58,color="red",label="实验数据" )
 ax.plot(xx, yy, z,color="b",lw=2,label="拟合数据" )
 ax.text(2100,2,25,f'abseer={abseer:.5f}%',zdir='x')
 ax.text(2100,2,30,f'c$_1$={fit_cc[0]:.5f}, c$_2$={fit_cc[1]:.5f}, c$_3$={fit_cc[2]:.5f}',zdir='x')

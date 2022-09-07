@@ -14,6 +14,8 @@ fit_cc,fit_cv=op.curve_fit(func,x,y_real)#拟合曲线curvefit方法
 print(f'a_0={fit_cc[0]:.5f},a_1={fit_cc[1]:.5f}, a_2={fit_cc[2]:.5f}')
 ydata=z=func(x,*fit_cc)
 #计算绝对百分误差平均值
+print("ydata=",ydata)
+
 abseer=np.mean(abs(y_real-ydata)/ydata)*100
 print("abseer=",f'{abseer:.5f}',"%")
 

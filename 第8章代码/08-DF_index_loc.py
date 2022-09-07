@@ -11,7 +11,7 @@ print("DF.loc['A城']:\n",DF.loc['A城'])#lo函数c横向索引A城数据
 print("DF.GDP\n",DF.GDP)#纵向索引GDP的数据
 print("DF.GDP.C城:\n",DF.GDP.C城)#精确定位索引C城的GDP数据
 print("DF.['GDP']\n",DF['GDP'])#纵向索引GDP的数据
-print("DF.values[(0,2)=",DF.values[(0,2)])#利用values的行、列序号索引任意数据
+print("DF.values[(0,2)]=",DF.values[(0,2)])#利用values的行、列序号索引任意数据
 print("DF. Population.B=",DF. Population.B城)
 
 

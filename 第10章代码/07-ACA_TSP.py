@@ -1,16 +1,13 @@
 # 蚁群算法 Ant Colony Algorithm #
-
-
+from cgi import test
 import numpy as np
 from numpy.core.fromnumeric import cumsum
 import pandas as pd
 import random as rnd
 import time
-
 # 绘图设置
 import matplotlib.pyplot as plt
 import matplotlib as mpl
-
 mpl.rcParams["xtick.direction"] = "in"  # 坐标轴上的短线朝内，默认朝外
 plt.rcParams["ytick.direction"] = "in"
 # 全局设置字体
@@ -19,7 +16,6 @@ mpl.rcParams["axes.unicode_minus"] = False  # 保证负号显示
 mpl.rcParams["font.size"] = 18  # 设置字体大小
 mpl.rcParams["font.style"] = "oblique"  # 设置字体风格，倾斜与否
 mpl.rcParams["font.weight"] = "normal"  # "normal",=500，设置字体粗细
-
 # 参数初始化
 """
 n:城市数目
@@ -36,7 +32,7 @@ eta:启发因子，取距离的倒数
 LJ[m,n]:路径记录
 tau[n,n]:信息素矩阵
 ran_ant:不受信息素影响的随机蚂蚁数
-
+opt_ant_Q:最优蚂蚁路线信息素加强
 """
 # 产生随机城市坐标city_zb
 def city_zb(width, hight, city_num):
@@ -50,10 +46,7 @@ def city_zb(width, hight, city_num):
         city_zb[i, 0] = int(np.random.random() * width * 100) / 100
         city_zb[i, 1] = int(np.random.random() * hight * 100) / 100
     return city_zb
-
-
 # city_zb=city_zb(50,50,15)#确定城市数目及坐标
-
 # 固定城市坐标
 # 读入城市坐标
 DF = pd.read_excel("city.xlsx", "Sheet1", na_filter=False, index_col=0)  # 共有31个城市坐标
@@ -63,15 +56,11 @@ n = len(city_x)  # 计算城市的数目
 city_zb = np.zeros((n, 2))  # 设置坐标数组
 city_zb[:, 0] = city_x / 100
 city_zb[:, 1] = city_y / 100
-
-# city_zb=city_zb(50,50,50)#确定城市数目及坐标
-
+#city_zb=city_zb(50,50,50)#确定城市数目及坐标
 # 计算城市i和城市j之间的距离
 # 输入 city_zb 各城市的坐标,用city_zb[i,0:1])
 # 输出 D 城市i和城市j之间的距离,用D[i,j]表示
-n = len(city_zb)
-
-
+#n = len(city_zb)
 def Distance(city_zb):
     D = np.zeros((n, n))  #  产生两城市之间距离数据的空矩阵即零阵
     for i in range(n):
@@ -83,39 +72,39 @@ def Distance(city_zb):
             ) ** 0.5
             D[j, i] = D[i, j]
     return D
-
-
 D = Distance(city_zb)  # 计算一次即可
-m = int(1.3 * n)  # 确定蚂蚁数
-alpha = 1.5
-beta = 4
-rho = 0.08
-itera_max = 500
-Q = 1
-ran_ant = 0
+m = int(3 * n)  # 确定蚂蚁数
+m=150
+alpha =1.5
+beta= 3
+rho = 0.25
+itera_max =10
+#  opt_ant_Q  最优蚂蚁路线信息素强化
+Q =10
+ran_ant =int(m/4) #每轮新计算时随机路线蚂蚁数，不受信息素影响
 LJ_best = np.zeros((itera_max, n))  # 各代最佳路线
 pen_best = np.zeros(itera_max)  # 各代最佳路线的长度
-eta = 3.0 / D  # 启发因子，取距离的倒数
+eta = 1.0 / D  # 启发因子，取距离的倒数
 LJ = np.zeros((m, n))  # 路径记录
 tau = np.ones((n, n))  # 信息素矩阵
+max_tau=10 #设置信息素最大值
 # print(n)
 # print(city_zb)
 # print(eta)
 # 计算城市之间的距离
-
-
 # 产生初始蚂蚁轨迹LJ0用以验证绘制程序的正确性
 def path(n):
     li = np.arange(0, n)
     LJ = np.zeros(n)
     rnd.shuffle(li)
     LJ[:] = li
+    test_LJ=np.array([5,6,7,10,9,8,2,4,16,19,17,3,18,22,21,20,24,25,26,28,27,30,31,29,1,15,14,12,13,11,23])
+    # test_LJ=np.array([22,21,20,25,26,28,27,30,31,29,1,15,14,12,13,7,6,5,4,2,10,9,8,16,23,11,24,19,17,3,18])
+    test_LJ=test_LJ-np.ones(n)
+    LJ[:]=test_LJ  #用固定优化路径，目的计算路径长度及绘制
+    
     return LJ.astype(int)  # 需要强制转变成整数
-
-
 LJ0 = path(n)
-
-
 # 绘制初始路径图
 # 画路径函数
 def drawpath(LJ, city_zb, num):
@@ -148,6 +137,7 @@ def drawpath(LJ, city_zb, num):
             "", xy=xy, xytext=xytext, arrowprops=dict(arrowstyle="<-", color="g", lw=2)
         )
 
+    ## 无需回起点时，下面3行代码不要
     xy = (city_zb[LJ[n - 1], 0], city_zb[LJ[n - 1], 1])
     xytext = (city_zb[LJ[0], 0], city_zb[LJ[0], 1])
     plt.annotate(
@@ -161,22 +151,17 @@ def drawpath(LJ, city_zb, num):
     plt.xlabel("横坐标")
     plt.ylabel("纵坐标")
     plt.title(" 轨迹图")
-
-
 # 路径长度计算
 def pathlength(D, LJ):
     N = D.shape[1]
     p_len = 0
     for j in range(N - 1):
         p_len = p_len + D[LJ[j], LJ[j + 1]]
+    # 无需回起点时，下面1行代码不要
     p_len = p_len + D[LJ[N - 1], LJ[0]]
     return p_len
-
-
 p_len = pathlength(D, LJ0)
 print(p_len)
-
-
 # 绘制初始路径1
 num = "绘制初始路径"
 draw_path = drawpath(LJ0, city_zb, num)
@@ -191,7 +176,6 @@ def print_way(LJ):
         print_LJ = print_LJ + str(LJ[i] + 1) + "-->"
     print_LJ = print_LJ + str(LJ[0] + 1)
     print(print_LJ)
-
 
 print("初始路径")
 print_way(LJ0)
@@ -226,20 +210,14 @@ while itera_num < itera_max:
                 # print(prohi_tab[j-1],allow[k])
                 P[k] = (
                     tau[prohi_tab[j - 1], allow[k]] ** alpha
-                    + eta[prohi_tab[j - 1], allow[k]] ** beta
+                    * eta[prohi_tab[j - 1], allow[k]] ** beta
                 )
-                # tem_P=tau[prohi_tab[j-1],allow[k]]**alpha+eta[prohi_tab[j-1],allow[k]]**beta
-                # P.append(tem_P)
-            # print("k=",k)
-            # print("allow[k]=",allow[k])
-            # print("J=",j)
-            # print("k=",k)
+                
             P = P / sum(P)
-            # print(P)
+            #tar_id= list(P[:]).index(max(P[:]) )
             Pc = cumsum(P)
-            # print(Pc)
-            # Pc=P
-            tar_id = [i for i, tp in enumerate(Pc) if tp > np.random.random()]
+            tar_id = [i for i, tp in enumerate(Pc) if tp >np.random.random()]
+            #tar = allow[tar_id]
             tar = allow[tar_id[0]]
             LJ[i, j] = tar
         # print("LJ=",LJ[i,:])
@@ -252,6 +230,7 @@ while itera_num < itera_max:
 
     pen_best[itera_num] = p_len[id_ant]  # 各代最佳路线的长度
     LJ_best[itera_num, :] = LJ[id_ant, :]  # 各代最佳路线
+    #LJ_best[itera_num, :]=np.array([22,21,20,25,26,28,27,30,31,29,1,15,14,12,13,7,6,5,4,2,10,9,8,16,23,11,24,19,17,3,18])
     # print(LJ[i,:])
     # print(len(LJ[i,:]))
     detal_tau = np.zeros((n, n))
@@ -266,14 +245,16 @@ while itera_num < itera_max:
         )  # 最后一个点和起始点闭合
         # detal_tau[LJ[i,0],LJ[i,n-1]]=detal_tau[LJ[i,0],LJ[i,n-1]]+Q/ p_len[i]
 
-    # 最优蚂蚁路线加强：
+    #最优蚂蚁路线加强：
+    opt_ant_Q=0.6*tau.max()
+    
     for j in range(n - 1):
         detal_tau[LJ[id_ant, j], LJ[id_ant, j + 1]] = (
-            detal_tau[LJ[id_ant, j], LJ[id_ant, j + 1]] + 9
+            detal_tau[LJ[id_ant, j], LJ[id_ant, j + 1]] +opt_ant_Q
         )
         # detal_tau[LJ[i,j+1],LJ[i,j]]=detal_tau[LJ[i,j+1],LJ[i,j]]+Q/ p_len[i]
     detal_tau[LJ[id_ant, n - 1], LJ[id_ant, 0]] = (
-        detal_tau[LJ[id_ant, n - 1], LJ[id_ant, 0]] + 9
+        detal_tau[LJ[id_ant, n - 1], LJ[id_ant, 0]] +opt_ant_Q
     )
 
     # ran_ant只随机蚂蚁信息素也加强
@@ -284,12 +265,18 @@ while itera_num < itera_max:
     # detal_tau[LJ[m-i-1,n-1],LJ[m-i-1,0]]=detal_tau[LJ[m-i-1,n-1],LJ[m-i-1,0]]+0.1
     # 实验表明随机的加强效果不好，最短距离只能到160左右
     tau = (1 - rho) * tau + detal_tau  # 更新信息素
+    for i in range(n):
+        for j in range(n):
+           if tau[i,j]>max_tau:
+               tau[i,j]=max_tau
+     
     # print("tau=",tau)
     itera_num = itera_num + 1
     LJ = np.zeros((m, n))  # 路径记录清空
 id_best = list(pen_best[:]).index(min(pen_best[:]))  # 找到最短距离路径的迭代序号
 print(LJ_best[id_best, :].astype(int))
 LJ_end = LJ_best[id_best, :].astype(int)
+
 print("最优路径")
 print_way(LJ_end)
 

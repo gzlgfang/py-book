@@ -2,7 +2,9 @@
 
 from scipy import optimize as op
 import numpy as np
-
+# DF1 = pd.read_csv("data1.csv")   #, "Sheet1",na_filter=False, index_col=0# 共有31个城市坐标
+# data_x = np.array(DF1["x"])  # 数据分配
+# data_y = np.array(DF1["y"])
 
 #输入统计数据
 x0=np.linspace(45,100,12)
