@@ -8,9 +8,6 @@ import matplotlib.pyplot as plt
 import scipy as scp
 from scipy.integrate import odeint
 #输入数据
-#k1=0.1
-#k2=0.1
-#k3=0.1# 参数初值
 C1=np.array([10,8.6231,	7.4627,	6.4811,	5.6475,	4.9366,	4.3282,	3.8057,	3.3552,	2.9652,	2.6261])
 C2=np.array([0,	1.2759,	2.1736,	2.7808,	3.1666,	3.385,	3.478,	3.4783,	3.4118,	3.2984,	3.1537])
 C3=np.array([0,	0.202,	0.7273,	1.4761,	2.3719,	3.3569,	4.3876,	5.432,	6.4661,	7.4728,	8.4403])
@@ -28,15 +25,10 @@ tspan=np.linspace(0,5.0,11)#确定自变量范围
 #print("sol=",sol[:,0])
 def J(k1,k2,k3):
    JJ=sum(sum((odeint(dy, y0, tspan,args=(k1,k2,k3))-C)**2))
-   #J1=odeint(dy, y0, tspan,args=(k1,k2,k3))[:,0]-C1
-   #J2=odeint(dy, y0, tspan,args=(k1,k2,k3))[:,1]-C2
-   #J3=odeint(dy, y0, tspan,args=(k1,k2,k3))[:,2]-C3
-   #JJ= sum(J1**2+J2**2+J3**2)
    return JJ
-
-k0=np.array([0.1,0.1,0.1])
+k0=np.array([0.1,0.1,0.1])#初始辨识参数
 #单纯形法优化
-def paixu(x,y): 
+def paixu(x,y): #数据线排序
   for i in range(len(y)-1):
       for j in range(i+1,len(y)):
           if y[i]>y[j]:
@@ -49,16 +41,14 @@ def paixu(x,y):
   xx=x
   yy=y
   return xx,yy
-
-
-
-h=0.1
+#单纯形结构参数
+h=0.1#高度
 alfa=1
 lamda=0.75
 miue=1
 flag=True
 n=0
-eer=0.0000001
+eer=0.0000001#设定误差
 kk1=np.copy(k0)
 kk1[0]=k0[0]+h
 
@@ -134,11 +124,8 @@ while flag:
 print(kk[0])
 print("优化目标=",jj[0])
 print("优化次数=",n)
-
 print(f'辨识参数:k_1={kk[0][0]:.5f}, k_2={kk[0][1]:.5f}, k_3={kk[0][2]:.5f}')
-
-#图形绘制
-#全局设置字体
+#图形绘制,#全局设置字体
 mpl.rcParams["font.sans-serif"]=["SimHei"]#保证显示中文字
 mpl.rcParams["axes.unicode_minus"]=False#保证负号显示
 mpl.rcParams['font.size']=16
@@ -147,25 +134,20 @@ mpl.rcParams['xtick.top']=True
 mpl.rcParams['xtick.direction'] = 'in'#坐标轴上的短线朝内，默认朝外
 plt.rcParams['ytick.direction'] = 'in'
 mpl.rcParams["font.style"] = "oblique"#设置字体风格，倾斜与否
-
 t=np.linspace(0,5,41)
 y_data=odeint(dy, y0, t,args=(kk[0][0],kk[0][1],kk[0][2]))
 fig = plt.figure()
-plt.scatter(tspan, C1,s=58,color="red",label="实验数据C$_A$" )
-plt.scatter(tspan, C2,s=58,color="b",label="实验数据C$_B$" )
-plt.scatter(tspan, C3,s=58,color="purple",label="实验数据C$_B$" )
-
+plt.scatter(tspan, C1,s=58,color="red",label="实验数据C$_A$",clip_on=False)
+plt.scatter(tspan, C2,s=58,color="b",label="实验数据C$_B$",clip_on=False )
+plt.scatter(tspan, C3,s=58,color="purple",label="实验数据C$_B$",clip_on=False )
 plt.plot(t, y_data[:,0],color="red",lw=2,label="拟合数据C$_A$" )
 plt.plot(t, y_data[:,1],color="b",lw=2,label="拟合数据C$_B$" )
 plt.plot(t, y_data[:,2],color="purple",lw=2,label="拟合数据C$_C$" )
-
-
 plt.text(2,10,f'abseer={jj[0]*100:.5f}%')
 plt.text(2,8,f'k$_1$={kk[0][0]:.5f}, k$_2$={kk[0][1]:.5f}, k$_3$={kk[0][2]:.5f}')
 plt.xlabel("$t$，时间 (min)", fontsize=16)
 plt.ylabel("$C$,浓度 (kmol/m$^3$)", fontsize=16,labelpad=8) 
 plt.grid(which='both', axis='both', color='r', linestyle=':', linewidth=1)
-
 plt.xlim(0,5)#设置x轴范围
 plt.ylim(0,12)
 plt.legend()

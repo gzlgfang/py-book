@@ -32,14 +32,11 @@ def J(k1,k2,k3):
    J2=odeint(dy, y0, tspan,args=(k1,k2,k3))[:,1]-C2
    J3=odeint(dy, y0, tspan,args=(k1,k2,k3))[:,2]-C3
    JJ= sum(J1**2+J2**2+J3**2)
-   #JJ=(J1,J2,J3)
-   #jj2=odeint(dy, y0, tspan,args=(k1,k2,k3))-C
-   #jj2=sum(jj2*2)
    return JJ
 #k1=0.3,k2=0.05,k3=0.3
-k0=np.array([0.1,0.1,0.1])
-#单纯形法优化
-h=0.1
+k0=np.array([0.1,0.1,0.1])#初始辨识参数
+#单纯形法优化参数
+h=0.1#高度
 alfa=1
 lamda=0.75
 miue=1
@@ -168,6 +165,4 @@ while flag:
          kk2=(UM+UL)/2
          kk3=(UH+UL)/2
          continue
-print(k0)
-print(j0)
-print(n)
+print("k0,j0,n=",k0,j0,n)
