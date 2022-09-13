@@ -71,4 +71,24 @@ print()
 for i, s3 in enumerate(sol3):
      print("x{}={:.8f}".format(i,1/s3))
 
+fig=plt.figure(figsize=(16,8),num="收敛过程图")
+#ls = ['-',':', '-.', '--']
+x=np.linspace(0,30,1000)
+y1=f(x)
+y2=f1(x)
+y3=f2(x)
+plt.plot(x,y1,lw=2,color="b",ls="-",label="方程1")#绘制函数曲线1
+plt.plot(x,y2,lw=2,color="r",ls=":",label="方程2")#绘制函数曲线2
+plt.plot(x,y3,lw=2,color="r",ls="-.",label="方程3")#绘制函数曲线3
+plt.xlabel("自变量，x",fontsize=18)
+plt.ylabel("函数值，f(x)",labelpad=5,fontsize=18)
+plt.grid(which='both', axis='both', color='r', linestyle=':', linewidth=1)
+plt.xlim(0,30)
+plt.ylim(-30,30)
+plt.legend()
+plt.title("函数变化过程图")
+plt.show()
+
+
+
 

@@ -40,10 +40,19 @@ plt.xlabel("x",fontname="serif")
 plt.ylabel("y",labelpad=5,fontname="serif")
 ydata=func(xdata,*alf_opt)
 plt.plot(xdata,ydata, label='拟合曲线',color="green", linewidth=2.0, linestyle="--")
-eer=sum((y_real-ydata)**2)
+eer=sum((y_real-ydata)**2)/len(y_real)
 print(ydata)
 plt.text(min(xdata),0.8*max(y_real),f'均方误差={eer:.5f}' )
-plt.text(min(xdata),0.6*max(y_real),f'拟合方程：lnp={alf_opt[0]:.5f}{alf_opt[1]:.5f}/(x+{alf_opt[2]:.5f})' )
+if alf_opt[2]<0:
+    if alf_opt[1]<0:
+       plt.text(min(xdata),0.6*max(y_real),f'拟合方程：lnP={alf_opt[0]:.5f}{alf_opt[1]:.5f}/(T{alf_opt[2]:.5f})' )
+    else:
+       plt.text(min(xdata),0.6*max(y_real),f'拟合方程：lnP={alf_opt[0]:.5f}+{alf_opt[1]:.5f}/(T{alf_opt[2]:.5f})' ) 
+else:
+    if alf_opt[1]<0:
+       plt.text(min(xdata),0.6*max(y_real),f'拟合方程：lnP={alf_opt[0]:.5f}{alf_opt[1]:.5f}/(T+{alf_opt[2]:.5f})' )
+    else:
+       plt.text(min(xdata),0.6*max(y_real),f'拟合方程：lnP={alf_opt[0]:.5f}+{alf_opt[1]:.5f}/(+T{alf_opt[2]:.5f})' ) 
 plt.grid(which='both', axis='both', color='r', linestyle=':', linewidth=1)
 plt.xlim(min(xdata)-2,max(xdata)+2)#设置x轴范围
 plt.ylim(min(y_real)-50,max(y_real)+50)#设置

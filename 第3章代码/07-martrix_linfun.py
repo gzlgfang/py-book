@@ -10,6 +10,7 @@ for i in range(len(x)):
 print("随机10×10方程组求解")
 a=10*np.random.rand(10,10)#产生系数
 A=np.mat(a)
+print("A=",A)
 b=np.mat(20*np.random.rand(10)).reshape(10,1)
 x = A.I * b  # 线性方程求解
 for i in range(len(x)):

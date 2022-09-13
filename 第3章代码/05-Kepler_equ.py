@@ -25,7 +25,7 @@ mpl.rcParams['xtick.top']=True
 mpl.rcParams['xtick.direction'] = 'in'#坐标轴上的短线朝内，默认朝外
 mpl.rcParams['ytick.direction'] = 'in'
 font1 = {'family': 'Times New Roman'} 
-p=np.linspace(0.1,3.1,31)
+p=np.linspace(0,3.0,31)
 for i in range(8):
     et="e="+str(int(10*(i+1)*0.1)/10)
     y1=sol[i,:]

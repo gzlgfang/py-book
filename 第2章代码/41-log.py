@@ -15,7 +15,7 @@ mpl.rcParams["font.weight"] ="normal"# "normal",=500，设置字体粗细
 #oblique 将字体倾斜，将没有斜体变量（italic）的特殊字体，要应用oblique
 
 fig, axes = plt.subplots(1, 3, figsize=(3, 12))
-x = np.linspace(0, 1e3, 1000)
+x = np.linspace(1, 1e2, 1000)
 y1, y2 = x**2.5, x**4
 axes[0].set_title('对数-对数')
 axes[0].loglog(x, y1, 'm', x, y2, 'b')

@@ -27,7 +27,7 @@ plt.scatter(xdata,y_real,color="red",label='实验数据')#绘制数据点
 plt.xlabel("x",fontname="serif")
 plt.ylabel("y",labelpad=5,fontname="serif")
 ydata=func(xdata,*alf_opt)
-eer=sum((y_real-ydata)**2)
+eer=sum((y_real-ydata)**2)/len(y_real)
 print('eer=',eer)
 plt.plot(xdata,ydata, label='拟合曲线',color="green", linewidth=2.0, linestyle="--")
 plt.grid(which='both', axis='both', color='r', linestyle=':', linewidth=1)
