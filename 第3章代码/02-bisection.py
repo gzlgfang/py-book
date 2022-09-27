@@ -11,7 +11,7 @@ mpl.rcParams['ytick.right']=True
 mpl.rcParams['xtick.top']=True
 mpl.rcParams['xtick.direction'] = 'in'#坐标轴上的短线朝内，默认朝外
 mpl.rcParams['ytick.direction'] = 'in'
-f = lambda x: 3-x *np.sin(x) #超越方程
+f = lambda x: 40-x *np.sin(x)-2*x #超越方程
 def f1(x):
     return x ** 3- 7.7 * x ** 2 + 19.2 * x - 15.3 #多项式方程
 def f2(x):

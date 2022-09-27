@@ -19,8 +19,8 @@ font1 = {"family": "Times New Roman"}
 def dy(y, t):
     y1, y2 = y[0], y[1]
     dy1 = y2
-    # dy2= t**2*np.cos(t)+y1*np.sin(t)
-    dy2 = 5 * np.sin(t) - 2 * np.cos(t) * t * np.exp(0.001 * y1)
+    dy2= t**2*np.cos(t)+y1*np.sin(t)
+    #dy2 = 5 * np.sin(t) - 2 * np.cos(t) * t * np.exp(0.001 * y1)
 
     return [dy1, dy2]
 
@@ -30,13 +30,15 @@ tspan = np.linspace(0, 30, 301)  # 确定自变量范围
 sol = odeint(dy, y0, tspan)
 t=tspan
 y1=sol[:, 0]
-ddy=5 * np.sin(t) - 2 * np.cos(t) * t * np.exp(0.001 * y1)
+y2=sol[:, 1]
+#ddy=5 * np.sin(t) - 2 * np.cos(t) * t * np.exp(0.001 * y1)
+ddy=t**2*np.cos(t)+y1*np.sin(t)
 #print(ddy)
 plt.figure(figsize=(8, 6), dpi=80)  # 创建一个 8 * 6 点（point）的图，并设置分辨率为 80
 # 绘制温度曲线，使用红色、连续的、宽度为 2（像素）的线条
-plt.plot(tspan, sol[:, 0], label="y", color="red", linewidth=2, linestyle="-")
+plt.plot(tspan, y1, label="y", color="red", linewidth=2, linestyle="-")
 # 绘制温度变化速率曲线，使用绿色的、虚线、宽度为 2 （像素）的线条
-plt.plot(tspan, sol[:, 1], label="dy", color="green", linewidth=2.0, linestyle="--")
+plt.plot(tspan, y2, label="dy", color="green", linewidth=2.0, linestyle="--")
 plt.plot(tspan, ddy, label="ddy", color="blue", linewidth=2.0, linestyle="-.")
 plt.xticks(np.linspace(0, 30, 16, endpoint=True))  # 设置横轴刻度
 plt.xlim(0, 30)  # 设置x轴的上下限

@@ -28,7 +28,7 @@ def dy(t, y):  # 已知微分方程y1的两个端点值为40和80，但不知y2�
 # 定义边界条件#
 def BC(ya, yb):
     f1, f2 = 40, 80
-    return np.array([ya[1] - f1, yb[0] - f2])
+    return np.array([ya[0] - f1, yb[0] - f2])
     # return np.array([20*ya[1]-f1*ya[0], 40*yb[0]-f2*yb[1]])
     # 可以其他边界条件，ya表示左边界，yb表示右边界，以bc=0的形式表示边界条件
 
@@ -36,17 +36,19 @@ def BC(ya, yb):
 sol = solve_bvp(dy, BC, tspan, y_tspan)
 y = sol.sol(tspan)[0]
 dyy = sol.sol(tspan)[1]
+dy_2= 0.05 * (1 +tspan**2) * y + 2
 plt.figure(figsize=(8, 6), dpi=80)  # 创建一个 8 * 6 点（point）的图，并设置分辨率为 80
 # 绘制温度曲线，使用红色、连续的、宽度为 2（像素）的线条
 plt.plot(tspan, y, label="y", color="red", linewidth=2, linestyle="-")
 # 绘制温度变化速率曲线，使用绿色的、虚线、宽度为 2 （像素）的线条
 plt.plot(tspan, dyy, label="dy", color="green", linewidth=2.0, linestyle="--")
+plt.plot(tspan, dy_2, label="$d^2y$", color="blue", linewidth=2.0, linestyle="-.")
 
 plt.xticks(np.linspace(0, 10, 11, endpoint=True))  # 设置横轴刻度
 plt.xlim(0, 10)  # 设置x轴的上下限
 plt.ylim(-120, 180)
 plt.xlabel("x", font1, color="blue")  # 设置x轴描述信息
-plt.ylabel("y,dy", font1,color="red")  # 设置y轴描述信息
+plt.ylabel("y,dy,$d^2y$", font1,color="red")  # 设置y轴描述信息
 plt.yticks(np.linspace(-120, 180, 16))  # 设置纵轴刻度
 plt.legend()
 plt.grid(True)
