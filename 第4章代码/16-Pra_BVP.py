@@ -50,7 +50,9 @@ dyy = sol.sol(tspan)[1]
 y1 = y
 y2 = dyy
 dy_2 = 0.5 * t**0.8 * np.sin(t) * y1 + a * np.log(t)
-result1 = dy_2[-1]
+result1 = dy_2[-1]  ## 二阶导数右端点
+
+# result1 = y2[-1]#### 一阶导数右端点
 y_right1 = result1
 # 计算另一种假设情况下的右端点值
 a = a2
@@ -60,7 +62,8 @@ dyy = sol.sol(tspan)[1]
 y1 = y
 y2 = dyy
 dy_2 = 0.5 * t**0.8 * np.sin(t) * y1 + a * np.log(t)
-result2 = dy_2[-1]
+result2 = dy_2[-1]  ## 二阶导数右端点
+# result2 = y2[-1]  #### 一阶导数右端点
 y_right2 = result2
 # 产生新的插值点作为迭代计算起点
 k = (a2 - a1) / (y_right2 - y_right1)
@@ -74,7 +77,8 @@ while eer >= tol:
     y1 = y
     y2 = dyy
     dy_2 = 0.5 * t**0.8 * np.sin(t) * y1 + a * np.log(t)
-    result = dy_2[-1]
+    result = dy_2[-1]  ## 二阶导数右端点
+    # result = y2[-1]  ## 一阶导数右端点
     eer = abs((y_right - result) / y_right)
     a_1 = a_0 + k * (y_right - result)
     a_0 = a_1
@@ -87,25 +91,26 @@ y2 = dyy
 dy_2 = 0.5 * t**0.8 * np.sin(t) * y1 + a * np.log(t)
 # print("a=",a[0])
 print("ddy_right=", dy_2[-1])
-print("y", y)
+# print("y", y)
 print("y_left=", y[0])
 print("y_right=", y[-1])
 print("a=", a)
 print("dy_right=", y2[-1])
-
-
 plt.figure(figsize=(8, 6), dpi=80)  # 创建一个 8 * 6 点（point）的图，并设置分辨率为 80
 # 绘制温度曲线，使用红色、连续的、宽度为 2（像素）的线条
-plt.plot(tspan, y1, label="y", color="red", linewidth=2, linestyle="-")
+plt.plot(tspan, y1, label="$y$", color="red", linewidth=2, linestyle="-")
 # 绘制温度变化速率曲线，使用绿色的、虚线、宽度为 2 （像素）的线条
-plt.plot(tspan, y2, label="dy", color="green", linewidth=2.0, linestyle="--")
+plt.plot(tspan, y2, label="$dy$", color="green", linewidth=2.0, linestyle="--")
 plt.plot(tspan, dy_2, label="$d^2y$", color="blue", linewidth=2.0, linestyle="-.")
-
 plt.xticks(np.linspace(0, 11, 12, endpoint=True))  # 设置横轴刻度
 plt.xlim(0, 11)  # 设置x轴的上下限
+x_text = 5.5
+y_text = 100
+str_a = "$a=$" + str(int(10000 * a) / 10000)
+plt.text(x_text, y_text, str_a)
 # plt.ylim(-120, 180)
-plt.xlabel("x", font1, color="blue")  # 设置x轴描述信息
-plt.ylabel("y,dy,$d^2y$", font1, color="red")  # 设置y轴描述信息
+plt.xlabel("$x$", font1, color="blue")  # 设置x轴描述信息
+plt.ylabel("$y,dy,d^2y$", font1, color="red")  # 设置y轴描述信息
 # plt.yticks(np.linspace(-120, 180, 16))  # 设置纵轴刻度
 plt.legend()
 plt.grid(True)
