@@ -1,4 +1,5 @@
 # 17-react2_ode.py
+from tkinter import N
 import matplotlib as mpl
 import matplotlib.pyplot as plt
 import numpy as np
@@ -32,7 +33,8 @@ def dy(y, t):
     return [dy1, dy2, dy3]
 
 
-y0 = [20, 0, 0]  # 确定初始状态
+No = 1
+y0 = [20 + No, 0, 0]  # 确定初始状态
 tspan = np.linspace(0, 50, 5001)  # 确定自变量范围
 ##确定条件下求解微分方程组：
 fig = plt.figure(figsize=(8, 6), dpi=80)  # 创建一个 8 * 6 点（point）的图，并设置分辨率为 80

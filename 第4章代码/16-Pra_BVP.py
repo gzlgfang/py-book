@@ -23,7 +23,7 @@ y_tspan = np.zeros((2, tspan.size))  # 确定应变量初值
 def dy(t, y):  # 已知微分方程y1的两个端点值为40和80，但不知y2的开始端点值，注意和ode定义方程dy(y,t)的不同
     y1, y2 = y[0], y[1]
     dy1 = y2
-    dy2 = 0.5 * t**0.8 * np.sin(t) * y1 + a * np.log(t)
+    dy2 = 4.7 * t**0.8 * np.sin(t) * y1 + a * np.log(t)
     return np.vstack((dy1, dy2))
 
 
@@ -49,10 +49,10 @@ y = sol.sol(tspan)[0]
 dyy = sol.sol(tspan)[1]
 y1 = y
 y2 = dyy
-dy_2 = 0.5 * t**0.8 * np.sin(t) * y1 + a * np.log(t)
-result1 = dy_2[-1]  ## 二阶导数右端点
+dy_2 = 4.7 * t**0.8 * np.sin(t) * y1 + a * np.log(t)
+# result1 = dy_2[-1]  ## 二阶导数右端点
 
-# result1 = y2[-1]#### 一阶导数右端点
+result1 = y2[-1]  #### 一阶导数右端点
 y_right1 = result1
 # 计算另一种假设情况下的右端点值
 a = a2
@@ -61,9 +61,9 @@ y = sol.sol(tspan)[0]
 dyy = sol.sol(tspan)[1]
 y1 = y
 y2 = dyy
-dy_2 = 0.5 * t**0.8 * np.sin(t) * y1 + a * np.log(t)
-result2 = dy_2[-1]  ## 二阶导数右端点
-# result2 = y2[-1]  #### 一阶导数右端点
+dy_2 = 4.1 * t**0.8 * np.sin(t) * y1 + a * np.log(t)
+# result2 = dy_2[-1]  ## 二阶导数右端点
+result2 = y2[-1]  #### 一阶导数右端点
 y_right2 = result2
 # 产生新的插值点作为迭代计算起点
 k = (a2 - a1) / (y_right2 - y_right1)
@@ -76,9 +76,9 @@ while eer >= tol:
     dyy = sol.sol(tspan)[1]
     y1 = y
     y2 = dyy
-    dy_2 = 0.5 * t**0.8 * np.sin(t) * y1 + a * np.log(t)
-    result = dy_2[-1]  ## 二阶导数右端点
-    # result = y2[-1]  ## 一阶导数右端点
+    dy_2 = 4.1 * t**0.8 * np.sin(t) * y1 + a * np.log(t)
+    # result = dy_2[-1]  ## 二阶导数右端点
+    result = y2[-1]  ## 一阶导数右端点
     eer = abs((y_right - result) / y_right)
     a_1 = a_0 + k * (y_right - result)
     a_0 = a_1
@@ -88,7 +88,7 @@ y = sol.sol(tspan)[0]
 dyy = sol.sol(tspan)[1]
 y1 = y
 y2 = dyy
-dy_2 = 0.5 * t**0.8 * np.sin(t) * y1 + a * np.log(t)
+dy_2 = 4.7 * t**0.8 * np.sin(t) * y1 + a * np.log(t)
 # print("a=",a[0])
 print("ddy_right=", dy_2[-1])
 # print("y", y)
@@ -105,7 +105,7 @@ plt.plot(tspan, dy_2, label="$d^2y$", color="blue", linewidth=2.0, linestyle="-.
 plt.xticks(np.linspace(0, 11, 12, endpoint=True))  # 设置横轴刻度
 plt.xlim(0, 11)  # 设置x轴的上下限
 x_text = 5.5
-y_text = 100
+y_text = 10
 str_a = "$a=$" + str(int(10000 * a) / 10000)
 plt.text(x_text, y_text, str_a)
 # plt.ylim(-120, 180)
