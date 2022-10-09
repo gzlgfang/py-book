@@ -67,7 +67,7 @@ def dy(y, t, k1, k2):
     return dC
 
 
-# 定义数据偏差平方和
+# 定义数据偏差平方和,可以直接和目标函数合并
 def J(k1, k2):
     y0 = CO1
     JJ1 = sum(sum((odeint(dy, y0, tspan, args=(k1, k2)) - C1) ** 2))
@@ -79,32 +79,40 @@ def J(k1, k2):
     return JJ
 
 
-k0 = np.array([0.01, 0.01])
 # 定义优化函数
 def fun(x):
     k1, k2 = x[0], x[1]
-    sum = J(k1, k2)
-    return sum
+    y0 = CO1
+    JJ1 = sum(sum((odeint(dy, y0, tspan, args=(k1, k2)) - C1) ** 2))
+    y0 = CO2
+    JJ2 = sum(sum((odeint(dy, y0, tspan, args=(k1, k2)) - C2) ** 2))
+    y0 = CO3
+    JJ3 = sum(sum((odeint(dy, y0, tspan, args=(k1, k2)) - C3) ** 2))
+    JJ = JJ1 + JJ2 + JJ3
+    # sum = J(k1, k2)  ##目标函数和偏差平方和单独定义时用
+    return JJ
 
 
+k0 = np.array([0.01, 0.01])
 res = op.minimize(fun, k0, method="L-BFGS-B", bounds=[(0.01, 10), (0.01, 10)])
 k = res.x
 j = res.fun
 
 print(f'优化目标=",{j:.5f}')
 print(f"辨识参数:k_1={k[0]:.5f}, k_2={k[1]:.5f}")
-tspan1 = [0, 1, 2, 3, 4, 5, 6, 7, 8]
+# tspan1 = [0, 1, 2, 3, 4, 5, 6, 7, 8]
+# tspan1 = tspan
 k1, k2 = k[0], k[1]
 
 # 打印辨识参数计算的微分方程解
 y0 = CO1
-ca_C1 = odeint(dy, y0, tspan1, args=(k1, k2))
+ca_C1 = odeint(dy, y0, tspan, args=(k1, k2))
 print(ca_C1)
 y0 = CO2
-ca_C2 = odeint(dy, y0, tspan1, args=(k1, k2))
+ca_C2 = odeint(dy, y0, tspan, args=(k1, k2))
 print(ca_C2)
 y0 = CO3
-ca_C3 = odeint(dy, y0, tspan1, args=(k1, k2))
+ca_C3 = odeint(dy, y0, tspan, args=(k1, k2))
 print(ca_C3)
 
 # 图形绘制
