@@ -97,7 +97,6 @@ k0 = np.array([0.01, 0.01])
 res = op.minimize(fun, k0, method="L-BFGS-B", bounds=[(0.01, 10), (0.01, 10)])
 k = res.x
 j = res.fun
-
 print(f'优化目标=",{j:.5f}')
 print(f"辨识参数:k_1={k[0]:.5f}, k_2={k[1]:.5f}")
 # tspan1 = [0, 1, 2, 3, 4, 5, 6, 7, 8]
@@ -130,12 +129,12 @@ fig = plt.figure()
 plt.scatter(tspan, C1[:, 0], s=58, color="red", label="实验数据C$_A$", clip_on=False)
 plt.scatter(tspan, C1[:, 1], s=58, color="b", label="实验数据C$_B$", clip_on=False)
 plt.scatter(tspan, C1[:, 2], s=58, color="purple", label="实验数据C$_C$", clip_on=False)
-plt.scatter(tspan, C1[:, 3], s=58, color="pink", label="实验数据C$_D$", clip_on=False)
+plt.scatter(tspan, C1[:, 3], s=58, color="green", label="实验数据C$_D$", clip_on=False)
 
 plt.plot(tspan, ca_C1[:, 0], color="red", lw=2, label="拟合数据C$_A$")
 plt.plot(tspan, ca_C1[:, 1], color="b", lw=2, label="拟合数据C$_B$")
 plt.plot(tspan, ca_C1[:, 2], color="purple", lw=2, label="拟合数据C$_C$")
-plt.plot(tspan, ca_C1[:, 3], color="pink", lw=2, label="拟合数据C$_D$")
+plt.plot(tspan, ca_C1[:, 3], color="green", lw=2, label="拟合数据C$_D$")
 y0 = CO1
 JJ1 = sum(sum((odeint(dy, y0, tspan, args=(k1, k2)) - C1) ** 2))
 plt.text(2, 5, f"abseer={JJ1*100:.5f}%")
@@ -153,12 +152,12 @@ fig = plt.figure()
 plt.scatter(tspan, C2[:, 0], s=58, color="red", label="实验数据C$_A$", clip_on=False)
 plt.scatter(tspan, C2[:, 1], s=58, color="b", label="实验数据C$_B$", clip_on=False)
 plt.scatter(tspan, C2[:, 2], s=58, color="purple", label="实验数据C$_C$", clip_on=False)
-plt.scatter(tspan, C2[:, 3], s=58, color="pink", label="实验数据C$_D$", clip_on=False)
+plt.scatter(tspan, C2[:, 3], s=58, color="green", label="实验数据C$_D$", clip_on=False)
 
 plt.plot(tspan, ca_C2[:, 0], color="red", lw=2, label="拟合数据C$_A$")
 plt.plot(tspan, ca_C2[:, 1], color="b", lw=2, label="拟合数据C$_B$")
 plt.plot(tspan, ca_C2[:, 2], color="purple", lw=2, label="拟合数据C$_C$")
-plt.plot(tspan, ca_C2[:, 3], color="pink", lw=2, label="拟合数据C$_D$")
+plt.plot(tspan, ca_C2[:, 3], color="green", lw=2, label="拟合数据C$_D$")
 
 y0 = CO2
 JJ2 = sum(sum((odeint(dy, y0, tspan, args=(k1, k2)) - C2) ** 2))
@@ -176,12 +175,12 @@ fig = plt.figure()
 plt.scatter(tspan, C3[:, 0], s=58, color="red", label="实验数据C$_A$", clip_on=False)
 plt.scatter(tspan, C3[:, 1], s=58, color="b", label="实验数据C$_B$", clip_on=False)
 plt.scatter(tspan, C3[:, 2], s=58, color="purple", label="实验数据C$_C$", clip_on=False)
-plt.scatter(tspan, C3[:, 3], s=58, color="pink", label="实验数据C$_D$", clip_on=False)
+plt.scatter(tspan, C3[:, 3], s=58, color="green", label="实验数据C$_D$", clip_on=False)
 
 plt.plot(tspan, ca_C3[:, 0], color="red", lw=2, label="拟合数据C$_A$")
 plt.plot(tspan, ca_C3[:, 1], color="b", lw=2, label="拟合数据C$_B$")
 plt.plot(tspan, ca_C3[:, 2], color="purple", lw=2, label="拟合数据C$_C$")
-plt.plot(tspan, ca_C3[:, 3], color="pink", lw=2, label="拟合数据C$_D$")
+plt.plot(tspan, ca_C3[:, 3], color="green", lw=2, label="拟合数据C$_D$")
 
 y0 = CO3
 JJ2 = sum(sum((odeint(dy, y0, tspan, args=(k1, k2)) - C3) ** 2))

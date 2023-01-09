@@ -1,4 +1,4 @@
-# Temperature-pressure  fit 
+# Temperature-presure  fit 
 #04-tem_pre-fit.py
 from scipy import optimize as op
 import numpy as np
