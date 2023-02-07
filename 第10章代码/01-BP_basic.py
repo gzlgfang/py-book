@@ -172,6 +172,7 @@ while flags:
         for i in range(n):
             s[j] = s[j] + w[i, j] * x[i]
         s[j] = s[j] - thta[j]
+
         b[j] = fnf(s[j])
     L = np.zeros(q)
     for t in range(q):

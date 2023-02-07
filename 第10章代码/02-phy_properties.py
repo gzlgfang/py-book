@@ -123,14 +123,14 @@ while ee > 0.0045:
     ee = np.sqrt(ee)
     #'全局误差判断
 
-    if train_num / 100000 == int(train_num / 100000):
+    if train_num / 10000 == int(train_num / 10000):
         print("ee=", ee)
         tol.append(ee)
-    if train_num < 2000000:
+    if train_num < 20000:
         continue  #'网络尚未收敛，继续计算
     else:
-        exit
-    #'网络收敛，打印权值及阀值并进入回响
+        break
+    #'网络收敛，打印权值及阀值并进入回响,不能用exit退出while循环，需要用break
     # GoTo 200
 # 绘制误差图
 # print(tol)
