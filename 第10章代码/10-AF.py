@@ -365,15 +365,15 @@ ax.set_zlabel("$z$", labelpad=10, fontsize=16)
 ax.set_title("鱼群算法迭代过程最优点位置移动")
 
 ax.text(
-    bestxx[0] - 0.04,
-    bestxx[1] - 0.04,
+    bestxx[0] - 0.01,
+    bestxx[1] - 0.01,
     bestxx[2],
     f"最优点位置坐标x={bestxx[0]:.5f}, y={bestxx[1]:.5f}, z={bestxx[2]:.5f}",
     zdir="x",
 )
 
 ax.text(
-    bestxx[0] - 0.05, bestxx[1] - 0.05, bestxx[2], f"最优点函数值J={bestyy:.5f}", zdir="x"
+    bestxx[0] - 0.01, bestxx[1] - 0.01, bestxx[2], f"最优点函数值J={bestyy:.5f}", zdir="x"
 )
 print(BestY)
 end_time = time.process_time()
