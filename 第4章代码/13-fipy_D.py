@@ -39,7 +39,7 @@ valueBottomLeft = 100
 X, Y = mesh.faceCenters
 facesTopLeft = (mesh.facesLeft & (Y >= L)) | (mesh.facesTop & (X <= L))
 facesBottomRight = (mesh.facesRight & (Y <= L)) | (mesh.facesBottom & (X >= L))
-facesBottomLeft = (mesh.facesLeft & (Y <= L)) | (mesh.facesLeft & (X >= L))
+facesBottomLeft = (mesh.facesLeft & (Y <= L)) | (mesh.facesBottom & (X <= 0))
 u.constrain(valueTopLeft, facesTopLeft)
 u.constrain(valueBottomRight, facesBottomRight)
 u.constrain(valueBottomLeft, facesBottomLeft)
@@ -47,7 +47,7 @@ u.constrain(valueBottomLeft, facesBottomLeft)
 # alpha=10.
 # D = 1.
 # eq =fp.TransientTerm()==fp.DiffusionTerm(coeff=D)+fp.ImplicitSourceTerm(alpha)==0
-# #TransientTerm() 
+# #TransientTerm()
 
 # valueTopLeft = 30
 # valueBottomRight = 100
@@ -60,16 +60,15 @@ u.constrain(valueBottomLeft, facesBottomLeft)
 # u.constrain(valueBottomRight, facesBottomRight)
 
 
-
-#if __name__ == "__main__":
-    #viewer =fp.Viewer(vars=u0, datamin=0., datamax=100)
-    #viewer.plot()
+# if __name__ == "__main__":
+# viewer =fp.Viewer(vars=u0, datamin=0., datamax=100)
+# viewer.plot()
 timeStepDuration = 0.1
 # 10 * 0.9 * dx**2 / (2 * D)
 steps = 8
 for step in range(steps):
     eq.solve(var=u, dt=timeStepDuration)
-    #viewer.plot()
+    # viewer.plot()
 plt.figure()
 fig, ax = plt.subplots(2, 4, figsize=(20, 4), num="8个时间步长的u值分布")
 norm = mpl.colors.Normalize(0, 100)
@@ -84,11 +83,13 @@ for i in range(1, 9):  # i取值为1-8，不包含9
         arr[j] = u0[j]
     ar = arr.reshape(nx, ny)
     p = ax[i // 5, i - i // 5 * 4 - 1].pcolor(
-        X, Y, ar, cmap=mpl.cm.jet, norm=norm, shading="auto" )  # pcolor绘制
+        X, Y, ar, cmap=mpl.cm.jet, norm=norm, shading="auto"
+    )  # pcolor绘制
     ax[i // 5, i - i // 5 * 4 - 1].set_title("时间=" + str(int(i * 0.1 * 10) / 10))
     ax[i // 5, i - i // 5 * 4 - 1].set_xticks([0, 0.5, 1.0, 1.5, 2])  # 设置纵轴刻度
     ax[i // 5, i - i // 5 * 4 - 1].set_yticks(
-        [0, 0.25, 0.5, 0.75, 1.0, 1.25, 1.5, 1.75, 2])
+        [0, 0.25, 0.5, 0.75, 1.0, 1.25, 1.5, 1.75, 2]
+    )
     ax[i // 5, i - i // 5 * 4 - 1].set_xlabel("x", font1)
     ax[i // 5, i - i // 5 * 4 - 1].set_ylabel("y", font1)
 # plt.tight_layout()#和上面adjust语句功能相同

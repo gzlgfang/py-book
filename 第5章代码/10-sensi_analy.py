@@ -13,6 +13,7 @@ J=np.zeros(10)#设置初值建立列表
 x=np.zeros((10,3))
 A_ub =[[4,2,4],[6, 5, 3],[9,4,2],[1,5,2],[2,5,3]]
 b_ub = [38,30,36,28,48]
+print(A_ub)
 for i in range(10):
     c1=-12-i
     c = [c1,-12,-8]
@@ -21,7 +22,7 @@ for i in range(10):
     J[i]=r.fun
     x[i,:]=r.x
     #print(x[i,:])
-#print(r)
+print(r)
 
 plt.figure(num="灵敏度分析1",figsize=(8,8))
 x_c1=np.linspace(12,21,10)#共10个c1
@@ -88,7 +89,5 @@ plt.xticks(np.arange(23,42,1))
 plt.grid(which='both', axis='both', color='r', linestyle=':', linewidth=1)
 plt.title("约束资源b1变化对最优解的影响")
 plt.legend()
-
-
 plt.show()
 

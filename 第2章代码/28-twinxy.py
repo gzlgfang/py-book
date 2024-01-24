@@ -13,7 +13,7 @@ mpl.rcParams['ytick.right']=True
 mpl.rcParams['xtick.top']=True
 #normal	默认值，正常体
 # 均值、标准差、shape
-flow = np.random.normal(160, 60, 300)#共300个随机数，均值为200
+flow = np.random.normal(160, 60, 300)#共300个随机数，均值为160
 print(flow)
 speed = np.random.normal(30, 12, 300)
 x = np.arange(0, 24, 24/300)
