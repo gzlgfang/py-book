@@ -46,7 +46,8 @@ def PSO(fitness, N, c1, c2, w, M, D):
         if fitness(x[i]) < fitness(gbest):
             gbest = x[i]
     # 主要循环
-    pbest_fit = np.zeros(M)  # 每一次迭代的最优函数值
+    gbest_fit = np.zeros(M)  # 每一次迭代的最优函数值
+    ggbest = []
     for t in range(M):  # 进行M轮迭代
         for i in range(N):
             # momentum + cognition + social
@@ -64,24 +65,45 @@ def PSO(fitness, N, c1, c2, w, M, D):
                 pbest[i] = x[i]  # pbest[i]为个体最优解
             if p[i] < fitness(gbest):  # 更新全局极值
                 gbest = pbest[i]
-        pbest_fit[t] = fitness(gbest)
+        gbest_fit[t] = fitness(gbest)
+        ggbest.append(gbest)
     print(f"目标函数取最小值时的自变量 {gbest}")
     print(f"目标函数的最小值为 {fitness(gbest)}")
-
+    print("ggbest=", ggbest)
     plt.figure(num="目标函数与迭代次数关系图")
     for i in range(M - 1):
-        plt.plot([i, i + 1], [pbest_fit[i], pbest_fit[i + 1]], lw=2, c="b")
+        plt.plot([i, i + 1], [gbest_fit[i], gbest_fit[i + 1]], lw=2, c="b")
         plt.grid()
+    plt.xlabel("迭代次数")
+    plt.ylabel("目标函数值")
+
+    fig = plt.figure()
+    ax = fig.add_subplot(1, 1, 1, projection="3d")
+    ggbest = np.array(ggbest)
+    x = ggbest[:, 0]
+    y = ggbest[:, 1]
+    z = ggbest[:, 2]
+    c = gbest_fit
+    p = ax.scatter(x, y, z, c=c, cmap=mpl.cm.RdYlBu, marker="o", s=500, zdir="z")
+    fig.colorbar(p, ax=ax, shrink=0.5)
+    ax.set_xlabel("$x$", labelpad=10, fontsize=16)
+    ax.set_ylabel("$y$", labelpad=10, fontsize=16)
+    ax.set_zlabel("$z$", labelpad=10, fontsize=16)
+    ax.set_title("粒子算法迭代过程最优点位置移动")
 
 
-def func(x):
+def func(x):  ##fitness
     # x1=x[0]
     # x2=x[1]
-    x,y,z=x[0],x[1],x[2]
+    x, y, z = x[0], x[1], x[2]
     # x, y = x[0], x[1]
-    #str=x**2 - 2 * x + y + 1000 * (min(4 - 4 * x**2 - y**2, 0)) ** 2
+    # str=x**2 - 2 * x + y + 1000 * (min(4 - 4 * x**2 - y**2, 0)) ** 2
     # f = lambda x: str
-    f=lambda x:(x**0.8+x*y**0.7+z**0.8-1)**2+(x**1.2*y+y**0.9+x**0.5*z-1)**2+(x+y**0.4*z**0.5+z**1.2-1)**2
+    f = (
+        lambda x: (x**0.8 + x * y**0.7 + z**0.8 - 1) ** 2
+        + (x**1.2 * y + y**0.9 + x**0.5 * z - 1) ** 2
+        + (x + y**0.4 * z**0.5 + z**1.2 - 1) ** 2
+    )
     # f=lambda x:(x[0]-10)**2+(x[1]-16)**2
     # f = lambda x: x1**2 +2*x1 - 6+x2**2 +2*x2
     # f=lambda x:30+x1**2 + x2**2-10*(np.cos(2*np.pi*x1)+np.cos(2*np.pi*x2))
@@ -91,7 +113,4 @@ def func(x):
 
 # if __name__ == '__main__':
 PSO(func, 50, 1.5, 2.5, 0.5, 100, 3)
-plt.xlabel("迭代次数")
-plt.ylabel("目标函数值")
-
 plt.show()

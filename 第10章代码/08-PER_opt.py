@@ -121,7 +121,7 @@ def PSO(fitness, N, c1, c2, w, M, D):
     plt.plot(
         tspan,
         1 - C[0, :] - C[1, :],
-        label=r"$C_B$",
+        label=r"$C_C$",
         color="b",
         linewidth=2,
         linestyle="-.",
@@ -164,8 +164,7 @@ def fitness(kx):
     # 定义微分方程,注意和程序08-bc_ode中的不同，自变量t放在前面
     def dx(t, xx):  #
         ipo = spi.splrep(tspan, kx, k=3)
-        # ky=spi.splev(t,ipo)
-        ky = spi.splrep(t, ipo)
+        ky = spi.splev(t, ipo)
         x1, x2 = xx[0], xx[1]
         # 浓度方程
         dx1 = ky**2 * x2 - ky * x1  #%微分方程1
