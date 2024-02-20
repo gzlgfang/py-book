@@ -47,9 +47,9 @@ def city_zb(width, hight, city_num):
 # city_zb[:, 1] = city_y / 100
 
 
-city_zb=city_zb(100,100,100)#确定城市数目及坐标
-n=len(city_zb)
-print("n=",n)
+city_zb = city_zb(100, 100, 100)  # 确定城市数目及坐标
+n = len(city_zb)
+print("n=", n)
 
 # 计算城市i和城市j之间的距离
 # 输入 city_zb 各城市的坐标,用city_zb[i,0:1])
@@ -74,7 +74,7 @@ D = Distance(city_zb)  # 计算一次即可
 # print(D)
 # 设置基本遗传数据
 ZQS = 100  # 种群大小
-Maxgen= 1000  # 最大遗传代数
+Maxgen = 1000  # 最大遗传代数
 Pc = 0.6  # 交叉概率
 Pm = 0.2  # 变异概率
 Sel_ra = 0.7  # 选择率
@@ -92,7 +92,7 @@ def path(ZQS, N):
 
 
 LJ = path(ZQS, n)
-# print(LJ)
+print("LJ0=", LJ)
 # print(type(LJ))
 # 绘制初始路径图
 # 画路径函数
@@ -137,8 +137,8 @@ def drawpath(LJ, city_zb, num):
     # plt.ylim(0, 40)
     # plt.xlim(10, 45)
 
-    plt.ylim(-5,105)
-    plt.xlim(-5,105)
+    plt.ylim(-5, 105)
+    plt.xlim(-5, 105)
 
     plt.grid()
     plt.xlabel("横坐标")
@@ -244,36 +244,40 @@ def cross(a, b):
     b1 = np.zeros(n)
     a1[:] = a[:]  # 先保护原数据到a1,b1
     b1[:] = b[:]
-    r=[r1,r2]
-    s=min(r)
-    e=max(r)
-    #print("s,e=",s,e)
-    ar1=np.arange(0,n)
-    ar2=np.arange(s,e+1)
-    tan=np.delete(ar1,ar2)
-    tan=tan.astype(int) #tan为扣除交换段序号的其他序号，需强制转换为整数
-    #print("tan=:",tan)
-    id1=[]
-    id2=[]
+    r = [r1, r2]
+    s = min(r)
+    e = max(r)
+    # print("s,e=",s,e)
+    ar1 = np.arange(0, n)
+    ar2 = np.arange(s, e + 1)
+    tan = np.delete(ar1, ar2)
+    tan = tan.astype(int)  # tan为扣除交换段序号的其他序号，需强制转换为整数
+    # print("tan=:",tan)
+    id1 = []
+    id2 = []
     for i in range(s, e + 1):
-        a[i] = b1[i]#第i个元素进行互换
+        a[i] = b1[i]  # 第i个元素进行互换
         b[i] = a1[i]
         # a1,b1=a,b#先保护原数据到a1,b1
-        x = [id for k,id in enumerate(tan)  if abs(a[id] -a[i])<0.01]  # 找到交换后a中重复元素的序号
-        y = [id for k,id in enumerate(tan)  if abs(b[id] - b[i])<0.01]
+        x = [
+            id for k, id in enumerate(tan) if abs(a[id] - a[i]) < 0.01
+        ]  # 找到交换后a中重复元素的序号
+        y = [id for k, id in enumerate(tan) if abs(b[id] - b[i]) < 0.01]
         if x != []:
-           id1.append(x[0])
-        if y !=[]:
-           id2.append(y[0])
-    #print("i=",i)
-    #print("id1=",id1)
-    #print("id2=",id2)
-    #print(len(id1),len(id2))
-    #if id1 != []:
-    for i in range(len(id1)): #其实就是交换后重复元素的序号，除i以外
-        a[id1[i]] =b1[id2[i]]#a重复的元素用原来没交换前b重复的对应元素替换
-        b[id2[i]] =a1[id1[i]]#b重复的元素用原来没交换前a重复的对应元素替换
+            id1.append(x[0])
+        if y != []:
+            id2.append(y[0])
+    # print("i=",i)
+    # print("id1=",id1)
+    # print("id2=",id2)
+    # print(len(id1),len(id2))
+    # if id1 != []:
+    for i in range(len(id1)):  # 其实就是交换后重复元素的序号，除i以外
+        a[id1[i]] = b1[id2[i]]  # a重复的元素用原来没交换前b重复的对应元素替换
+        b[id2[i]] = a1[id1[i]]  # b重复的元素用原来没交换前a重复的对应元素替换
     return [a, b]
+
+
 # def cross(a, b):
 #     # a和b为两个待交叉的个体
 #     # 输出：
@@ -484,7 +488,7 @@ while gen <= Maxgen:
     p_len = pathlength(D, LJ)  # 计算路径长度
     index = list(p_len[:]).index(min(p_len[:]))  # 找到最短距离路径序号
     obj = p_len[index]
-    plt.plot([gen, gen + 1], [pre_obj, obj], lw=2,clip_on=False)
+    plt.plot([gen, gen + 1], [pre_obj, obj], lw=2, clip_on=False)
     pre_obj = obj
     # 选择操作
     fitnv = fit(p_len)
@@ -498,8 +502,8 @@ while gen <= Maxgen:
     # 新种子重组，保证上一轮最优解遗传给下一代
     LJ = newLJ(LJ, Sel_LJ, D)
     gen = gen + 1
-    if (gen/30-int(gen/30))<=0.01:
-        print("gen=",gen)
+    if (gen / 30 - int(gen / 30)) <= 0.01:
+        print("gen=", gen)
 plt.xlabel("遗传代数")
 plt.ylabel("路径长度")
 plt.title("优化路径距离和遗传代数关系")

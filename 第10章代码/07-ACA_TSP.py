@@ -82,9 +82,9 @@ D = Distance(city_zb)  # 计算一次即可
 m = int(3 * n)  # 确定蚂蚁数
 m = 150
 alpha = 1.5
-beta = 3
+beta = 2
 rho = 0.25
-itera_max = 10
+itera_max = 100
 #  opt_ant_Q  最优蚂蚁路线信息素强化
 Q = 10
 ran_ant = int(m / 4)  # 每轮新计算时随机路线蚂蚁数，不受信息素影响
@@ -104,7 +104,7 @@ def path(n):
     LJ = np.zeros(n)
     rnd.shuffle(li)
     LJ[:] = li
-    test_LJ = np.array(
+    """ test_LJ = np.array(
         [
             5,
             6,
@@ -141,7 +141,7 @@ def path(n):
     )
     # test_LJ=np.array([22,21,20,25,26,28,27,30,31,29,1,15,14,12,13,7,6,5,4,2,10,9,8,16,23,11,24,19,17,3,18])
     test_LJ = test_LJ - np.ones(n)
-    LJ[:] = test_LJ  # 用固定优化路径，目的计算路径长度及绘制
+    LJ[:] = test_LJ  # 用 """  # 固定优化路径，目的计算路径长度及绘制
 
     return LJ.astype(int)  # 需要强制转变成整数
 
