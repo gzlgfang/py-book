@@ -20,7 +20,6 @@ mpl.rcParams["font.size"] = 18  # 设置字体大小
 mpl.rcParams["font.style"] = "oblique"  # 设置字体风格，倾斜与否
 mpl.rcParams["font.weight"] = "normal"  # "normal",=500，设置字体粗细
 
-
 # 产生随机城市坐标city_zb
 def city_zb(width, hight, city_num):
     """
@@ -36,20 +35,19 @@ def city_zb(width, hight, city_num):
 
 
 # city_zb=city_zb(50,50,15)#确定城市数目及坐标
-
 # # 读入城市坐标
-# DF = pd.read_excel("city.xlsx", "Sheet1", na_filter=False, index_col=0)  # 共有31个城市坐标
-# city_x = np.array(DF["x"])  # 数据分配
-# city_y = np.array(DF["y"])
-# n = len(city_x)  # 计算城市的数目
-# city_zb = np.zeros((n, 2))  # 设置坐标数组
-# city_zb[:, 0] = city_x / 100
-# city_zb[:, 1] = city_y / 100
+DF = pd.read_excel("city.xlsx", "Sheet1", na_filter=False, index_col=0)  # 共有31个城市坐标
+city_x = np.array(DF["x"])  # 数据分配
+city_y = np.array(DF["y"])
+n = len(city_x)  # 计算城市的数目
+city_zb = np.zeros((n, 2))  # 设置坐标数组
+city_zb[:, 0] = city_x / 100
+city_zb[:, 1] = city_y / 100
 
-
-city_zb = city_zb(100, 100, 100)  # 确定城市数目及坐标
+""" city_num = 30
+city_zb = city_zb(100, 100, city_num)  # 确定城市数目及坐标
 n = len(city_zb)
-print("n=", n)
+print("n=", n) """
 
 # 计算城市i和城市j之间的距离
 # 输入 city_zb 各城市的坐标,用city_zb[i,0:1])
@@ -65,8 +63,8 @@ def Distance(city_zb):
                 + (city_zb[i, 1] - city_zb[j, 1]) ** 2
             ) ** 0.5
             D[j, i] = D[i, j]
-    # D[0, 14] = D[14, 0] = 10000000  # 0-14之间有障碍物
-    # D[29, 30] = D[30, 29] = 1000000
+    D[0, 14] = D[14, 0] = 10000000  # 0-14之间有障碍物
+    D[29, 30] = D[30, 29] = 1000000
     return D
 
 
@@ -74,7 +72,7 @@ D = Distance(city_zb)  # 计算一次即可
 # print(D)
 # 设置基本遗传数据
 ZQS = 100  # 种群大小
-Maxgen = 1000  # 最大遗传代数
+Maxgen = 500  # 最大遗传代数
 Pc = 0.6  # 交叉概率
 Pm = 0.2  # 变异概率
 Sel_ra = 0.7  # 选择率
@@ -113,12 +111,12 @@ def drawpath(LJ, city_zb, num):
         plt.text(city_zb[i, 0] - 0.3, city_zb[i, 1] + 0.5, str(i + 1), color="r")
 
     # 绘线
-    xy = (city_zb[LJ[0], 0], city_zb[LJ[0], 1])
+    """ xy = (city_zb[LJ[0], 0], city_zb[LJ[0], 1])
     xytext = (city_zb[LJ[1], 0], city_zb[LJ[1], 1])
     plt.annotate(
-        "", xy=xy, xytext=xytext, arrowprops=dict(arrowstyle="<-", color="g", lw=2)
-    )
-    for i in range(1, n - 1):
+        "", xy=xy, xytext=xytext, arrowprops=dict(arrowstyle="<-", color="r", lw=2)
+    ) """
+    for i in range(0, n - 1):
         # x=[city_zb[LJ[i],0],city_zb[LJ[i+1],0]]
         # y=[city_zb[LJ[i],1],city_zb[LJ[i+1],1]]
         # plt.plot(x,y,lw=2,c="r")
@@ -131,14 +129,14 @@ def drawpath(LJ, city_zb, num):
     xy = (city_zb[LJ[n - 1], 0], city_zb[LJ[n - 1], 1])
     xytext = (city_zb[LJ[0], 0], city_zb[LJ[0], 1])
     plt.annotate(
-        "", xy=xy, xytext=xytext, arrowprops=dict(arrowstyle="<-", color="g", lw=2)
+        "", xy=xy, xytext=xytext, arrowprops=dict(arrowstyle="<-", color="r", lw=2)
     )
 
-    # plt.ylim(0, 40)
-    # plt.xlim(10, 45)
+    plt.ylim(0, 40)
+    plt.xlim(10, 45)
 
-    plt.ylim(-5, 105)
-    plt.xlim(-5, 105)
+    """ plt.ylim(-5, 105)
+    plt.xlim(-5, 105) """
 
     plt.grid()
     plt.xlabel("横坐标")
@@ -239,7 +237,7 @@ def cross(a, b):
         r2 = rnd.randint(0, n - 1)  # 随机产生一个0：n-1的整数
         if r1 != r2:
             flags = False
-    # 保证找到两个不同是整数，可以进行交叉操作
+    # 保证找到两个不同的整数，可以进行交叉操作
     a1 = np.zeros(n)
     b1 = np.zeros(n)
     a1[:] = a[:]  # 先保护原数据到a1,b1
@@ -247,14 +245,12 @@ def cross(a, b):
     r = [r1, r2]
     s = min(r)
     e = max(r)
-    # print("s,e=",s,e)
-    ar1 = np.arange(0, n)
-    ar2 = np.arange(s, e + 1)
+    ar1 = np.arange(0, n)  # 不包含n，默认为浮点数
+    ar2 = np.arange(s, e + 1)  # 包含s-e
     tan = np.delete(ar1, ar2)
     tan = tan.astype(int)  # tan为扣除交换段序号的其他序号，需强制转换为整数
-    # print("tan=:",tan)
     id1 = []
-    id2 = []
+    id2 = []  # 空列表
     for i in range(s, e + 1):
         a[i] = b1[i]  # 第i个元素进行互换
         b[i] = a1[i]
@@ -267,70 +263,64 @@ def cross(a, b):
             id1.append(x[0])
         if y != []:
             id2.append(y[0])
-    # print("i=",i)
-    # print("id1=",id1)
-    # print("id2=",id2)
-    # print(len(id1),len(id2))
-    # if id1 != []:
     for i in range(len(id1)):  # 其实就是交换后重复元素的序号，除i以外
         a[id1[i]] = b1[id2[i]]  # a重复的元素用原来没交换前b重复的对应元素替换
         b[id2[i]] = a1[id1[i]]  # b重复的元素用原来没交换前a重复的对应元素替换
     return [a, b]
 
 
-# def cross(a, b):
-#     # a和b为两个待交叉的个体
-#     # 输出：
-#     # a和b为交叉后得到的两个个体
-#     n = len(a)  # 城市数目
-#     flags = True
-#     while flags:
-#         r1 = rnd.randint(0, n - 1)  # 随机产生一个0：n-1的整数
-#         r2 = rnd.randint(0, n - 1)  # 随机产生一个0：n-1的整数
-#         if r1 != r2:
-#             flags = False
-#     # 保证找到两个不同是整数，可以进行交叉操作
-#     a0 = np.zeros(n)
-#     b0 = np.zeros(n)
-#     a1 = np.zeros(n)
-#     b1 = np.zeros(n)
-#     # a0[:] = a[:]
-#     # b0[:] = b[:]
-#     a1[:] = a[:]  # 先保护原数据到a1,b1
-#     b1[:] = b[:]
-#     # r=np.random.randint(n,size=2) #可能重复
-#     # r.sort()
-#     # r1,r2=r[0],r[1]
-#     # a0,b0=a,b#作为中间变量
-#     if r1 > r2:
-#         s, e = r2, r1
-#     else:
-#         s, e = r1, r2
-#     # s,e=r1,r2
-#     # a[s:e+1]=b0[s:e+1]
-#     # b[s:e+1]=a0[s:e+1]
-#     # print(s,e)
-#     for i in range(s, e + 1):
-#         a[i] = b1[i]
-#         b[i] = a1[i]
-#         # a1,b1=a,b#先保护原数据到a1,b1
-#         x = [id for id in range(n) if a[id] == a[i]]  # 找到交换后a中重复元素的序号
-#         y = [id for id in range(n) if b[id] == b[i]]
-#         # print("i=",x,y)
-#         id1 = [s1 for k, s1 in enumerate(x) if x[k] != i]  # 找到序号不为i的其他序号
-#         id2 = [s2 for k, s2 in enumerate(y) if y[k] != i]
-#         # print("i=",i)
-#         # print(id1)
-#         # print(id2)
-#         if id1 != []:
-#             i1 = id1[0]
-#             a[i1] = a1[i]
-#             a1[i1] = a[i1]
-#         if id2 != []:
-#             i2 = id2[0]
-#             b[i2] = b1[i]
-#             b1[i2] = b[i2]
-#     return [a, b]
+""" def cross(a, b):
+    #     # a和b为两个待交叉的个体
+    #     # 输出：
+    #     # a和b为交叉后得到的两个个体
+    n = len(a)  # 城市数目
+    flags = True
+    while flags:
+        r1 = rnd.randint(0, n - 1)  # 随机产生一个0：n-1的整数
+        r2 = rnd.randint(0, n - 1)  # 随机产生一个0：n-1的整数
+        if r1 != r2:
+            flags = False
+    #     # 保证找到两个不同是整数，可以进行交叉操作
+
+    a1 = np.zeros(n)
+    b1 = np.zeros(n)
+    #     # a0[:] = a[:]
+    #     # b0[:] = b[:]
+    a1[:] = a[:]  # 先保护原数据到a1,b1
+    b1[:] = b[:]
+    # r=np.random.randint(n,size=2) #可能重复
+    #     # r.sort()
+    #     # r1,r2=r[0],r[1]
+    #     # a0,b0=a,b#作为中间变量
+    if r1 > r2:
+        s, e = r2, r1
+    else:
+        s, e = r1, r2
+    # s,e=r1,r2
+    #     # a[s:e+1]=b0[s:e+1]
+    #     # b[s:e+1]=a0[s:e+1]
+    #     # print(s,e)
+    for i in range(s, e + 1):
+        a[i] = b1[i]
+        b[i] = a1[i]
+        #         # a1,b1=a,b#先保护原数据到a1,b1
+        x = [id for id in range(n) if a[id] == a[i]]  # 找到交换后a中重复元素的序号
+        y = [id for id in range(n) if b[id] == b[i]]
+        #         # print("i=",x,y)
+        id1 = [s1 for k, s1 in enumerate(x) if x[k] != i]  # 找到序号不为i的其他序号
+        id2 = [s2 for k, s2 in enumerate(y) if y[k] != i]
+        #         # print("i=",i)
+        #         # print(id1)
+        #         # print(id2)
+        if id1 != []:
+            i1 = id1[0]
+            a[i1] = a1[i]
+            a1[i1] = a[i1]
+        if id2 != []:
+            i2 = id2[0]
+            b[i2] = b1[i]
+            b1[i2] = b[i2]
+    return [a, b] """
 
 
 # 交叉重组
@@ -345,7 +335,6 @@ def Re_com(Sel_LJ, Pc):
 
 Sel_LJ = Re_com(Sel_LJ, Pc)
 # print("NEW=",Sel_LJ)
-
 # 交叉重组后的最优解
 p_len = pathlength(D, Sel_LJ)
 # fitnv=fit(p_len)
@@ -390,10 +379,8 @@ plt.text(40, 37, "总长度=")
 plt.text(42, 37, str(int(1000 * p_len[index]) / 1000))
 # print(np.sort(Sel_LJ[index]))
 # print(Sel_LJ[index])
-
 # print("Sel_LJ=",Sel_LJ.shape)
 # print(type(Sel_LJ))
-
 # 逆转操作：
 # 全部被选中种子均参加逆转操作
 # 逆转后适应度大的将替换原选择种子
@@ -431,7 +418,7 @@ def Reverse(Sel_LJ, D):
     p_len1 = pathlength(D, Sel_LJ1)
     # %计算路径长度
     index = p_len1 < p_len
-    Sel_LJ[index, :] = Sel_LJ1[index, :]
+    Sel_LJ[index, :] = Sel_LJ1[index, :]  ##选择逆转后适应度优秀的
     return Sel_LJ
 
 
@@ -513,19 +500,21 @@ plt.grid()
 num = "绘制最终优化图"
 draw_path = drawpath(LJ[index, :], city_zb, num)
 # plt.legend(str(p_len[0]))
-plt.text(40, 102, "总长度=")
-plt.text(50, 102, str(int(1000 * p_len[index]) / 1000))
+""" plt.text(40, 102, "总长度=")
+plt.text(50, 102, str(int(1000 * p_len[index]) / 1000)) """
 
-# plt.text(35, 32, "总长度=")
-# plt.text(39, 32, str(int(1000 * p_len[index]) / 1000))
+plt.text(35, 32, "总长度=")
+plt.text(39, 32, str(int(1000 * p_len[index]) / 1000))
 
 
 # 打印最终优化路径
+print("最终优化路径长度=", int(1000 * p_len[index]) / 1000)
+print("打印最终优化路径:")
 print_LJ = str()
 for i in range(n):
     print_LJ = print_LJ + str(LJ[index, i] + 1) + "-->"
 print_LJ = print_LJ + str(LJ[index, 0] + 1)
 print(print_LJ)
 end_time = time.process_time()
-print("process_time程序运行计时=", end_time - start_time)
+print("process_time程序运行计时=", end_time - start_time, "秒")
 plt.show()

@@ -28,7 +28,7 @@ def Food_con(X):  ##X 是矩阵向量，行数是鱼群数量，列数是每条�
     # Y[:] = (
     # 3 * (x1 - 5) ** 2 + 6 * (x2 - 6) ** 2 + (x3 - 4) ** 2
     # )  ##根据具体目标函数定义，Y是一维向量，数目为鱼群数量
-    Y[:] = (
+    Y = (
         (x1**1.2 + x1**0.5 * x2**0.9 + x2 * x3**0.9 - 0.8) ** 2
         + (x1**0.8 + x2**1.2 * x3 + x1 * x3**1.1 - 0.8) ** 2
         + (x1 * x2 * 1.1 + x2 * x3 + x3**1.5 - 0.8) ** 2
@@ -48,7 +48,7 @@ def Food_con_1(X):  ##X是每条鱼位置,求单条鱼的目标函数即浓度
         3 * (x1 - 5) ** 2 + 6 * (x2 - 6) ** 2 + (x3 - 4) ** 2
     )  ##根据 """  ##具体目标函数定义，Y是一维向量，数目为鱼群数量
 
-    Y[:] = (
+    Y = (
         (x1**1.2 + x1**0.5 * x2**0.9 + x2 * x3**0.9 - 0.8) ** 2
         + (x1**0.8 + x2**1.2 * x3 + x1 * x3**1.1 - 0.8) ** 2
         + (x1 * x2 * 1.1 + x2 * x3 + x3**1.5 - 0.8) ** 2
@@ -83,7 +83,7 @@ def Inital_AF(NumF, lb_ub):  ##产生鱼群初始位置
     ##lb_ub： 鱼的活动范围
     ##输出变量
     ##X：产生初始人工鱼群的位置向量
-    row = np.shape(lb_ub)[0]
+    # row = np.shape(lb_ub)[0]=2,下限和上限，只有2行数据
     col = np.shape(lb_ub)[1]
     X = np.zeros([NumF, col])
 
@@ -109,7 +109,7 @@ step = 0.2 * lu_dis
 visual = 0.5
 try_N = 30
 last_Y = Food_con(XX)
-print(last_Y)
+# print(last_Y)
 ##觅食行为，Find food（Find_food),为每条鱼计算下一个位置及浓度 Xnext[Ynext]
 def Find_food(Xi, Fi, visual, step, try_N, last_Y, lb_ub):
     # 输入参数：
@@ -243,6 +243,7 @@ def follow_AF(X, Fi, visual, deta, step, try_N, last_Y, lb_ub):
     # 输出参数：
     #%Xnext       Xi人工鱼的下一个位置
     # Ynext        Xi人工鱼的下一个位置的食物浓度
+    # deta = 0.618  ##拥挤度因子
     Xi = X[Fi - 1, :]
     D = Distance(Xi, X)
     # print("D=",D)
@@ -302,9 +303,9 @@ step = 0.1  ##步长
 ##初始化鱼群
 XX = Inital_AF(NumF, lb_ub)
 BestY = np.ones(Maxgen)  ##每次迭代中最优的函数值
-BestX = np.zeros([Maxgen, 3])  ##每步中最优的自变量
+BestX = np.zeros([Maxgen, 3])  ##每次迭代中最优的自变量
 # BestX = np.zeros([Maxgen, 2])
-besty = -800  ##最优函数值
+besty = -800  ##最优函数值初值,设置1个较小的负数，问题求最大值
 Y = Food_con(XX)  ##初始化鱼群个鱼的函数值即浓度
 
 while gen <= Maxgen - 1:
@@ -314,6 +315,7 @@ while gen <= Maxgen - 1:
         Xi1, Yi1 = cluster_AF(XX, Fi, visual, step, deta, try_N, Y, lb_ub)
         ## 追尾行为
         Xi2, Yi2 = follow_AF(XX, Fi, visual, step, deta, try_N, Y, lb_ub)
+        # 判断优劣
         if Yi1 > Yi2:
             XX[Fi - 1, :] = Xi1
             Y[Fi - 1] = Yi1
@@ -375,7 +377,7 @@ ax.text(
 ax.text(
     bestxx[0] - 0.01, bestxx[1] - 0.01, bestxx[2], f"最优点函数值J={bestyy:.5f}", zdir="x"
 )
-print(BestY)
+# print(BestY)
 end_time = time.process_time()
 print("process_time程序运行计时=", end_time - start_time)
 plt.show()

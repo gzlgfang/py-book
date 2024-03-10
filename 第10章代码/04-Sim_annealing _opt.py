@@ -97,9 +97,7 @@ def Newpath(LJ):
         LJ2[r_max] = LJ[r_min]
         # LJ2[r_min+n]=LJ[r_max+n]
         # LJ2[r_max+n]=LJ[r_min+n]#针对两个变量
-
         # LJ2[5]=LJ[r3]
-
     return LJ2
 
 
@@ -107,7 +105,7 @@ LJ1 = Bin_pop(N)
 LJ2 = Newpath(LJ1)
 x = Change2_10(LJ2, lb, ub, D)  # 2进制转化为10进制，能区分变量数目及上下限
 preObj = fun(x)
-print(x, preObj)
+print("初始解及目标函数=", x, preObj)
 # 新解确定与否判定
 def Metropolis(LJ1, LJ2, T, D, lb, ub):
     x1 = Change2_10(LJ1, lb, ub, D)
@@ -131,7 +129,7 @@ def Metropolis(LJ1, LJ2, T, D, lb, ub):
 [LJ, f] = Metropolis(LJ1, LJ2, T0, D, lb, ub)
 count = 0
 LJ0 = LJ.astype(int)
-print(LJ0, f)
+# print(LJ0, f)
 
 count = 0
 obj = np.zeros(T_num)  # 初始化路径总距离
@@ -144,6 +142,7 @@ while T0 > Tend:
     tem_len = np.zeros(L)
     # 进行一次退火需要进行L次新函数计算
     for i in range(L):
+        LJ1 = LJ0
         LJ2 = Newpath(LJ0)
         # Metropolis 法则判断新解
         [LJ0, f] = Metropolis(LJ1, LJ2, T0, D, lb, ub)
@@ -169,9 +168,19 @@ while T0 > Tend:
 
 
 x = Change2_10(LJ0, lb, ub, D)
-print(x, fun(x))
-plt.figure(num="目标函数和和退火次数关系图")
+print("最优解=", x)
+print("最优目标函数=", fun(x))
+plt.figure(num="目标函数和和退火次数关系图1")
+for i in range(1, T_num - 1):
+    plt.plot([i, i + 1], [obj[i], obj[i + 1]])
+plt.xlabel("退火次数")
+plt.ylabel("目标函数")
+
+plt.grid()
+plt.figure(num="目标函数和和退火次数关系图2")
 for i in range(1, T_num - 1):
     plt.plot([i, i + 1], [obj1[i], obj1[i + 1]])
 
+
+plt.grid()
 plt.show()

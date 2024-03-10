@@ -38,7 +38,6 @@ def fun(x):
 
 
 T_num = int(optimize.fsolve(fun, [30]) + 2)  # 计算退火次数
-
 # 读入城市坐标
 DF = pd.read_excel("city.xlsx", "Sheet1", na_filter=False, index_col=0)  # 共有31个城市坐标
 city_x = np.array(DF["x"])  # 数据分配
@@ -68,7 +67,6 @@ def path(N):
     li = np.arange(0, N)
     # LJ = np.zeros(N)
     # rnd.shuffle(li)
-
     LJ = rnd.sample(list(li), N)
     # LJ[:] = li
     return LJ  # .astype(int)  # 需要强制转变成整数
@@ -264,6 +262,10 @@ plt.text(37, 35, str(int(1000 * p_len) / 1000))
 
 plt.figure(num="优化路径距离和退火次数关系图")
 for i in range(1, T_num - 1):
-    plt.plot([i, i + 1], [obj1[i], obj1[i + 1]])
+    plt.plot([i, i + 1], [obj[i], obj[i + 1]])
+plt.xlabel("退火次数")
+plt.ylabel("优化路径长度")
+plt.title("优化路径距离和退火次数关系图")
 
+plt.grid()
 plt.show()

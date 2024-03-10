@@ -69,7 +69,7 @@ def PSO(fitness, N, c1, c2, w, M, D):
         ggbest.append(gbest)
     print(f"目标函数取最小值时的自变量 {gbest}")
     print(f"目标函数的最小值为 {fitness(gbest)}")
-    print("ggbest=", ggbest)
+    # print("ggbest=", ggbest)
     plt.figure(num="目标函数与迭代次数关系图")
     for i in range(M - 1):
         plt.plot([i, i + 1], [-gbest_fit[i], -gbest_fit[i + 1]], lw=2, c="b")
@@ -82,9 +82,9 @@ def PSO(fitness, N, c1, c2, w, M, D):
     ggbest = np.array(ggbest)
     x = ggbest[:, 0]
     y = ggbest[:, 1]
-    # z = ggbest[:, 2]
-    z = -gbest_fit
-    c = -gbest_fit
+    z = ggbest[:, 2]
+    # z = -gbest_fit
+    c = gbest_fit
     p = ax.scatter(x, y, z, c=c, cmap=mpl.cm.RdYlBu, marker="*", s=200, zdir="z")
     fig.colorbar(p, ax=ax, shrink=0.5)
     ax.set_xlabel("$x$", labelpad=10, fontsize=16)
@@ -95,12 +95,13 @@ def PSO(fitness, N, c1, c2, w, M, D):
     # ax.set_xlim(-1, 1.1)
     # ax.set_ylim(-1, 1.1)
     ax.set_title("粒子算法迭代过程最优点位置移动")
+    # print("x,y,z=", x, y, z)
 
 
 def func(x):  ##fitness
     x1 = x[0]
     x2 = x[1]
-    # x, y, z = x[0], x[1], x[2]
+    x, y, z = x[0], x[1], x[2]
     """ x, y = x[0], x[1]
     str = x**2 - 2 * x + y + 1000 * (min(4 - 4 * x**2 - y**2, 0)) ** 2
     f = lambda x: str """
@@ -109,24 +110,25 @@ def func(x):  ##fitness
     + (x**1.2 * y + y**0.9 + x**0.5 * z - 1) ** 2
     + (x + y**0.4 * z**0.5 + z**1.2 - 1) ** 2
      ) """
-    """ f = (
+    f = (
         lambda x: (x**0.8 + x * y**0.7 + z**0.8 - 1) ** 2
-        + (x**1.2 * y + y**0.9 + x**0.5 * z - 1) ** 2
-        + (x + y**0.4 * z + z**1.2 - 1) ** 2
-    ) """
+        + (x**1.2 * y + y**0.9 * z + x**0.5 - 1) ** 2
+        + (x + y**0.4 * z**0.5 + z**1.2 - 1) ** 2
+    )
 
     # f = lambda x: (x[0] - 10) ** 2 + (x[1] - 16) ** 2
     # f = lambda x: (x1 - 2) ** 2 + (x1 - x2) ** 2 - 2 * x2
     # f = lambda x: x1**2 +2*x1 - 6+x2**2 +2*x2
     # f=lambda x:30+x1**2 + x2**2-10*(np.cos(2*np.pi*x1)+np.cos(2*np.pi*x2))
-    f = (
+    """ f = (
         lambda x: np.sin(np.sqrt(x1**2 + x2**2)) / np.sqrt(x1**2 + x2**2)
         + np.exp((np.cos(2 * np.pi * x1) + np.cos(2 * np.pi * x2)) / 2)
         - np.exp(1)
-    )
-    return np.sum(-f(x))  # 求最大变成求最小，前面加负号
+    ) """
+    return np.sum(f(x))  # 求最大变成求最小，前面加负号
 
 
 # if __name__ == '__main__':
-PSO(func, 50, 1.5, 2.5, 0.5, 100, 2)
+PSO(func, 50, 1.5, 2.5, 0.5, 100, 3)
+
 plt.show()

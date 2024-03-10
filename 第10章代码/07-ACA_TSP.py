@@ -50,16 +50,17 @@ def city_zb(width, hight, city_num):
     return city_zb
 
 
-# city_zb=city_zb(50,50,15)#确定城市数目及坐标
+city_zb = city_zb(50, 50, 30)  # 确定城市数目及坐标
+n = len(city_zb)
 # 固定城市坐标
 # 读入城市坐标
-DF = pd.read_excel("city.xlsx", "Sheet1", na_filter=False, index_col=0)  # 共有31个城市坐标
+""" DF = pd.read_excel("city.xlsx", "Sheet1", na_filter=False, index_col=0)  # 共有31个城市坐标
 city_x = np.array(DF["x"])  # 数据分配
 city_y = np.array(DF["y"])
 n = len(city_x)  # 计算城市的数目
 city_zb = np.zeros((n, 2))  # 设置坐标数组
 city_zb[:, 0] = city_x / 100
-city_zb[:, 1] = city_y / 100
+city_zb[:, 1] = city_y / 100 """
 # city_zb=city_zb(50,50,50)#确定城市数目及坐标
 # 计算城市i和城市j之间的距离
 # 输入 city_zb 各城市的坐标,用city_zb[i,0:1])
@@ -84,14 +85,15 @@ m = 150
 alpha = 1.5
 beta = 2
 rho = 0.25
-itera_max = 100
+itera_max = 300
 #  opt_ant_Q  最优蚂蚁路线信息素强化
 Q = 10
 ran_ant = int(m / 4)  # 每轮新计算时随机路线蚂蚁数，不受信息素影响
-LJ_best = np.zeros((itera_max, n))  # 各代最佳路线
+ran_ant = 0
+LJ_best = np.zeros((itera_max, n), int)  # 各代最佳路线
 pen_best = np.zeros(itera_max)  # 各代最佳路线的长度
 eta = 1.0 / D  # 启发因子，取距离的倒数
-LJ = np.zeros((m, n))  # 路径记录
+LJ = np.zeros((m, n), int)  # 所有蚂蚁路径记录
 tau = np.ones((n, n))  # 信息素矩阵
 max_tau = 10  # 设置信息素最大值
 # print(n)
@@ -100,10 +102,11 @@ max_tau = 10  # 设置信息素最大值
 # 计算城市之间的距离
 # 产生初始蚂蚁轨迹LJ0用以验证绘制程序的正确性
 def path(n):
-    li = np.arange(0, n)
-    LJ = np.zeros(n)
-    rnd.shuffle(li)
-    LJ[:] = li
+    LJ_one = np.arange(0, n)
+    # LJ = np.zeros(n, int)
+    rnd.shuffle(LJ_one)
+    # LJ[:] = li
+    # LJ = li
     """ test_LJ = np.array(
         [
             5,
@@ -143,7 +146,7 @@ def path(n):
     test_LJ = test_LJ - np.ones(n)
     LJ[:] = test_LJ  # 用 """  # 固定优化路径，目的计算路径长度及绘制
 
-    return LJ.astype(int)  # 需要强制转变成整数
+    return LJ_one  # 随机生成初始单个蚂蚁路径
 
 
 LJ0 = path(n)
@@ -170,20 +173,20 @@ def drawpath(LJ, city_zb, num):
     xy = (city_zb[LJ[0], 0], city_zb[LJ[0], 1])
     xytext = (city_zb[LJ[1], 0], city_zb[LJ[1], 1])
     plt.annotate(
-        "", xy=xy, xytext=xytext, arrowprops=dict(arrowstyle="<-", color="g", lw=2)
+        "", xy=xy, xytext=xytext, arrowprops=dict(arrowstyle="<-", color="r", lw=3)
     )
     for i in range(1, n - 1):
         xy = [city_zb[LJ[i], 0], city_zb[LJ[i], 1]]
         xytext = [city_zb[LJ[i + 1], 0], city_zb[LJ[i + 1], 1]]
         plt.annotate(
-            "", xy=xy, xytext=xytext, arrowprops=dict(arrowstyle="<-", color="g", lw=2)
+            "", xy=xy, xytext=xytext, arrowprops=dict(arrowstyle="<-", color="g", lw=4)
         )
 
     ## 无需回起点时，下面3行代码不要
     xy = (city_zb[LJ[n - 1], 0], city_zb[LJ[n - 1], 1])
     xytext = (city_zb[LJ[0], 0], city_zb[LJ[0], 1])
     plt.annotate(
-        "", xy=xy, xytext=xytext, arrowprops=dict(arrowstyle="<-", color="g", lw=1)
+        "", xy=xy, xytext=xytext, arrowprops=dict(arrowstyle="<-", color="r", lw=3)
     )
     # plt.ylim(0,40)
     # plt.xlim(10,50)ggbgbbg
@@ -213,7 +216,6 @@ num = "绘制初始路径"
 draw_path = drawpath(LJ0, city_zb, num)
 # plt.legend(str(p_len[0]))
 plt.text(22, 33, "总长度=" + str(int(1000 * p_len) / 1000))
-
 # 打印路径
 def print_way(LJ):
     print_LJ = str()
@@ -231,13 +233,14 @@ print_way(LJ0)
 itera_num = 0
 while itera_num < itera_max:
     # 随机产生每只蚂蚁的起点城市序号0~n-1
-    start = np.zeros(m)
+    start = np.zeros(m, int)
     # itera_num=itera_num+1
     for i in range(m):
         start[i] = rnd.randint(0, n - 1)
-    start = start.astype(int)
+    # start = start.astype(int)
     # print(start)
     LJ[:, 0] = start
+    # print(type(start))
     LJ = LJ.astype(int)
     # print(LJ[:,0])
     # print("len(LJ[:,0]=",len(LJ[:,0]))
@@ -248,11 +251,9 @@ while itera_num < itera_max:
         for j in range(1, n):
             prohi_tab = LJ[i, 0:j]  # 禁止表 prohibit_table
             allow = list(set(city_id).difference(set(prohi_tab)))
-            P = np.zeros(len(allow))  # []#建立初始空数据
-            # P=allow[:]
-            # print("p=",P)
-            # print(len(allow))
-            # print(len(P))
+            P = np.ones(len(allow))  # []#建立初始数据
+            # P = np.zeros(len(allow)) 也可以为零，建立初始空数据
+
             for k in range(len(allow)):
                 # print(prohi_tab[j-1],allow[k])
                 P[k] = (
@@ -260,12 +261,17 @@ while itera_num < itera_max:
                     * eta[prohi_tab[j - 1], allow[k]] ** beta
                 )
 
-            P = P / sum(P)
+            # P = P / sum(P) ##保证最后一个允许数据时被选中
+            # print("P=", P)
             # tar_id= list(P[:]).index(max(P[:]) )
-            Pc = cumsum(P)
+            # Pc = cumsum(P) ##保证随机操作时有数据选中
+            # print("Pc=", Pc)
+            Pc = P / sum(P)
             tar_id = [i for i, tp in enumerate(Pc) if tp > np.random.random()]
-            # tar = allow[tar_id]
-            tar = allow[tar_id[0]]
+            if tar_id == []:
+                tar_id = np.array([0], int)  # tar = allow[tar_id]
+            # print(tar_id)
+            tar = allow[tar_id[0]]  # 要加[0]
             LJ[i, j] = tar
         # print("LJ=",LJ[i,:])
         if i >= m - ran_ant:  # ran_ant=3
