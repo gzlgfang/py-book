@@ -24,18 +24,13 @@ def Food_con(X):  ##X 是矩阵向量，行数是鱼群数量，列数是每条�
     Y = np.zeros(n)
     x1 = X[:, 0]
     x2 = X[:, 1]
-    x3 = X[:, 2]
+    # x3 = X[:, 2]
     # Y[:] = (
     # 3 * (x1 - 5) ** 2 + 6 * (x2 - 6) ** 2 + (x3 - 4) ** 2
     # )  ##根据具体目标函数定义，Y是一维向量，数目为鱼群数量
-    Y = (
-        (x1**1.2 + x1**0.5 * x2**0.9 + x2 * x3**0.9 - 0.8) ** 2
-        + (x1**0.8 + x2**1.2 * x3 + x1 * x3**1.1 - 0.8) ** 2
-        + (x1 * x2 * 1.1 + x2 * x3 + x3**1.5 - 0.8) ** 2
-    )
-    # R = x1**2 + x2**2
-    # Y[:] = 20 * (np.cos(2 * np.pi * x1) + np.cos(2 * np.pi * x2)) - R - 20
-    return -Y  ## 求极小值，目标反转
+    R = x1**2 + x2**2
+    Y[:] = 20 * (np.cos(2 * np.pi * x1) + np.cos(2 * np.pi * x2)) - R - 20
+    return Y  ## 求极小值，目标反转
 
 
 def Food_con_1(X):  ##X是每条鱼位置,求单条鱼的目标函数即浓度
@@ -43,19 +38,9 @@ def Food_con_1(X):  ##X是每条鱼位置,求单条鱼的目标函数即浓度
     Y = np.zeros(1)
     x1 = X[0]
     x2 = X[1]
-    x3 = X[2]
-    """ Y[:] = (
-        3 * (x1 - 5) ** 2 + 6 * (x2 - 6) ** 2 + (x3 - 4) ** 2
-    )  ##根据 """  ##具体目标函数定义，Y是一维向量，数目为鱼群数量
-
-    Y = (
-        (x1**1.2 + x1**0.5 * x2**0.9 + x2 * x3**0.9 - 0.8) ** 2
-        + (x1**0.8 + x2**1.2 * x3 + x1 * x3**1.1 - 0.8) ** 2
-        + (x1 * x2 * 1.1 + x2 * x3 + x3**1.5 - 0.8) ** 2
-    )
-    """ R = x1**2 + x2**2
-    Y[:] = 20 * (np.cos(2 * np.pi * x1) + np.cos(2 * np.pi * x2)) - R - 20 """
-    return -Y
+    R = x1**2 + x2**2
+    Y[:] = 20 * (np.cos(2 * np.pi * x1) + np.cos(2 * np.pi * x2)) - R - 20
+    return Y
 
 
 # X = np.array([[1, 2, 3], [2, 3, 4], [4, 6, 7], [9, 3, 2], [6, 12, 4]])
@@ -75,8 +60,6 @@ def Distance(Xi, X):  ##计算第Xi条鱼和其他所有鱼之间的距离
 
 ##  Di_j=Distance(X[2],X)
 ##  print(Di_j) 调试用
-
-
 def Inital_AF(NumF, lb_ub):  ##产生鱼群初始位置
     ## 输入变量
     ##NumF： 鱼群大小
@@ -86,7 +69,6 @@ def Inital_AF(NumF, lb_ub):  ##产生鱼群初始位置
     # row = np.shape(lb_ub)[0]=2,下限和上限，只有2行数据
     col = np.shape(lb_ub)[1]
     X = np.zeros([NumF, col])
-
     for i in range(NumF):
         for j in range(col):
             lb = lb_ub[0, j]
@@ -101,8 +83,8 @@ def Inital_AF(NumF, lb_ub):  ##产生鱼群初始位置
 ##这里的lb_ub是2行3列的矩阵，第1行是鱼群位置范围的上限，第2行是鱼群位置范围的下限。每一行数据的数目表示维度
 NumF = 20
 # lb_ub = np.array([[-1, -1, -1], [10, 10, 10]])  ##第一行数据为下限，第二行数据为上限，列数为位置维度
-lb_ub = np.array([[0, 0, 0], [1, 1, 1]])
-# lb_ub = np.array([[-5, -5], [5, 5]])
+# lb_ub = np.array([[0, 0, 0], [1, 1, 1]])
+lb_ub = np.array([[-5, -5], [5, 5]])
 XX = Inital_AF(NumF, lb_ub)
 lu_dis = np.sqrt(np.sum((lb_ub[0, :] - lb_ub[1, :]) ** 2)) / 10
 step = 0.2 * lu_dis
@@ -170,7 +152,6 @@ print("觅食=", Xnext, Ynext)
 deta = 0.618
 ##群聚行为
 def cluster_AF(X, Fi, visual, step, deta, try_N, last_Y, lb_ub):
-
     # 输入参数：
     # X            所有人工鱼的位置
     # Fi           当前人工鱼的序号
@@ -184,7 +165,6 @@ def cluster_AF(X, Fi, visual, step, deta, try_N, last_Y, lb_ub):
     # 输出参数：
     #%Xnext       Xi人工鱼的下一个位置
     # Ynext        Xi人工鱼的下一个位置的食物浓度
-
     Xi = X[Fi - 1, :]
     D = Distance(Xi, X)
     # print("D=",D)
@@ -229,7 +209,6 @@ print("群聚=", Xnext, Ynext)  # 调试时用
 
 
 def follow_AF(X, Fi, visual, deta, step, try_N, last_Y, lb_ub):
-
     ## 追尾行为
     # 输入参数：
     # X            所有人工鱼的位置
@@ -293,21 +272,18 @@ start_time = time.process_time()
 gen = 0
 ##重新设置计算参数
 NumF = 60  ##生成60只人工鱼
-# lb_ub = np.array([[0.01, 0.01, 0.01], [1, 1, 1]])  ##三维位置上下限
-# lb_ub = np.array([[-5, -5], [5, 5]])
-Maxgen = 200  ##最多迭代次数
+Maxgen = 100  ##最多迭代次数
 try_N = 200  ##最多试探次数
-visual = 0.5  ##感知距离
+visual = 3  ##感知距离
 deta = 0.618  ##拥挤度因子
-step = 0.1  ##步长
+step = 0.2  ##步长
 ##初始化鱼群
 XX = Inital_AF(NumF, lb_ub)
 BestY = np.ones(Maxgen)  ##每次迭代中最优的函数值
-BestX = np.zeros([Maxgen, 3])  ##每次迭代中最优的自变量
-# BestX = np.zeros([Maxgen, 2])
+# BestX = np.zeros([Maxgen, 3])  ##每次迭代中最优的自变量
+BestX = np.zeros([Maxgen, 2])
 besty = -800  ##最优函数值初值,设置1个较小的负数，问题求最大值
 Y = Food_con(XX)  ##初始化鱼群个鱼的函数值即浓度
-
 while gen <= Maxgen - 1:
     for i in range(NumF):
         ## 聚群行为
@@ -326,7 +302,6 @@ while gen <= Maxgen - 1:
     # print(Max_id)
     Ymax = max(Y[:])  ##本次迭代最大值
     Xmax = XX[Max_id, :]  ##浓度最大处的位置数据
-
     if Ymax > besty:
         besty = Ymax
         bestx = Xmax
@@ -336,11 +311,9 @@ while gen <= Maxgen - 1:
         BestY[gen] = BestY[gen - 1]  ##用上一轮迭代的最优解
         BestX[gen, :] = BestX[gen - 1, :]
     gen = gen + 1
-
 bestyy = max(BestY)
 id = list(BestY[:]).index(max(BestY[:]))
 bestxx = BestX[id, :]
-
 plt.figure(num="优化目标和迭代次数关系图")
 x = np.arange(0, Maxgen)
 y = BestY
@@ -349,7 +322,6 @@ plt.xlabel("迭代代数")
 plt.ylabel("目标函数")
 plt.title("鱼群算法迭代过程")
 plt.grid()
-
 print("最优目标函数值=", bestyy)
 print("最优鱼个体位置=", bestxx)
 
@@ -357,7 +329,8 @@ fig = plt.figure()
 ax = fig.add_subplot(1, 1, 1, projection="3d")
 x = BestX[:, 0]
 y = BestX[:, 1]
-z = BestX[:, 2]
+# z = BestX[:, 2] #三元变量时用
+z = BestY  # 二元变量时用
 c = BestY
 p = ax.scatter(x, y, z, c=c, cmap=mpl.cm.RdYlBu, marker="o", s=500, zdir="z")
 fig.colorbar(p, ax=ax, shrink=0.5)
@@ -365,17 +338,8 @@ ax.set_xlabel("$x$", labelpad=10, fontsize=16)
 ax.set_ylabel("$y$", labelpad=10, fontsize=16)
 ax.set_zlabel("$z$", labelpad=10, fontsize=16)
 ax.set_title("鱼群算法迭代过程最优点位置移动")
-
 ax.text(
-    bestxx[0] - 0.01,
-    bestxx[1] - 0.01,
-    bestxx[2],
-    f"最优点位置坐标x={bestxx[0]:.5f}, y={bestxx[1]:.5f}, z={bestxx[2]:.5f}",
-    zdir="x",
-)
-
-ax.text(
-    bestxx[0] - 0.01, bestxx[1] - 0.01, bestxx[2], f"最优点函数值J={bestyy:.5f}", zdir="x"
+    bestxx[0] - 0.01, bestxx[1] - 0.01, bestyy + 0.01, f"最优点函数值J={bestyy:.5f}", zdir="x"
 )
 # print(BestY)
 end_time = time.process_time()

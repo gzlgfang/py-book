@@ -7,8 +7,6 @@
 备注:naive PSO
 """
 import numpy as np
-
-
 import matplotlib.pyplot as plt
 import matplotlib as mpl
 
@@ -83,8 +81,7 @@ def PSO(fitness, N, c1, c2, w, M, D):
     ggbest = np.array(ggbest)
     x = ggbest[:, 0]
     y = ggbest[:, 1]
-    z = ggbest[:, 2]
-    # z = -gbest_fit ##二维时用
+    z = gbest_fit
     c = gbest_fit
     p = ax.scatter(x, y, z, c=c, cmap=mpl.cm.RdYlBu, marker="*", s=200, zdir="z")
     fig.colorbar(p, ax=ax, shrink=0.5)
@@ -100,39 +97,14 @@ def PSO(fitness, N, c1, c2, w, M, D):
 
 
 def func(x):  ##fitness
-    x, y, z = x[0], x[1], x[2]
-    """ x, y = x[0], x[1]
+    x, y = x[0], x[1]
     str = x**2 - 2 * x + y + 1000 * (min(4 - 4 * x**2 - y**2, 0)) ** 2
-    f = lambda x: str """
-    """ f = (
-    lambda x: (x**0.8 + x * y**0.7 + z**0.8 - 1) ** 2
-    + (x**1.2 * y + y**0.9 + x**0.5 * z - 1) ** 2
-    + (x + y**0.4 * z**0.5 + z**1.2 - 1) ** 2
-     ) """
-    """ f = (
-        lambda x: (x**0.8 + x * y**0.7 + z**0.8 - 1) ** 2
-        + (x**1.2 * y + y**0.9 * z + x**0.5 - 1) ** 2
-        + (x + y**0.4 * z**0.5 + z**1.2 - 1) ** 2
-    ) """
-    f = (
-        lambda x: (x**0.8 + x * y**0.7 + z**0.8 - 1) ** 2
-        + (x**1.2 * y + y**0.9 + x**0.5 * z - 1) ** 2
-        + (x + y**0.4 * z + z**1.2 - 1) ** 2
-    )  # 案例2
+    f = lambda x: str
 
-    # f = lambda x: (x[0] - 10) ** 2 + (x[1] - 16) ** 2
-    # f = lambda x: (x1 - 2) ** 2 + (x1 - x2) ** 2 - 2 * x2
-    # f = lambda x: x1**2 +2*x1 - 6+x2**2 +2*x2
-    # f=lambda x:30+x1**2 + x2**2-10*(np.cos(2*np.pi*x1)+np.cos(2*np.pi*x2))
-    """ f = (
-        lambda x: np.sin(np.sqrt(x1**2 + x2**2)) / np.sqrt(x1**2 + x2**2)
-        + np.exp((np.cos(2 * np.pi * x1) + np.cos(2 * np.pi * x2)) / 2)
-        - np.exp(1)
-    ) """  ##案例1
-    return np.sum(f(x))  # 求最大变成求最小，前面加负号，默认求最小
+    return np.sum(f(x))  # 求最大需要变成求最小，前面加负号，默认求最小
 
 
 # if __name__ == '__main__':
-PSO(func, 50, 1.5, 2.5, 0.5, 100, 3)
+PSO(func, 50, 1.5, 2.5, 0.5, 100, 2)
 
 plt.show()

@@ -22,7 +22,7 @@ mpl.rcParams["font.weight"] = "normal"  # "normal",=500，设置字体粗细
 # 模拟退火基础参数：
 from scipy import optimize
 
-global T0, q, Tend, T
+# global T0, q, Tend, T
 T0 = 2000  # 初始温度
 Tend = 0.0005  # 最终温度
 L = 180  # 链长，每次稳定温度下优化次数

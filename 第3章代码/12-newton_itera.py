@@ -8,8 +8,8 @@ x1 = symbols("x1")
 x2 = symbols("x2")
 f1 = 8.0 - x1**2 - 0.5 * x2**2.0
 f2 = 4.0 - sympy.exp(x1) - 2 * x2  # x
-t10 = 1.0
-t20 = -2
+t10 = 2.0
+t20 = 2
 t0 = np.array([[t10], [t20]])
 
 
@@ -32,22 +32,19 @@ def F00(t1, t2):  # 构建迭代起点
     return F0
 
 
-flag = True
-eps = 0.0000000001
-k = 0
+flag, eps, k = True, 0.0000000001, 0
 while flag == True:
     k = k + 1
     F0 = F00(t10, t20)
     F0 = F0.astype(np.float64)
     ja = jacobi(t10, t20).astype(np.float64)
-    ja = np.linalg.inv(ja)
+    ja = np.linalg.inv(ja)  ##求逆
     x = -ja * F0 + t0
     if max(abs(x - t0)) <= eps:
         flag = False
     t0[:] = x[:]  # 注意不能用t0=x互换
     # print("x0=",x0)
-    t10 = t0[0, 0]
-    t20 = t0[1, 0]
+    t10, t20 = t0[0, 0], t0[1, 0]
     if k == 201:
         flag = False
 print(f"k={k}\nx={x.T}\nF={F0.T}")
