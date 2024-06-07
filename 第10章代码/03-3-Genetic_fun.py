@@ -1,7 +1,5 @@
 #!/usr/bin/env python3
-# 03-2-Genetic algorithm  for bag_problem
-from matplotlib import colors
-from matplotlib.figure import Figure
+# 03-3-Genetic algorithm  for fun_problem
 import numpy as np
 from numpy.core.numeric import tensordot
 import pandas as pd
@@ -20,238 +18,90 @@ mpl.rcParams["axes.unicode_minus"] = False  # 保证负号显示
 mpl.rcParams["font.size"] = 18  # 设置字体大小
 mpl.rcParams["font.style"] = "oblique"  # 设置字体风格，倾斜与否
 mpl.rcParams["font.weight"] = "normal"  # "normal",=500，设置字体粗细
-# 产生随机物体重量和及价值数据mass_value
-def mass_value(num):
-    """
-    num：物体数目
-    """
-    m_v = np.zeros((2, num))
-    for i in range(num):
-        m_v[0, i] = int(np.random.random() * 100) + 1  # 产生0-100的随机整数
-        m_v[1, i] = int(np.random.random() * 100) + 1
-    return m_v
+##输入参数
+D = 3  # 变量维数
+lb, ub = 0, 1.0  # 变量上下限
+N = 160  # 二进制数据长度
+ZQS = 100
+Maxgen = 100
+Pc = 0.5  # 交叉概率
+Pm = 0.2  # 变异概率
+Sel_ra = 0.7  # 选择率
 
 
-""" m_v = mass_value(30)  # 确定物体数目、重量和及价值
-n = 30
-m = np.array(m_v[0, :])
-v = np.array(m_v[1, :]) """
-# 输入确定的物体重量及价值
-v = np.array(
-    [
-        202,
-        208,
-        198,
-        192,
-        180,
-        180,
-        165,
-        162,
-        160,
-        158,
-        155,
-        130,
-        125,
-        122,
-        120,
-        118,
-        115,
-        110,
-        105,
-        101,
-        110,
-        100,
-        98,
-        96,
-        95,
-        90,
-        88,
-        82,
-        80,
-        77,
-        75,
-        73,
-        72,
-        70,
-        69,
-        66,
-        65,
-        63,
-        60,
-        58,
-        56,
-        50,
-        30,
-        20,
-        15,
-        10,
-        8,
-        5,
-        3,
-        1,
-    ]
-)
-m = np.array(
-    [
-        80,
-        82,
-        85,
-        70,
-        72,
-        70,
-        66,
-        50,
-        55,
-        25,
-        50,
-        55,
-        40,
-        48,
-        50,
-        32,
-        22,
-        60,
-        30,
-        32,
-        40,
-        38,
-        35,
-        32,
-        25,
-        28,
-        30,
-        22,
-        50,
-        30,
-        45,
-        30,
-        60,
-        50,
-        20,
-        65,
-        20,
-        25,
-        30,
-        10,
-        20,
-        25,
-        15,
-        10,
-        10,
-        10,
-        4,
-        4,
-        2,
-        1,
-    ]
-)
-n = len(m)
-M = 1000  # 背包中可以放入的总重量
-# 定义背包是否放入物品0-1数组，0代表不放入，1代表放入
-def put_array(n):
-    x = np.zeros(n)
-    for i in range(n):
-        if np.random.random() >= 0.5:
-            x[i] = 1
-    return x
-
-
-x = put_array(n)
-# 计算背包中放入的总重量
-def total_mass(x, m):
-    T_mass = sum(x * m)
-    return T_mass
-
-
-# 计算背包中放入的总价值
-def total_value(x, v):
-    T_value = sum(x * v)
-    return T_value
-
-
-# 设置基本遗传数据
-ZQS = 300  # 种群大小
-Maxgen = 500  # 最大遗传代数
-Pc = 0.8  # 交叉概率
-Pm = 0.3  # 变异概率
-Sel_ra = 0.8  # 选择率
-# 产生随机放入背包物体序列，共ZQS个
-# 输入种群数ZQS及物品总数目n
-def array(ZQS, n):
-    T_x = np.zeros((ZQS, n))
+def Bin_pop(ZQS, N):  # 产生初始变量二进制数种群
+    li = np.zeros(N)
+    LJ = np.zeros((ZQS, N))
     for i in range(ZQS):
-        T_x[i, :] = put_array(n)
-    return T_x
+        for j in range(N):
+            li[j] = np.fix(0.5 + np.random.random())
+        LJ[i, :] = li
+    return LJ.astype(int)  # 需要强制转变成整数
 
 
-T_x = array(ZQS, n)
-# 计算种群全部个体的放入背包的总重量GM
-def gene_mass(T_x, m):
-    ZQS = T_x.shape[0]
-    GM = np.zeros(ZQS)
+LJ = Bin_pop(ZQS, N)
+# print("LJ=",LJ)
+def Change2_10(LJ, lb, ub, D):  # 二进制转化为10进制，能区分变量数目及上下限
+    ZQS, N = LJ.shape  # 二进制数组大小
+    var2_num = int(N / D)  # 每个变量的二进制数编码长度
+    X = np.zeros((ZQS, D))
     for i in range(ZQS):
-        GM[i] = total_mass(T_x[i, :], m)
-    return GM
+        for j in range(D):
+            temp0 = 0  #
+            temp1 = 0
+            for k in range(var2_num):
+                temp0 = temp0 + 2 ** (var2_num - k - 1) * LJ[i, j * var2_num + k]
+                temp1 = temp1 + 2**k
+            temp0 = lb + temp0 / temp1 * (ub - lb)
+            X[i, j] = temp0
+    return X
 
 
-# 计算种群全部个体的放入背包的总价值GV
-def gene_value(T_x, v):
-    ZQS = T_x.shape[0]
-    GV = np.zeros(ZQS)
-    for i in range(ZQS):
-        GV[i] = total_value(T_x[i, :], v)
-    return GV
+# X=Change2_10(LJ, lb, ub, D)
+# print("X=",X)
+## 计算函数值
+def funv(X):  ##X
+    x1 = X[:, 0]
+    x2 = X[:, 1]
+    x3 = X[:, 2]
+    """ Y = (
+        (x1**1.2 + x1**0.5 * x2**0.9 + x2 * x3**0.9 - 0.8) ** 2
+        + (x1**0.8 + x2**1.2 * x3 + x1 * x3**1.1 - 0.8) ** 2
+        + (x1 * x2 * 1.1 + x2 * x3 + x3**1.5 - 0.8) ** 2
+    ) """
+    Y = (
+        (x1**0.8 + x1 * x2**0.7 + x3**0.8 - 1) ** 2
+        + (x1**1.2 * x2 + x2**0.9 * x3 + x1**0.5 - 1) ** 2
+        + (x1 + x2**0.4 * x3**0.5 + x3**1.2 - 1) ** 2
+    )
+
+    return Y + 1  ##加1后，达到最优时，目标函数值为1
 
 
+# print("FV=",FV)
 # 计算适应度值fitness 归一化处理
-def fit(GM, GV, M):
-    ZQS = len(GM)
+def fit(FV):
+    ZQS = len(FV)
     fitnv = np.ones(ZQS)
-    for i in range(ZQS):
-        if GM[i] > M:
-            GV[i] = -i
-    fitnv[:] = GV[:]
+    fitnv[:] = 1 / FV[:]
     max = np.max(fitnv)
     min = np.min(fitnv)
     fitnv[:] = (fitnv[:] - min) / (max - min)
     return fitnv
 
 
-def draw_T_x(T_x, GM, GV, index, num):
-    plt.figure(num=num)
-    n = T_x.shape[1]
-    x = np.arange(1, n + 1)
-    y = T_x[index]
-    plt.scatter(
-        x, y, s=100, c="red", cmap=mpl.cm.RdYlBu, clip_on=False
-    )  # clip_on=False表示坐标轴上的Mark也要整体显示
-    plt.plot(x, y, lw=2)
-    plt.xticks(np.arange(0, n + 1, 1))
-    plt.yticks([0, 1])
-    # plt.xticks(np.arange(0,n+1,1),position='top')
-    plt.tick_params(top="on", right="on", which="both", direction="in")
-    plt.xlabel("物件序号，n")
-    plt.ylabel("放入包内逻辑数，x")
-    plt.text(n / 2, 0.6, f"放入物品总重量GM(index)={GM[index]:.1f}", c="b")
-    plt.text(n / 2, 0.5, f"放入物品总价值GV(index)={GV[index]:.1f}", c="b")
-    plt.title("物体是否放入包内逻辑数据图")
-    plt.xlim(0, n)
-    plt.grid(c="green", ls="-.")
+# print("fitnv=",fitnv)
 
-
-# 打印初始优化结果图
-GM = gene_mass(T_x, m)
-GV = gene_value(T_x, v)
-fitnv = fit(GM, GV, M)
-index = list(fitnv[:]).index(max(fitnv[:]))  # 找到满足约束条件放入背包中价值最大的物体系列序号
-pre_obj = GV[index]
-num = "初始优化结果图"
-draw_T_x(T_x, GM, GV, index, num)
-# 开始遗传算法核心代码
-# 选择操作
-LJ = T_x
-
-
+# 打印初始种群最优解
+X = Change2_10(LJ, lb, ub, D)
+FV = funv(X)
+fitnv = fit(FV)
+index = list(fitnv[:]).index(max(fitnv[:]))  # 找到适用度值最大即三个方程的平方和最小解
+pre_obj = FV[index] - 1
+pre_X = X[index]
+print("pre_obj=", pre_obj)
+print("pre_X=", pre_X)
+##选择操作
 def select(LJ, Sel_ra, fitnv):
     ZQS = len(LJ)
     sel_num = int(ZQS * Sel_ra)
@@ -272,15 +122,9 @@ def select(LJ, Sel_ra, fitnv):
     return Sel_LJ
 
 
-Sel_LJ = select(LJ, Sel_ra, fitnv)
-# 选择操作后的最优解
-GM = gene_mass(Sel_LJ, m)
-GV = gene_value(Sel_LJ, v)
-fitnv = fit(GM, GV, M)
-index = list(fitnv[:]).index(max(fitnv[:]))  # 找到满足约束条件放入背包中价值最大的物体系列序号
-print(index, GM[index], GV[index])
-print(Sel_LJ[index, :])
-num = "选择操作的最优解图"
+##Sel_LJ = select(LJ, Sel_ra, fitnv)
+# print("Sel_LJ=",Sel_LJ)
+# print("目标函数取最小值时的自变量优位置= [0.34194738 0.4310146  0.54625798])")
 # 交叉
 def cross(a, b):
     # a和b为两个待交叉的个体
@@ -318,17 +162,18 @@ def Re_com(Sel_LJ, Pc):
     return Sel_LJ
 
 
-Sel_LJ = Re_com(Sel_LJ, Pc)
+""" Sel_LJ = Re_com(Sel_LJ, Pc)
 # 交叉重组后的最优解
-GM = gene_mass(Sel_LJ, m)
-GV = gene_value(Sel_LJ, v)
-fitnv = fit(GM, GV, M)
-index = list(fitnv[:]).index(max(fitnv[:]))  # 找到满足约束条件放入背包中价值最大的物体系列序号
-print(index, GM[index], GV[index])
-print(Sel_LJ[index, :])
-num = "交叉重组后的最优解图"
-# Pm为变异概率
-# Sel_LJ为变异操作前后路径,原来0的变成1，原来1的变成0
+X=Change2_10(Sel_LJ, lb, ub, D)
+FV=funv(X)
+fitnv=fit(FV)
+index = list(fitnv[:]).index(max(fitnv[:]))  # 找到适用度值最大即三个方程的平方和最小解
+cro_obj = FV[index]-1
+cro_X=X[index]
+print("cro_obj=",cro_obj)
+print("cro_X=",cro_X) """
+
+
 def Mutate(Sel_LJ, Pm):
     ZQS, n = Sel_LJ.shape
     for i in range(ZQS):
@@ -338,7 +183,6 @@ def Mutate(Sel_LJ, Pm):
             r_min = r[0]
             r_mid = r[1]
             r_max = r[2]
-
             if abs(Sel_LJ[i, r_min] - 1) <= 0.1:
                 Sel_LJ[i, r_min] = 0
             else:
@@ -355,27 +199,24 @@ def Mutate(Sel_LJ, Pm):
                 Sel_LJ[i, r[3]] = 0
             else:
                 Sel_LJ[i, r[3]] = 1
-
     return Sel_LJ
 
 
-Sel_LJ = Mutate(Sel_LJ, Pm)  # 变异后的路径
-# 变异后的最优解
-GM = gene_mass(Sel_LJ, m)
-GV = gene_value(Sel_LJ, v)
-fitnv = fit(GM, GV, M)
-index = list(fitnv[:]).index(max(fitnv[:]))  # 找到满足约束条件放入背包中价值最大的物体系列序号
-print(index, GM[index], GV[index])
-print(Sel_LJ[index, :])
-num = "变异后的最优解"
-draw_T_x(Sel_LJ, GM, GV, index, num)
+""" Sel_LJ = Mutate(Sel_LJ, Pm)  # 变异后的路径
+#变异后的最优解
+X=Change2_10(Sel_LJ, lb, ub, D)
+FV=funv(X)
+fitnv=fit(FV)
+index = list(fitnv[:]).index(max(fitnv[:]))  # 找到适用度值最大即三个方程的平方和最小解
+Mut_obj = FV[index]-1
+Mut_X=X[index]
+print("Mut_obj=", Mut_obj)
+print("Mut_X=", Mut_X) """
+
 # 逆转操作
-def Reverse(Sel_LJ, m, v, M):
+def Reverse(Sel_LJ, fitnv):
     ZQS, n = Sel_LJ.shape
     Sel_LJ = np.array(Sel_LJ)
-    GM = gene_mass(Sel_LJ, m)
-    GV = gene_value(Sel_LJ, v)
-    fitnv = fit(GM, GV, M)
     Sel_LJ1 = np.copy(Sel_LJ)
     for i in range(ZQS):
         flags = True
@@ -392,37 +233,36 @@ def Reverse(Sel_LJ, m, v, M):
             r_min = 1
         # print(r_min,r_max)
         Sel_LJ1[i, r_min : r_max + 1] = Sel_LJ[i, r_max : r_min - 1 : -1]
-    GM = gene_mass(Sel_LJ1, m)
-    GV = gene_value(Sel_LJ1, v)
-    fitnv1 = fit(GM, GV, M)
-    # p_len1=pathlength(D,Sel_LJ1); # %计算路径长度
+    X1 = Change2_10(Sel_LJ1, lb, ub, D)
+    FV1 = funv(X1)
+    fitnv1 = fit(FV1)
     index = fitnv1 > fitnv
     Sel_LJ[index, :] = Sel_LJ1[index, :]
     return Sel_LJ
 
 
-Sel_LJ = Reverse(Sel_LJ, m, v, M)
-print(Sel_LJ)
+""" Sel_LJ = Reverse(Sel_LJ, fitnv)
 
 # 逆转后的最优解
-GM = gene_mass(Sel_LJ, m)
-GV = gene_value(Sel_LJ, v)
-fitnv = fit(GM, GV, M)
-index = list(fitnv[:]).index(max(fitnv[:]))  # 找到满足约束条件放入背包中价值最大的物体系列序号
-print(index, GM[index], GV[index])
-print(Sel_LJ[index, :])
-num = "逆转后的最优解"
-# draw_T_x(Sel_LJ,GM,GV,index,num)
+X=Change2_10(Sel_LJ, lb, ub, D)
+FV=funv(X)
+fitnv=fit(FV)
+index = list(fitnv[:]).index(max(fitnv[:]))  # 找到适用度值最大即三个方程的平方和最小解
+Rev_obj = FV[index]-1
+Rev_X=X[index]
+print("Rev_obj=", Rev_obj)
+print("Rev_X=", Rev_X) """
+
 # 重新产生新种群
 # 输入原种群LJ
 # 输入经过遗传操作后的优势种群Sel_LJ
 # 输出新的种群LJ1
-def newLJ(LJ, Sel_LJ, m, v, M):
+def newLJ(LJ, Sel_LJ):
     ZQS, n = LJ.shape
     sel_num = len(Sel_LJ)
-    GM = gene_mass(LJ, m)
-    GV = gene_value(LJ, v)
-    fitnv = fit(GM, GV, M)
+    X = Change2_10(LJ, lb, ub, D)
+    FV = funv(X)
+    fitnv = fit(FV)
     tem_p = []
     for i, e in enumerate(fitnv):
         tem_p.append((i, e))
@@ -434,42 +274,45 @@ def newLJ(LJ, Sel_LJ, m, v, M):
     return LJ1
 
 
-LJ = newLJ(LJ, Sel_LJ, m, v, M)
-gen = 0  # 遗传代数
-# pre_obj=p_len(index) 为上一轮最优
-print(gen, pre_obj)
-plt.figure(num="优化总价值和遗传代数关系")
+# LJ = newLJ(LJ, Sel_LJ)
+# print("LJ_new=",LJ)
+
+gen = 0
+plt.figure(num="目标函数值和遗传代数关系")
 while gen <= Maxgen:
-    GM = gene_mass(LJ, m)
-    GV = gene_value(LJ, v)
-    fitnv = fit(GM, GV, M)
-    index = list(fitnv[:]).index(max(fitnv[:]))  # 找到满足约束条件放入背包中价值最大的物体系列序号
-    obj = GV[index]  # 初次遗传操作后的最优解
+    X = Change2_10(LJ, lb, ub, D)
+    FV = funv(X)
+    fitnv = fit(FV)
+    index = list(fitnv[:]).index(max(fitnv[:]))
+    obj = FV[index] - 1  # 初次遗传操作后的最优解
     plt.plot([gen, gen + 1], [pre_obj, obj], lw=2)
     pre_obj = obj
     # 选择操作
-    fitnv = fit(GM, GV, M)
     Sel_LJ = select(LJ, Sel_ra, fitnv)  # LJ由上一代带入
     # 交叉重组操作
-    # Sel_LJ=Re_com(Sel_LJ,Pc)
+    Sel_LJ = Re_com(Sel_LJ, Pc)
     # 变异操作
     Sel_LJ = Mutate(Sel_LJ, Pm)
+    X = Change2_10(Sel_LJ, lb, ub, D)
+    FV = funv(X)
+    fitnv = fit(FV)
     # 逆转操作
-    Sel_LJ = Reverse(Sel_LJ, m, v, M)
+    Sel_LJ = Reverse(Sel_LJ, fitnv)
     # 新种子重组，保证上一轮最优解遗传给下一代
-    LJ = newLJ(LJ, Sel_LJ, m, v, M)
+    LJ = newLJ(LJ, Sel_LJ)
     gen = gen + 1
 plt.xlabel("遗传代数")
-plt.ylabel("放入物品总价值")
-plt.title("优化总价值和遗传代数关系")
+plt.ylabel("目标函数值")
+plt.title("目标函数值和遗传代数关系")
 plt.grid()
-# 绘制最后最优解
-num = "绘制最终优化图"
-GM = gene_mass(LJ, m)
-GV = gene_value(LJ, v)
-fitnv = fit(GM, GV, M)
+
+# 打印最后最优解
+X = Change2_10(LJ, lb, ub, D)
+FV = funv(X)
+fitnv = fit(FV)
 index = list(fitnv[:]).index(max(fitnv[:]))  # 找到满足约束条件放入背包中价值最大的物体系列序号
-print(index, GM[index], GV[index])
-print(LJ[index, :])
-draw_T_x(LJ, GM, GV, index, num)
+opt_obj = FV[index] - 1
+opt_X = X[index]
+print("最优目标函数=", opt_obj)
+print("最优解=", opt_X)
 plt.show()

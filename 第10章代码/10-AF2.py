@@ -82,14 +82,14 @@ def Inital_AF(NumF, lb_ub):  ##产生鱼群初始位置
 ##NumF=8;
 ## lb_ub=np.array([[-5,8,2],[4.3,8,1]]);
 ##这里的lb_ub是2行3列的矩阵，第1行是鱼群位置范围的上限，第2行是鱼群位置范围的下限。每一行数据的数目表示维度
-NumF = 20
+NumF = 200
 # lb_ub = np.array([[-1, -1, -1], [10, 10, 10]])  ##第一行数据为下限，第二行数据为上限，列数为位置维度
 lb_ub = np.array([[0, 0, 0], [1, 1, 1]])
 XX = Inital_AF(NumF, lb_ub)
 lu_dis = np.sqrt(np.sum((lb_ub[0, :] - lb_ub[1, :]) ** 2)) / 10
 step = 0.2 * lu_dis
 visual = 0.5
-try_N = 30
+try_N = 300
 last_Y = Food_con(XX)
 # print(last_Y)
 ##觅食行为，Find food（Find_food),为每条鱼计算下一个位置及浓度 Xnext[Ynext]
@@ -267,8 +267,8 @@ print("追尾=", Xnext, Ynext)
 start_time = time.process_time()
 gen = 0
 ##重新设置计算参数
-NumF = 30  ##生成60只人工鱼
-Maxgen = 50  ##最多迭代次数
+NumF = 60  ##生成60只人工鱼
+Maxgen = 200  ##最多迭代次数
 try_N = 200  ##最多试探次数
 visual = 0.5  ##感知距离
 deta = 0.618  ##拥挤度因子

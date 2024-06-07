@@ -50,17 +50,17 @@ def city_zb(width, hight, city_num):
     return city_zb
 
 
-city_zb = city_zb(50, 50, 30)  # 确定城市数目及坐标
-n = len(city_zb)
+# city_zb = city_zb(50, 50, 30)  # 确定城市数目及坐标
+# n = len(city_zb)
 # 固定城市坐标
 # 读入城市坐标
-""" DF = pd.read_excel("city.xlsx", "Sheet1", na_filter=False, index_col=0)  # 共有31个城市坐标
+DF = pd.read_excel("city.xlsx", "Sheet1", na_filter=False, index_col=0)  # 共有31个城市坐标
 city_x = np.array(DF["x"])  # 数据分配
 city_y = np.array(DF["y"])
 n = len(city_x)  # 计算城市的数目
 city_zb = np.zeros((n, 2))  # 设置坐标数组
 city_zb[:, 0] = city_x / 100
-city_zb[:, 1] = city_y / 100 """
+city_zb[:, 1] = city_y / 100
 # city_zb=city_zb(50,50,50)#确定城市数目及坐标
 # 计算城市i和城市j之间的距离
 # 输入 city_zb 各城市的坐标,用city_zb[i,0:1])
@@ -85,7 +85,7 @@ m = 150
 alpha = 1.5
 beta = 2
 rho = 0.25
-itera_max = 300
+itera_max = 100
 #  opt_ant_Q  最优蚂蚁路线信息素强化
 Q = 10
 ran_ant = int(m / 4)  # 每轮新计算时随机路线蚂蚁数，不受信息素影响

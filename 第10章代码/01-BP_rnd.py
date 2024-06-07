@@ -22,21 +22,60 @@ p = eval(input("输入中间层神经元数目="))
 q = eval(input("输入输出层神经元数目="))  # 相当于输出变量有q个分量
 
 num = 0
-m = eval(input("训练模式数量="))
+# m = eval(input("训练模式数量="))
+lb, ub = eval(input("训练异或分类数据下限与上限="))
+""" m = int(0.1 * (ub - lb)) + 10
+a = np.zeros((m, n))
+y = np.zeros((m, q)) """
+
+
+t = ub - lb + 1
+print("t=", t)
+m = t**2
 a = np.zeros((m, n))
 y = np.zeros((m, q))
+
+A_Y = np.zeros((m, 3))
+for i in range(t):
+    for j in range(t):
+        m_i = j + i * t
+        # print("j,j+lb=", j, j + lb)
+
+        a[m_i, 0], a[m_i, 1] = i + lb, j + lb
+        if abs(a[m_i, 0] - a[m_i, 1]) < 0.01:
+            y[m_i, 0] = 0
+        else:
+            y[m_i, 0] = 1
+
+        A_Y[m_i] = [a[m_i, 0], a[m_i, 1], y[m_i, 0]]
+# print(A_Y)
+
+
 #'输入已知模式对的输入输出数据，若有绝对值大于1的数据，需对数据作归一化处理，'该程序中认为所有数据绝对值小于等于1，未作归一化处理，读者在应用时请注意
-for i in range(m):
+""" for i in range(m):
     for j in range(n):
         print("输入第", i + 1, "模式第", j + 1, "输入变量a[i, j]")
         a[i, j] = eval(input("a[i, j]="))
     for j in range(q):
         print("输入第", i + 1, "模式第", j + 1, "输出变量y[i, j]")
-        y[i, j] = eval(input("y[i, j]="))
+        y[i, j] = eval(input("y[i, j]=")) """
+""" A_Y = np.zeros((m, 3))
+for i in range(m):
+    for j in range(n):
+        a[i, j] = rnd.randint(lb, ub)
+    if abs(a[i, 0] - a[i, 1]) <= 0.01:
+        y[i, 0] = 0
+    else:
+        y[i, 0] = 1
+    A_Y[i] = [a[i, 0], a[i, 1], y[i, 0]]
+print(A_Y) """
+
 
 #'生成初始连接权数及阀值
+
 start_time = time.perf_counter()
 print("start_time:", start_time)
+
 
 w = np.zeros((n, p))
 thta = np.zeros(p)
@@ -155,8 +194,8 @@ print("全局误差=", ee, "\n" "总训练次数=", train_num)
 end_time = time.perf_counter()
 print("perf_counter程序运行计时=", end_time - start_time, "秒")
 # '网络回响
-flags = True
-while flags:
+# flags = True
+""" while flags:
     x = np.zeros(n)
     for i in range(n):
         print("输入第", i + 1, "输入变量")
@@ -180,7 +219,29 @@ while flags:
     if tt == "y":
         flags = True
     else:
-        flags = False
+        flags = False """
+
+# 全部训练范围内数据参数回响
+Y = np.zeros((ub + 1, ub + 1, 3))
+for k in range(lb, ub + 1):
+    for m in range(lb, ub + 1):
+        x = np.zeros(n + 1)
+        x[0], x[1] = k, m
+        s = np.zeros(p)
+        for j in range(p):
+            for i in range(n):
+                s[j] = s[j] + w[i, j] * x[i]
+            s[j] = s[j] - thta[j]
+            b[j] = fnf(s[j])
+        L = np.zeros(q)
+        for t in range(q):
+            for j in range(p):
+                L[t] = L[t] + v[j, t] * b[j]
+            L[t] = L[t] - r[t]
+            yy = fnf(L[t])
+            x[2] = yy
+        Y[k, m] = x
+print(Y)
 
 plt.show()
 

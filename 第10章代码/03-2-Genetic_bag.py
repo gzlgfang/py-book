@@ -448,7 +448,7 @@ while gen <= Maxgen:
     plt.plot([gen, gen + 1], [pre_obj, obj], lw=2)
     pre_obj = obj
     # 选择操作
-    fitnv = fit(GM, GV, M)
+    # fitnv = fit(GM, GV, M)
     Sel_LJ = select(LJ, Sel_ra, fitnv)  # LJ由上一代带入
     # 交叉重组操作
     # Sel_LJ=Re_com(Sel_LJ,Pc)

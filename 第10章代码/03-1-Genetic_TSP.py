@@ -72,7 +72,7 @@ D = Distance(city_zb)  # 计算一次即可
 # print(D)
 # 设置基本遗传数据
 ZQS = 100  # 种群大小
-Maxgen = 500  # 最大遗传代数
+Maxgen = 300  # 最大遗传代数
 Pc = 0.6  # 交叉概率
 Pm = 0.2  # 变异概率
 Sel_ra = 0.7  # 选择率
@@ -146,14 +146,14 @@ def drawpath(LJ, city_zb, num):
 
 # 计算路径总距离
 def pathlength(D, LJ):
-    N = D.shape[1]
+    n = D.shape[1]
     ZQS = LJ.shape[0]
     p_len = np.zeros(ZQS)
     for i in range(ZQS):
-        for j in range(N - 1):
+        for j in range(n - 1):
             p_len[i] = p_len[i] + D[LJ[i, j], LJ[i, j + 1]]
         # 无需回起点时，下面1行代码不要
-        p_len[i] = p_len[i] + D[LJ[i, N - 1], LJ[i, 0]]
+        p_len[i] = p_len[i] + D[LJ[i, n - 1], LJ[i, 0]]
     return p_len
 
 
