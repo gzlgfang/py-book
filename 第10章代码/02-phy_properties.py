@@ -241,7 +241,7 @@ while flags:
         for j in range(p):
             L[t] = L[t] + v[j, t] * b[j]
         L[t] = L[t] - r[t]
-        print(L[t])
+        # print(L[t])
         yy = fnf(L[t]) * yy_max
         print(yy)
     tt = input("是否继续需要网络回响，是输入y，否输入n ")

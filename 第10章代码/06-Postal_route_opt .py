@@ -282,6 +282,7 @@ print(opt_JJ[index])
 opt_way = opt_way.astype(int)
 # 最优路径
 print_way(opt_way[index])
+
 plt.figure(num="实验序号和最优目标函数关系图")
 x = np.arange(1, test_num + 1)
 y = opt_JJ
@@ -296,8 +297,9 @@ plt.legend()
 plt.grid(True)
 LJ = opt_way[index]
 num = "列次实验中最优路径"
+
 drawpath(LJ, city_zb, num)
-plt.text(25, 25, "总长度于投递量乘积=")
+plt.text(25, 25, "总长度与投递量乘积=")
 plt.text(33, 25, str(int(1000 * opt_JJ[index]) / 1000))
 print("列次计算目标函数平均值=", np.mean(opt_JJ))
 plt.show()

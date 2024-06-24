@@ -258,7 +258,7 @@ num = "绘制最优路径"
 draw_path = drawpath(LJ0, city_zb, num)
 # plt.legend(str(p_len[0]))
 plt.text(35, 35, "总长度=")
-plt.text(37, 35, str(int(1000 * p_len) / 1000))
+plt.text(39, 35, str(int(1000 * p_len) / 1000))
 
 plt.figure(num="优化路径距离和退火次数关系图")
 for i in range(1, T_num - 1):

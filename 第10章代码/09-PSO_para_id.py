@@ -112,10 +112,10 @@ def PSO(fitness, N, c1, c2, w, M, D):
     plt.plot(tspan, C[2, :], label=r"$C_C$", color="b", linewidth=2, linestyle="-.")
     plt.plot(tspan, C[3, :], label=r"$C_D$", color="k", linewidth=2, linestyle="-.")
     # 实验数据点
-    plt.scatter(tspan, CA_E, s=70, c="r", marker="*", alpha=0.6)
-    plt.scatter(tspan, CB_E, s=70, c="g", marker="h", alpha=0.6)
-    plt.scatter(tspan, CC_E, s=70, c="b", marker="<", alpha=0.6)
-    plt.scatter(tspan, CD_E, s=70, c="k", marker=">", alpha=0.6)
+    plt.scatter(tspan, CA_E, s=70, c="r", marker="*", alpha=0.6, clip_on=False)
+    plt.scatter(tspan, CB_E, s=70, c="g", marker="h", alpha=0.6, clip_on=False)
+    plt.scatter(tspan, CC_E, s=70, c="b", marker="<", alpha=0.6, clip_on=False)
+    plt.scatter(tspan, CD_E, s=70, c="k", marker=">", alpha=0.6, clip_on=False)
     k11 = int(gbest[0] * 1000 + 0.5) / 1000
     k22 = int(gbest[1] * 1000 + 0.5) / 1000
     k33 = int(gbest[2] * 1000 + 0.5) / 1000

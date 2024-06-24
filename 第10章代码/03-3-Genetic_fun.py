@@ -21,9 +21,9 @@ mpl.rcParams["font.weight"] = "normal"  # "normal",=500，设置字体粗细
 ##输入参数
 D = 3  # 变量维数
 lb, ub = 0, 1.0  # 变量上下限
-N = 160  # 二进制数据长度
+N = 120  # 二进制数据长度
 ZQS = 100
-Maxgen = 100
+Maxgen = 300
 Pc = 0.5  # 交叉概率
 Pm = 0.2  # 变异概率
 Sel_ra = 0.7  # 选择率

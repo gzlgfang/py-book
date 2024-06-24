@@ -80,12 +80,12 @@ def Distance(city_zb):
 
 
 D = Distance(city_zb)  # 计算一次即可
-m = int(3 * n)  # 确定蚂蚁数
-m = 150
+m = int(2 * n)  # 确定蚂蚁数
+m = 50
 alpha = 1.5
 beta = 2
 rho = 0.25
-itera_max = 100
+itera_max = 50
 #  opt_ant_Q  最优蚂蚁路线信息素强化
 Q = 10
 ran_ant = int(m / 4)  # 每轮新计算时随机路线蚂蚁数，不受信息素影响
@@ -266,10 +266,14 @@ while itera_num < itera_max:
             # tar_id= list(P[:]).index(max(P[:]) )
             # Pc = cumsum(P) ##保证随机操作时有数据选中
             # print("Pc=", Pc)
-            Pc = P / sum(P)
+            P = P / sum(P)
+            Pc = cumsum(P)
             tar_id = [i for i, tp in enumerate(Pc) if tp > np.random.random()]
-            if tar_id == []:
-                tar_id = np.array([0], int)  # tar = allow[tar_id]
+            #tar_id = [i for i, tp in enumerate(P) if tp == max(P)]
+            ##用最大的期望值，但跳出局部最优解的能力减弱,调试后发现只能算到168左右
+            # if tar_id == []: 如果用了cumsum函数，就可以不要这个条件判断
+            # tar_id = np.array([0], int)
+            # tar = allow[tar_id] ，保证即使没有符合前面的要求，也有后继连接序号
             # print(tar_id)
             tar = allow[tar_id[0]]  # 要加[0]
             LJ[i, j] = tar
@@ -299,7 +303,7 @@ while itera_num < itera_max:
         # detal_tau[LJ[i,0],LJ[i,n-1]]=detal_tau[LJ[i,0],LJ[i,n-1]]+Q/ p_len[i]
 
     # 最优蚂蚁路线加强：
-    opt_ant_Q = 0.6 * tau.max()
+    opt_ant_Q = 0.5 * tau.max()  ##原0.6 收敛过程有震荡
 
     for j in range(n - 1):
         detal_tau[LJ[id_ant, j], LJ[id_ant, j + 1]] = (

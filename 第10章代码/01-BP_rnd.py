@@ -162,10 +162,11 @@ while ee > 0.005:
     if train_num / 10000 == int(train_num / 10000):
         print("ee=", ee)
         tol.append(ee)
-    if train_num < 10000000:
+    if train_num < 100000:
         continue  #'网络尚未收敛，继续计算
     else:
-        exit
+        break
+
     #'网络收敛，打印权值及阀值并进入回响
     # GoTo 200
 # 绘制误差图
@@ -194,8 +195,8 @@ print("全局误差=", ee, "\n" "总训练次数=", train_num)
 end_time = time.perf_counter()
 print("perf_counter程序运行计时=", end_time - start_time, "秒")
 # '网络回响
-# flags = True
-""" while flags:
+flags = True
+while flags:
     x = np.zeros(n)
     for i in range(n):
         print("输入第", i + 1, "输入变量")
@@ -219,7 +220,7 @@ print("perf_counter程序运行计时=", end_time - start_time, "秒")
     if tt == "y":
         flags = True
     else:
-        flags = False """
+        flags = False
 
 # 全部训练范围内数据参数回响
 Y = np.zeros((ub + 1, ub + 1, 3))

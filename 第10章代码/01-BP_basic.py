@@ -126,7 +126,7 @@ while ee > 0.005:
     if train_num < 10000000:
         continue  #'网络尚未收敛，继续计算
     else:
-        exit
+        break
     #'网络收敛，打印权值及阀值并进入回响
     # GoTo 200
 # 绘制误差图

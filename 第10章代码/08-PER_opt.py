@@ -66,7 +66,7 @@ def PSO(fitness, N, c1, c2, w, M, D):
             for j in range(D):
                 if x[i, j] < 0:  # 保证变量为非负，需要根据具体求解问题设置
                     x[i, j] = 0
-                if x[i, j] > 1:  # 保证变量为非负，需要根据具体求解问题设置
+                if x[i, j] > 1:  # 保证变量不大于1，需要根据具体求解问题设置
                     x[i, j] = 1
             if fitness(x[i]) < p[i]:  # 更新个体极值
                 p[i] = fitness(x[i])
