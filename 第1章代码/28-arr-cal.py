@@ -1,6 +1,7 @@
 # 数组运算28-arr-cal.py
 # 算术运算
 import numpy as np
+
 a_cal1 = np.arange(1, 13).reshape(3, 4)  # 3行4列数组
 a_cal2 = np.arange(1, 5)  # 1行4列数组
 a_cal3 = np.arange(1, 4).reshape(3, 1)  # 3行1列数组
@@ -31,8 +32,11 @@ print("np.log10(a_fun):\n", np.log10(a_fun))
 print("np.log2(a_fun):\n", np.log2(a_fun))
 # 聚合运算
 a_aggre = np.arange(1, 28).reshape(3, 3, 3)
+print("a_aggre=", a_aggre)
+
+
 print("a_aggre.mean(axis=0):\n", a_aggre.mean(axis=0))  # 计算元素平均值
-print("a_aggre.std(axis=0):\n", a_aggre.std(axis=1))  # 计算标准差
+print("a_aggre.std(axis=0):\n", a_aggre.std(axis=0))  # 计算标准差
 print("a_aggre.var(axis=None):\n", a_aggre.var(axis=None))  # 计算方差
 print("a_aggre.sum(axis=(0,1):\n", a_aggre.sum(axis=(0, 1)))  # 计算元素和
 print("a_aggre.prod(axis=0):\n", a_aggre.prod(axis=0))  # 计算元素乘积
@@ -69,5 +73,15 @@ a_cro1 = np.cross([1, 2, 4], [4, 5, 6])
 print("a_cro1:\n", a_cro1)
 a_cro2 = np.cross(a43, a43 + 2)
 print("a_cro2:\n", a_cro2)
-
+print("a000,a010,a020=", a_aggre[0, 0, 0], a_aggre[0, 1, 0], a_aggre[0, 2, 0])
+print("a001,a011,a021=", a_aggre[0, 0, 1], a_aggre[0, 1, 1], a_aggre[0, 2, 1])
+print("a002,a012,a022=", a_aggre[0, 0, 2], a_aggre[0, 1, 2], a_aggre[0, 2, 2])
 # 逻辑运算
+
+print("a100,a110,a120=", a_aggre[1, 0, 0], a_aggre[1, 1, 0], a_aggre[1, 2, 0])
+print("a101,a111,a121=", a_aggre[1, 0, 1], a_aggre[1, 1, 1], a_aggre[1, 2, 1])
+print("a102,a112,a122=", a_aggre[1, 0, 2], a_aggre[1, 1, 2], a_aggre[1, 2, 2])
+
+print("a200,a210,a220=", a_aggre[2, 0, 0], a_aggre[2, 1, 0], a_aggre[2, 2, 0])
+print("a201,a211,a221=", a_aggre[2, 0, 1], a_aggre[2, 1, 1], a_aggre[2, 2, 1])
+print("a202,a212,a222=", a_aggre[2, 0, 2], a_aggre[2, 1, 2], a_aggre[2, 2, 2])
