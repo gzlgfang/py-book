@@ -18,9 +18,9 @@ def Exhau(funJ, N, Pc, start, alfai):
     funJ  优化函数
     N     区间等分数
     PC    收缩率，Percentage of contraction
+    alfai 扫描步长
+    start 扫描起点
     """
-    # alfai = 0.1
-    # start = 1
     global a, b, c, d, e
     a, b, c, d, e = 1, 3, 5, 7, 2
     flag = True
