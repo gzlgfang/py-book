@@ -45,15 +45,26 @@ def Exhau(funJ, N, Pc, start, alfai):
         t2 = t[index + 1]
     optim = t[index]
     minf = funJ(t[index], a, b, c, d, e)
-    print(f"t={optim:.8f},minf={minf:.8f}")
 
+    print(f"t={optim:.8f},minf={minf:.8f}")
     x = np.linspace(x_start, x_end, 100)
     y = funJ(x, a, b, c, d, e)
+
     plt.figure(num="目标函数与优化区间变量关系图")
     plt.plot(x, y, lw=2, c="b")
     plt.grid()
     plt.xlabel("变量值")
     plt.ylabel("优化函数值")
+    plt.annotate(
+        "最优点",
+        xy=(optim, minf),
+        xytext=(optim + 1, minf + 0.5),
+        arrowprops=dict(arrowstyle="->", color="r", linewidth=2),
+    )
+    str1 = "x=" + str(optim)
+    str2 = "最优值=" + str(minf)
+    plt.text(optim - 0.5, minf + 0.25, str1)
+    plt.text(optim - 0.5, minf + 0.15, str2)
     plt.show()
 
 
@@ -91,4 +102,4 @@ def funJ(x, a, b, c, d, e):  ##fitness
 
 
 # if __name__ == '__main__':
-Exhau(funJ, 100, 10e-6, 0, 0.1)
+Exhau(funJ, 100, 10e-6, 1, 0.1)
