@@ -18,7 +18,7 @@ start_time = time.time()
 def Bisexhau(funJ, beita, eer1, eer2, start, alfai):
     """
     funJ      优化函数
-    beita     区间等分数
+    beita     中心偏离因子
     eer1      变量精度
     eer2      函数精度
     alfai     扫描步长
