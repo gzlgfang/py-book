@@ -7,6 +7,7 @@ import matplotlib as mpl
 import matplotlib.pyplot as plt
 import scipy as scp
 from scipy.integrate import odeint
+import copy
 
 # 输入数据
 C1 = np.array(
@@ -47,10 +48,10 @@ def paixu(x, y):  # 数据线排序
     for i in range(len(y) - 1):
         for j in range(i + 1, len(y)):
             if y[i] > y[j]:
-                tempy = y[i]
+                tempy = copy.deepcopy(y[i])
                 y[i] = y[j]
                 y[j] = tempy
-                tempx = x[i]
+                tempx = copy.deepcopy(x[i])
                 x[i] = x[j]
                 x[j] = tempx
     xx = x
