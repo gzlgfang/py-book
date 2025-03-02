@@ -1,9 +1,10 @@
-from signal import signal
+from asyncore import write
 import streamlit as st
 import matplotlib as mpl
 import matplotlib.pyplot as plt
 import numpy as np
 from scipy import optimize as op
+import pandas as pd
 mpl.rcParams["font.sans-serif"]=["SimHei"]#保证显示中文字
 mpl.rcParams["axes.unicode_minus"]=False
 mpl.rcParams["font.size"] = 12#设置字体大小
@@ -11,6 +12,10 @@ mpl.rcParams['ytick.right']=True
 mpl.rcParams['xtick.top']=True
 mpl.rcParams['xtick.direction'] = 'in'#坐标轴上的短线朝内，默认朝外
 mpl.rcParams['ytick.direction'] = 'in'
+
+
+#streamlit run "g:/st-app/st_fit.py"
+
 
 n=st.number_input("实验数目num", value=12,step=1,format="%d")
 n=int(n)
@@ -93,8 +98,19 @@ m=st.number_input("参加拟合数据数目", value=12,step=1,format="%d")
 m=int(m)
 xx=x[0:m]
 yy=y[0:m]
+#通过文件输入数据
+uploaded_file = st.file_uploader("Choose a file")
+if uploaded_file is not None:
+  dataframe = pd.read_csv(uploaded_file)
+  dataframe=np.array(dataframe)
+  xx=dataframe[:,0]
+  yy=dataframe[:,1]
+st.write("xx=",xx)
+st.write("yy=",yy)
+m=len(xx)
 
-#st.write("x=",x)
+
+st.write("x1-x2=",xx[0]-xx[1])
 #st.write("y=",y)
 
 add_selectbox = st.sidebar.radio(
@@ -109,15 +125,15 @@ if add_selectbox=="一次":
     y_real=yy
     ydata=coef[1]+coef[0]*xx
 
-    fig=plt.figure(num="拟合曲线绘制",figsize=(8,8))
-    plt.scatter(xdata,y_real,color="red",label='实验数据')#绘制数据点
+    fig=plt.figure(num="Fitted curve drawing",figsize=(8,8))
+    plt.scatter(xdata,y_real,color="red",label='Experimental Date')#绘制数据点
     plt.xlabel("x",fontname="serif")
     plt.ylabel("y",labelpad=5,fontname="serif")
     eer=sum((y_real-ydata)**2)
-    plt.plot(xdata,ydata, label='拟合曲线',color="green", linewidth=2.0, linestyle="--")
+    plt.plot(xdata,ydata, label='Fitted curve',color="green", linewidth=2.0, linestyle="--")
     plt.grid(which='both', axis='both', color='r', linestyle=':', linewidth=1)
-    plt.text(min(xx)+0.1*(max(xx)-min(xx)),0.9*(max(yy)-min(yy)+min(yy)),f'均方误差={eer:.5f}' )
-    plt.text(min(xx)+0.1*(max(xx)-min(xx)),0.8*(max(yy)-min(yy)+min(yy)),f'拟合方程：y={coef[1]:.5f}+{coef[0]:.5f}x')#{}
+    plt.text(min(xx)+0.1*(max(xx)-min(xx)),0.9*(max(yy)-min(yy))+min(yy),f'MSE={eer:.5f}' )
+    plt.text(min(xx)+0.1*(max(xx)-min(xx)),0.8*(max(yy)-min(yy))+min(yy),f'Fitted Function:y={coef[1]:.5f}+{coef[0]:.5f}x')#{}
     plt.xlim(min(xx)-0.5,max(xx)+0.5)#设置x轴范围
     plt.ylim(min(yy)-1,max(yy)+1)
     plt.legend()
@@ -129,20 +145,20 @@ if add_selectbox=="一次":
 elif add_selectbox=="二次": 
     coef=np.polyfit(xx,yy,deg=2)
      #st.write("coef1=",coef1)
-    st.write("拟合方程：y=",int(10000*coef[2]+0.5)/10000,"+",int(10000*coef[1]+0.5)/10000,"*x+",int(10000*coef[0]+0.5)/10000,"*x^2")
+    st.write("拟合方程:y=",int(10000*coef[2]+0.5)/10000,"+",int(10000*coef[1]+0.5)/10000,"*x+",int(10000*coef[0]+0.5)/10000,"*x^2")
     xdata=xx
     y_real=yy
     ydata=coef[2]+coef[1]*xx+coef[0]*xx**2
 
-    fig=plt.figure(num="拟合曲线绘制",figsize=(8,8))
-    plt.scatter(xdata,y_real,color="red",label='实验数据')#绘制数据点
+    fig=plt.figure(num="Fitted curve drawing",figsize=(8,8))
+    plt.scatter(xdata,y_real,color="red",label='Experimental Date')#绘制数据点
     plt.xlabel("x",fontname="serif")
     plt.ylabel("y",labelpad=5,fontname="serif")
     eer=sum((y_real-ydata)**2)
-    plt.plot(xdata,ydata, label='拟合曲线',color="green", linewidth=2.0, linestyle="--")
+    plt.plot(xdata,ydata, label='Fitted curve ',color="green", linewidth=2.0, linestyle="--")
     plt.grid(which='both', axis='both', color='r', linestyle=':', linewidth=1)
-    plt.text(min(xx)+0.1*(max(xx)-min(xx)),0.9*(max(yy)-min(yy)+min(yy)),f'均方误差={eer:.5f}' )
-    plt.text(min(xx)+0.1*(max(xx)-min(xx)),0.8*(max(yy)-min(yy)+min(yy)),f'拟合方程：y={coef[2]:.5f}+{coef[1]:.5f}x+{coef[0]:.5f}x$^{{2}}$')#{}
+    plt.text(min(xx)+0.1*(max(xx)-min(xx)),0.9*(max(yy)-min(yy))+min(yy),f'MSE={eer:.5f}' )
+    plt.text(min(xx)+0.1*(max(xx)-min(xx)),0.8*(max(yy)-min(yy))+min(yy),f'Fitted Function:y={coef[2]:.5f}+{coef[1]:.5f}x+{coef[0]:.5f}x$^{{2}}$')#{}
     plt.xlim(min(xx)-0.5,max(xx)+0.5)#设置x轴范围
     plt.ylim(min(yy)-1,max(yy)+1)
     plt.legend()
@@ -152,20 +168,20 @@ elif add_selectbox=="二次":
 elif add_selectbox == "三次":
     coef=np.polyfit(xx,yy,deg=3)
      #st.write("coef1=",coef1)
-    st.write("拟合方程：y=",int(10000*coef[3]+0.5)/10000,"+",int(10000*coef[2]+0.5)/10000,"*x+",int(10000*coef[1]+0.5)/10000,"*x^2+",int(10000*coef[0]+0.5)/10000,"*x^3")
+    st.write("拟合方程:y=",int(10000*coef[3]+0.5)/10000,"+",int(10000*coef[2]+0.5)/10000,"*x+",int(10000*coef[1]+0.5)/10000,"*x^2+",int(10000*coef[0]+0.5)/10000,"*x^3")
     xdata=xx
     y_real=yy
     ydata=coef[3]+coef[2]*xx+coef[1]*xx**2+coef[0]*xx**3
 
-    fig=plt.figure(num="拟合曲线绘制",figsize=(8,8))
-    plt.scatter(xdata,y_real,color="red",label='实验数据')#绘制数据点
+    fig=plt.figure(num="Fitted curve drawing",figsize=(8,8))
+    plt.scatter(xdata,y_real,color="red",label='Experimental Date')#绘制数据点
     plt.xlabel("x",fontname="serif")
     plt.ylabel("y",labelpad=5,fontname="serif")
     eer=sum((y_real-ydata)**2)
-    plt.plot(xdata,ydata, label='拟合曲线',color="green", linewidth=2.0, linestyle="--")
+    plt.plot(xdata,ydata, label='Fitted curve',color="green", linewidth=2.0, linestyle="--")
     plt.grid(which='both', axis='both', color='r', linestyle=':', linewidth=1)
-    plt.text(min(xx)+0.1*(max(xx)-min(xx)),0.9*(max(yy)-min(yy)+min(yy)),f'均方误差={eer:.5f}' )
-    plt.text(min(xx)+0.1*(max(xx)-min(xx)),0.8*(max(yy)-min(yy)+min(yy)),f'拟合方程：y={coef[3]:.5f}+{coef[2]:.5f}x+{coef[1]:.5f}x$^{{2}}$+{coef[0]:.5f}x$^{{3}}$')#{}
+    plt.text(min(xx)+0.1*(max(xx)-min(xx)),0.9*(max(yy)-min(yy))+min(yy),f'MSE={eer:.5f}' )
+    plt.text(min(xx)+0.1*(max(xx)-min(xx)),0.8*(max(yy)-min(yy))+min(yy),f'Fitted Function:y={coef[3]:.5f}+{coef[2]:.5f}x+{coef[1]:.5f}x$^{{2}}$+{coef[0]:.5f}x$^{{3}}$')#{}
     plt.xlim(min(xx)-0.5,max(xx)+0.5)#设置x轴范围
     plt.ylim(min(yy)-1,max(yy)+1)
     plt.legend()
@@ -178,15 +194,15 @@ elif add_selectbox=="四次":
     y_real=yy
     ydata=coef[4]+coef[3]*xx+coef[2]*xx**2+coef[1]*xx**3+coef[0]*xx**4
 
-    fig=plt.figure(num="拟合曲线绘制",figsize=(8,8))
-    plt.scatter(xdata,y_real,color="red",label='实验数据')#绘制数据点
+    fig=plt.figure(num="Fitted curve drawing",figsize=(8,8))
+    plt.scatter(xdata,y_real,color="red",label='Experimental Date')#绘制数据点
     plt.xlabel("x",fontname="serif")
     plt.ylabel("y",labelpad=5,fontname="serif")
     eer=sum((y_real-ydata)**2)
-    plt.plot(xdata,ydata, label='拟合曲线',color="green", linewidth=2.0, linestyle="--")
+    plt.plot(xdata,ydata, label='Fitted curve ',color="green", linewidth=2.0, linestyle="--")
     plt.grid(which='both', axis='both', color='r', linestyle=':', linewidth=1)
-    plt.text(min(xx)+0.1*(max(xx)-min(xx)),0.9*(max(yy)-min(yy)+min(yy)),f'均方误差={eer:.5f}' )
-    plt.text(min(xx)+0.1*(max(xx)-min(xx)),0.8*(max(yy)-min(yy)+min(yy)),f'拟合方程：y={coef[4]:.5f}+{coef[3]:.5f}x+{coef[2]:.5f}x$^{{2}}$+{coef[1]:.5f}x$^{{3}}$+{coef[0]:.5f}x$^{{4}}$')#{}
+    plt.text(min(xx)+0.1*(max(xx)-min(xx)),0.9*(max(yy)-min(yy))+min(yy),f'MSE={eer:.5f}' )
+    plt.text(min(xx)+0.1*(max(xx)-min(xx)),0.8*(max(yy)-min(yy))+min(yy),f'Fitted Function:y={coef[4]:.5f}+{coef[3]:.5f}x+{coef[2]:.5f}x$^{{2}}$+{coef[1]:.5f}x$^{{3}}$+{coef[0]:.5f}x$^{{4}}$')#{}
     plt.xlim(min(xx)-0.5,max(xx)+0.5)#设置x轴范围
     plt.ylim(min(yy)-1,max(yy)+1)
     plt.legend()
@@ -199,15 +215,15 @@ elif add_selectbox == "五次":
     y_real=yy
     ydata=coef[5]+coef[4]*xx+coef[3]*xx**2+coef[2]*xx**3+coef[1]*xx**4+coef[0]*xx**5
 
-    fig=plt.figure(num="拟合曲线绘制",figsize=(8,8))
-    plt.scatter(xdata,y_real,color="red",label='实验数据')#绘制数据点
+    fig=plt.figure(num="Fitted curve drawing",figsize=(8,8))
+    plt.scatter(xdata,y_real,color="red",label='Experimental Date')#绘制数据点
     plt.xlabel("x",fontname="serif")
     plt.ylabel("y",labelpad=5,fontname="serif")
     eer=sum((y_real-ydata)**2)
-    plt.plot(xdata,ydata, label='拟合曲线',color="green", linewidth=2.0, linestyle="--")
+    plt.plot(xdata,ydata, label='Fitted curve',color="green", linewidth=2.0, linestyle="--")
     plt.grid(which='both', axis='both', color='r', linestyle=':', linewidth=1)
-    plt.text(min(xx)+0.1*(max(xx)-min(xx)),0.9*(max(yy)-min(yy)+min(yy)),f'均方误差={eer:.5f}' )
-    plt.text(min(xx)+0.1*(max(xx)-min(xx)),0.8*(max(yy)-min(yy)+min(yy)),f'拟合方程：y={coef[5]:.5f}+{coef[4]:.5f}x+{coef[3]:.5f}x$^{{2}}$+{coef[2]:.5f}x$^{{3}}$+{coef[1]:.5f}x$^{{4}}$+{coef[1]:.5f}x$^{{5}}$')#{}
+    plt.text(min(xx)+0.1*(max(xx)-min(xx)),0.9*(max(yy)-min(yy))+min(yy),f'MSE={eer:.5f}' )
+    plt.text(min(xx)+0.1*(max(xx)-min(xx)),0.8*(max(yy)-min(yy))+min(yy),f'Fitted Function:y={coef[5]:.5f}+{coef[4]:.5f}x+{coef[3]:.5f}x$^{{2}}$+{coef[2]:.5f}x$^{{3}}$+{coef[1]:.5f}x$^{{4}}$+{coef[1]:.5f}x$^{{5}}$')#{}
     plt.xlim(min(xx)-0.5,max(xx)+0.5)#设置x轴范围
     plt.ylim(min(yy)-1,max(yy)+1)
     plt.legend()
@@ -225,17 +241,17 @@ elif add_selectbox == "指数":
     st.write("拟合方程：y=",int(10000*alf_opt[0]+0.5)/10000,"e^",int(10000*alf_opt[1]+0.5)/10000,"x")
 
     
-    fig=plt.figure(num="拟合曲线绘制",figsize=(8,8))
-    plt.scatter(xdata,y_real,color="red",label='实验数据')#绘制数据点
+    fig=plt.figure(num="Fitted curve drawing",figsize=(8,8))
+    plt.scatter(xdata,y_real,color="red",label='Experimental Date')#绘制数据点
     plt.xlabel("x",fontname="serif")
     plt.ylabel("y",labelpad=5,fontname="serif")
     ydata=func(xdata,*alf_opt)
     eer=sum((y_real-ydata)**2)
-    plt.plot(xdata,ydata, label='拟合曲线',color="green", linewidth=2.0, linestyle="--")
+    plt.plot(xdata,ydata, label='Fitted cutve',color="green", linewidth=2.0, linestyle="--")
     plt.grid(which='both', axis='both', color='r', linestyle=':', linewidth=1)
-    plt.text(min(xx)+0.1*(max(xx)-min(xx)),0.9*(max(yy)-min(yy)+min(yy)),f'均方误差={eer:.5f}' )
+    plt.text(min(xx)+0.1*(max(xx)-min(xx)),0.9*(max(yy)-min(yy))+min(yy),f'MSE={eer:.5f}' )
     alf=(int(alf_opt[1]*10000+0.5)/10000)
-    plt.text(min(xx)+0.1*(max(xx)-min(xx)),0.8*(max(yy)-min(yy)+min(yy)),f'拟合方程：y={alf_opt[0]:.5f}e$^{{{alf}x}}$')#{}
+    plt.text(min(xx)+0.1*(max(xx)-min(xx)),0.8*(max(yy)-min(yy))+min(yy),f'Fitted Functin:y={alf_opt[0]:.5f}e$^{{{alf}x}}$')#{}
     plt.xlim(min(xx)-0.5,max(xx)+0.5)#设置x轴范围
     plt.ylim(min(yy)-1,max(yy)+1)
     plt.legend()
@@ -251,17 +267,17 @@ elif add_selectbox == "幂函数":
     st.write("拟合方程：y=",int(10000*alf_opt[0]+0.5)/10000,"x^",int(10000*alf_opt[1]+0.5)/10000)
 
     
-    fig=plt.figure(num="拟合曲线绘制",figsize=(8,8))
-    plt.scatter(xdata,y_real,color="red",label='实验数据')#绘制数据点
+    fig=plt.figure(num="Fitted curve drawing",figsize=(8,8))
+    plt.scatter(xdata,y_real,color="red",label='Experimental Data')#绘制数据点
     plt.xlabel("x",fontname="serif")
     plt.ylabel("y",labelpad=5,fontname="serif")
     ydata=func(xdata,*alf_opt)
     eer=sum((y_real-ydata)**2)
-    plt.plot(xdata,ydata, label='拟合曲线',color="green", linewidth=2.0, linestyle="--")
+    plt.plot(xdata,ydata, label='Fitted curve',color="green", linewidth=2.0, linestyle="--")
     plt.grid(which='both', axis='both', color='r', linestyle=':', linewidth=1)
-    plt.text(min(xx)+0.1*(max(xx)-min(xx)),0.9*(max(yy)-min(yy)+min(yy)),f'均方误差={eer:.5f}' )
+    plt.text(min(xx)+0.1*(max(xx)-min(xx)),0.9*(max(yy)-min(yy))+min(yy),f'MSE={eer:.5f}' )
     alf=(int(alf_opt[1]*10000+0.5)/10000)
-    plt.text(min(xx)+0.1*(max(xx)-min(xx)),0.8*(max(yy)-min(yy)+min(yy)),f'拟合方程：y={alf_opt[0]:.5f}x$^{{{alf}}}$')#{}
+    plt.text(min(xx)+0.1*(max(xx)-min(xx)),0.8*(max(yy)-min(yy))+min(yy),f'Fitted Function:y={alf_opt[0]:.5f}x$^{{{alf}}}$')#{}
     plt.xlim(min(xx)-0.5,max(xx)+0.5)#设置x轴范围
     plt.ylim(min(yy)-1,max(yy)+1)
     plt.legend()
@@ -273,20 +289,20 @@ elif add_selectbox == "对数":
         return  a*np.log(x)+b
     alf_opt,alf_cov=op.curve_fit(func,xdata,y_real)
 
-    st.write("拟合方程：y=",int(10000*alf_opt[0]+0.5)/10000,"ln(x)+",int(10000*alf_opt[1]+0.5)/10000)
+    st.write("Fitted Fubction：y=",int(10000*alf_opt[0]+0.5)/10000,"ln(x)+",int(10000*alf_opt[1]+0.5)/10000)
 
     
-    fig=plt.figure(num="拟合曲线绘制",figsize=(8,8))
-    plt.scatter(xdata,y_real,color="red",label='实验数据')#绘制数据点
+    fig=plt.figure(num="Fitted curve drawing",figsize=(8,8))
+    plt.scatter(xdata,y_real,color="red",label='Experimental Date')#绘制数据点
     plt.xlabel("x",fontname="serif")
     plt.ylabel("y",labelpad=5,fontname="serif")
     ydata=func(xdata,*alf_opt)
     eer=sum((y_real-ydata)**2)
-    plt.plot(xdata,ydata, label='拟合曲线',color="green", linewidth=2.0, linestyle="--")
+    plt.plot(xdata,ydata, label='Fitted curve ',color="green", linewidth=2.0, linestyle="--")
     plt.grid(which='both', axis='both', color='r', linestyle=':', linewidth=1)
-    plt.text(min(xx)+0.1*(max(xx)-min(xx)),0.9*(max(yy)-min(yy)+min(yy)),f'均方误差={eer:.5f}' )
+    plt.text(min(xx)+0.1*(max(xx)-min(xx)),0.9*(max(yy)-min(yy))+min(yy),f'MSE={eer:.5f}' )
     alf=(int(alf_opt[1]*10000+0.5)/10000)
-    plt.text(min(xx)+0.1*(max(xx)-min(xx)),0.8*(max(yy)-min(yy)+min(yy)),f'拟合方程：y={alf_opt[0]:.5f}ln(x)+{alf:.5f}')#{}
+    plt.text(min(xx)+0.1*(max(xx)-min(xx)),0.8*(max(yy)-min(yy))+min(yy),f'Fitted Function:y={alf_opt[0]:.5f}ln(x)+{alf:.5f}')#{}
     plt.xlim(min(xx)-0.5,max(xx)+0.5)#设置x轴范围
     plt.ylim(min(yy)-1,max(yy)+1)
     plt.legend()

@@ -1,0 +1,7 @@
+numpy
+scipy
+matplotlib
+future
+pandas
+#turtle
+#fipy

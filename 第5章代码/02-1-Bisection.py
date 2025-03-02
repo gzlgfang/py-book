@@ -76,7 +76,7 @@ plt.annotate(
     arrowprops=dict(arrowstyle="->", color="r", linewidth=2),
 )
 str1 = "x=" + str(optim)
-str2 = "最优值=" + str(minf)
+str2 = "最优值=" + str(minf)jkjn,
 plt.text(optim - 0.5, minf + 0.25, str1)
 plt.text(optim - 0.5, minf + 0.15, str2)
 plt.show()

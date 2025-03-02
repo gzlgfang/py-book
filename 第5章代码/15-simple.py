@@ -14,7 +14,6 @@ mpl.rcParams["axes.unicode_minus"] = False  # 保证负号显示
 mpl.rcParams["font.size"] = 18  # 设置字体大小
 mpl.rcParams["font.style"] = "oblique"  # 设置字体风格，倾斜与否
 mpl.rcParams["font.weight"] = "normal"  # "normal",=500，设置字体粗细
-start_time = time.time()
 
 
 def Simple(funJ, h, alfa, miue, lamda, eer, n):
@@ -27,14 +26,15 @@ def Simple(funJ, h, alfa, miue, lamda, eer, n):
     lamda     压缩系数
     eer       设定误差
     """
-    n = int(n)
+    # n = int(n)
     # print(type(n))
     # 得到初始单纯形n+1个点
+    start_time = time.time()
     U = rect_simple(n, h)  ##n=3,h=0.5;kkx相当与U
     # print(U)
-    y = []  # 计算n+1个顶点的值
+    """ y = []  # 计算n+1个顶点的值
     for i in range(n + 1):
-        y.append(funJ(U[i]))
+        y.append(funJ(U[i])) """
 
     flag = True
     num = 0
@@ -46,7 +46,6 @@ def Simple(funJ, h, alfa, miue, lamda, eer, n):
         # print("uu=", U)
         kk, jj = paixu(U, y)
         # print("KKK=", kk, jj)
-
         ##补充U=KK
         fL = jj[0]  # 最小
         UL = kk[0]
@@ -62,9 +61,9 @@ def Simple(funJ, h, alfa, miue, lamda, eer, n):
         num = num + 1
         if num >= 300:
             flag = False
-        if abs((fL - fH) / (fH + 0.5)) < eer and (abs(UL[0] - UH[0])) < eer:
+        temp_eer = (sum((UL - UH) * (UL - UH))) ** 0.5
+        if abs((fL - fH) / (fH + 0.5)) < eer and temp_eer < eer:
             flag = False
-
         UC = (sum(kk) - UH) / n
         # print(UC)
         # 进行映射
@@ -95,12 +94,11 @@ def Simple(funJ, h, alfa, miue, lamda, eer, n):
                 U[n - 1] = (UM + UL) / 2
                 U[n] = (UH + UL) / 2
                 continue
-    print(U[0])
-    print("优化目标=", y[0])
+    print("最优解：", UL)
+    print("优化目标值=", fL)
     print("优化次数=", num)
-
-
-# 图形绘制,#全局设置字体
+    end_time = time.time()
+    print("优化用时=", end_time - start_time)
 
 
 def rect_simple(n, h):  ##生成初始单纯形
@@ -118,9 +116,10 @@ def paixu(x, y):  # 数据排序从小到大按y序列为准
                 tempy = y[i]
                 y[i] = y[j]
                 y[j] = tempy
-                tempx = copy.deepcopy(x[i][:])  ##不能简单赋值，否则数据将穿透
-                x[i][:] = x[j][:]
-                x[j][:] = tempx
+                tempx = copy.deepcopy(x[i])  ##不能简单赋值，否则数据将穿透
+                # tempx = x[i]
+                x[i] = x[j]
+                x[j] = tempx
     xx = x
     yy = y
     return xx, yy
@@ -128,8 +127,14 @@ def paixu(x, y):  # 数据排序从小到大按y序列为准
 
 def funJ(x):  ##fitness
     x1, x2, x3 = x[0], x[1], x[2]
-    f = ((x1 - 9) ** 2 + (x2 - 7) ** 2) ** 0.5 + ((x3 - 5) ** 2) ** 0.5
+    f = ((x1 - 7) ** 2 + (x2 - 3) ** 2) ** 0.5 + ((x3 - 5) ** 2) ** 0.5
     return f  # 求
 
 
-Simple(funJ, 0.8, 1, 0.65, 0.75, 10e-6, 3)
+def fun(x):
+    x1, x2, x3 = x[0], x[1], x[2]
+    return (x1 - 2) ** 2 + (x2 - 3 * x1 - 2) ** 2 + (x3 - 2 * x2 - 3) ** 2 + x1 * x2
+
+
+Simple(funJ, 0.5, 1, 0.3, 0.75, 10e-7, 3)
+Simple(fun, 0.5, 1, 0.3, 0.75, 10e-7, 3)

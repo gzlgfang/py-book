@@ -78,7 +78,7 @@ def PSO(fitness, N, c1, c2, w, M, D):
     print(f"目标函数的最小值为 {fitness(gbest,D)}")
     plt.figure(num="目标函数与迭代次数关系图")
     for i in range(M - 1):
-        plt.plot([i, i + 1], [pbest_fit[i], pbest_fit[i + 1]], lw=2, c="b")
+        plt.plot([i, i + 1], [-pbest_fit[i], -pbest_fit[i + 1]], lw=2, c="b")
         plt.grid()
     # 绘制浓度曲线:
     plt.xlabel("迭代次数")
@@ -127,7 +127,7 @@ def PSO(fitness, N, c1, c2, w, M, D):
     plt.xticks(np.linspace(0, 1, 11, endpoint=True))  # 设置横轴刻度
     plt.xlim(0, 1)  # 设置x轴的上下限
     # plt.ylim(-120,180)
-    plt.xlabel(r"$\mathrm{x}$", color="blue", size=28)  # 设置x轴描述信息
+    plt.xlabel(r"$\mathrm{L}$", color="blue", size=28)  # 设置x轴描述信息
     plt.ylabel(r"$\mathrm{C_{A},C_{B},C_{C}}$", color="red")  #
     # plt.ylabel(r'$\mathrm{C_{A},C_{B},C_{C},λ_{1},λ_{2}}$',color='red')# 设置y轴描述信息,利用r'$x_1$设置下标1
     plt.yticks(np.linspace(0, 1, 11, endpoint=True))  # 设置纵轴刻度
@@ -184,4 +184,4 @@ def fitness(kx, D):
 
 
 if __name__ == "__main__":
-    PSO(fitness, 50, 1.5, 2.5, 0.5, 50, 11)  # 调用总程序
+    PSO(fitness, 100, 1.5, 2.5, 0.5, 100, 11)  # 调用总程序

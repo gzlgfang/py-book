@@ -39,9 +39,9 @@ v = np.zeros((6, 41))
 for i in range(6):
     t = 333.15 + i * 40
     for j in range(41):
-        p = 10 + 2.5 * j
+        p = 10 + 5 * j
         v[i, j] = brentq(f, 22, 100000)
-
+        print(t, p, v[i, j])
 mpl.rcParams["font.sans-serif"] = ["SimHei"]  # 保证显示中文字
 mpl.rcParams["axes.unicode_minus"] = False
 mpl.rcParams["font.size"] = 16  # 设置字体大小
@@ -50,14 +50,14 @@ mpl.rcParams["xtick.top"] = True
 mpl.rcParams["xtick.direction"] = "in"  # 坐标轴上的短线朝内，默认朝外
 mpl.rcParams["ytick.direction"] = "in"
 font1 = {"family": "Times New Roman"}
-p = np.linspace(10, 110, 41)
+p = np.linspace(10, 210, 41)
 for i in range(6):
     tt = str(333.15 + i * 40) + "°C"
     y = v[i, :]
     plt.plot(p, y, lw=2, label=tt)
-plt.xlim(10, 110)
+plt.xlim(10, 210)
 plt.ylim(0, 4500)
-plt.xticks(np.arange(10, 110, 10))
+plt.xticks(np.arange(10, 210, 10))
 plt.xlabel("p,atm", font1)
 plt.ylabel(r"$V,1×10^{-6}m^{3}.mol^{-1}$", font1)
 plt.legend()
